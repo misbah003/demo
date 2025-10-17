@@ -1,0 +1,17 @@
+TAX INVOICE
+
+Seller: Acme Trading Pvt Ltd
+GSTIN: GSTIN12345678
+
+Customer: Nimbus Solutions
+GSTIN: GSTIN87654321
+
+Invoice Number: INV-1234
+Date: 2025-03-04
+
+Item: Item 1, Qty: 2, Rate: ₹150.00, Total: ₹300.00
+Item: Item 2, Qty: 1, Rate: ₹250.50, Total: ₹250.50
+
+Subtotal: ₹550.50
+VAT (12%): ₹66.06
+Total: ₹616.56

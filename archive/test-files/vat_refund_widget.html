@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAT Refund Predictor - Website Integration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .result-value {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .refund-amount {
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        .success {
+            color: #28a745;
+        }
+
+        .warning {
+            color: #ffc107;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .badge.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .api-status {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .api-status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* State dropdown styling */
+        select#state {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            appearance: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 VAT Refund Predictor</h1>
+            <p>AI-Powered VAT Refund Estimation</p>
+        </div>
+
+        <div class="content">
+            <div id="apiStatus" class="api-status">
+                ✅ API Connected - Ready to predict
+            </div>
+
+            <form id="vatForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="amount">💰 Transaction Amount (₹)</label>
+                        <input type="number" id="amount" placeholder="100000" required min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vatRate">📊 VAT Rate (%)</label>
+                        <select id="vatRate" required>
+                            <option value="5">5%</option>
+                            <option value="12">12%</option>
+                            <option value="18" selected>18%</option>
+                            <option value="28">28%</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">🏢 Business Category</label>
+                        <select id="category" required>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Services">Services</option>
+                            <option value="Textiles">Textiles</option>
+                            <option value="Pharmaceuticals">Pharmaceuticals</option>
+                            <option value="Food & Beverages">Food & Beverages</option>
+                            <option value="Automotive">Automotive</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">📍 State</label>
+                        <select id="state" required>
+                            <option value="">-- Select State --</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                            <option value="Assam">Assam</option>
+                            <option value="Bihar">Bihar</option>
+                            <option value="Chhattisgarh">Chhattisgarh</option>
+                            <option value="Goa">Goa</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                            <option value="Jharkhand">Jharkhand</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Kerala">Kerala</option>
+                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Manipur">Manipur</option>
+                            <option value="Meghalaya">Meghalaya</option>
+                            <option value="Mizoram">Mizoram</option>
+                            <option value="Nagaland">Nagaland</option>
+                            <option value="Odisha">Odisha</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="Sikkim">Sikkim</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Tripura">Tripura</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Uttarakhand">Uttarakhand</option>
+                            <option value="West Bengal">West Bengal</option>
+                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                            <option value="Chandigarh">Chandigarh</option>
+                            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                            <option value="Ladakh">Ladakh</option>
+                            <option value="Lakshadweep">Lakshadweep</option>
+                            <option value="Puducherry">Puducherry</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="turnover">💼 Annual Turnover (₹)</label>
+                        <input type="number" id="turnover" placeholder="5000000" required min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="riskScore">⚠️ Risk Score (0.0 - 1.0)</label>
+                        <input type="number" id="riskScore" step="0.1" min="0" max="1" value="0.2" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="compliance">✅ Compliance Status</label>
+                        <select id="compliance" required>
+                            <option value="Compliant" selected>Compliant</option>
+                            <option value="Non-Compliant">Non-Compliant</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn">🚀 Predict VAT Refund</button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px;">Calculating prediction...</p>
+            </div>
+
+            <div id="result" class="result">
+                <h3>📊 Prediction Result</h3>
+                
+                <div class="result-item">
+                    <span class="result-label">Predicted Refund Amount:</span>
+                    <span class="result-value refund-amount" id="refundAmount">₹0.00</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Recommendation:</span>
+                    <span class="result-value" id="recommendation"></span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Reason:</span>
+                    <span class="result-value" id="reason"></span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Confidence:</span>
+                    <span class="result-value" id="confidence"></span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Response Time:</span>
+                    <span class="result-value" id="responseTime"></span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Model Accuracy (R²):</span>
+                    <span class="result-value" id="accuracy"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION - Change this for your website
+        // ============================================
+        const API_URL = 'http://localhost:5001';  // Change to your API URL in production
+
+        // State to Region mapping (for API compatibility)
+        const stateToRegion = {
+            // North
+            'Delhi': 'North',
+            'Haryana': 'North',
+            'Himachal Pradesh': 'North',
+            'Jammu and Kashmir': 'North',
+            'Ladakh': 'North',
+            'Punjab': 'North',
+            'Rajasthan': 'North',
+            'Uttar Pradesh': 'North',
+            'Uttarakhand': 'North',
+            'Chandigarh': 'North',
+            
+            // South
+            'Andhra Pradesh': 'South',
+            'Karnataka': 'South',
+            'Kerala': 'South',
+            'Tamil Nadu': 'South',
+            'Telangana': 'South',
+            'Puducherry': 'South',
+            'Lakshadweep': 'South',
+            'Andaman and Nicobar Islands': 'South',
+            
+            // East
+            'Bihar': 'East',
+            'Jharkhand': 'East',
+            'Odisha': 'East',
+            'West Bengal': 'East',
+            'Assam': 'East',
+            'Arunachal Pradesh': 'East',
+            'Manipur': 'East',
+            'Meghalaya': 'East',
+            'Mizoram': 'East',
+            'Nagaland': 'East',
+            'Sikkim': 'East',
+            'Tripura': 'East',
+            
+            // West
+            'Goa': 'West',
+            'Gujarat': 'West',
+            'Maharashtra': 'West',
+            'Chhattisgarh': 'West',
+            'Madhya Pradesh': 'West',
+            'Dadra and Nagar Haveli and Daman and Diu': 'West'
+        };
+
+        // Check API health on load
+        async function checkAPIHealth() {
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                
+                const statusEl = document.getElementById('apiStatus');
+                if (data.status === 'healthy') {
+                    statusEl.className = 'api-status';
+                    statusEl.textContent = '✅ API Connected - Ready to predict';
+                } else {
+                    statusEl.className = 'api-status error';
+                    statusEl.textContent = '❌ API Error - Please check if server is running';
+                }
+            } catch (error) {
+                const statusEl = document.getElementById('apiStatus');
+                statusEl.className = 'api-status error';
+                statusEl.textContent = '❌ Cannot connect to API - Please start the server';
+            }
+        }
+
+        // Check health on page load
+        checkAPIHealth();
+
+        // Form submission
+        document.getElementById('vatForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get selected state and convert to region
+            const selectedState = document.getElementById('state').value;
+            const region = stateToRegion[selectedState] || 'North';  // Default to North if not found
+            
+            // Show loading
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('result').classList.remove('show');
+            document.getElementById('submitBtn').disabled = true;
+            
+            const data = {
+                Amount: parseFloat(document.getElementById('amount').value),
+                VAT_Rate: parseFloat(document.getElementById('vatRate').value),
+                Category: document.getElementById('category').value,
+                Region: region,  // Use mapped region
+                Filing_Status: 'Filed',
+                Compliance_Flag: document.getElementById('compliance').value,
+                Refund_Eligible: 'Yes',
+                Is_Anomaly: 'No',
+                Risk_Score: parseFloat(document.getElementById('riskScore').value),
+                Annual_Turnover: parseFloat(document.getElementById('turnover').value)
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/predict`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                // Hide loading
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('submitBtn').disabled = false;
+                
+                if (result.success) {
+                    // Show results
+                    document.getElementById('refundAmount').textContent = 
+                        '₹' + result.predicted_refund_amount.toLocaleString('en-IN', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+                    
+                    const recElement = document.getElementById('recommendation');
+                    if (result.recommendation === 'auto_approve') {
+                        recElement.innerHTML = '<span class="badge success">✅ Auto-Approve</span>';
+                    } else {
+                        recElement.innerHTML = '<span class="badge warning">⚠️ Manual Review Required</span>';
+                    }
+                    
+                    document.getElementById('reason').textContent = result.reason;
+                    document.getElementById('confidence').textContent = 
+                        result.confidence.charAt(0).toUpperCase() + result.confidence.slice(1);
+                    document.getElementById('responseTime').textContent = 
+                        result.response_time_ms.toFixed(2) + ' ms';
+                    
+                    const r2Score = result.model_info.r2_score || 0.70;
+                    document.getElementById('accuracy').textContent = 
+                        (r2Score * 100).toFixed(2) + '%';
+                    
+                    document.getElementById('result').classList.add('show');
+                } else {
+                    alert('Prediction failed: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('submitBtn').disabled = false;
+                alert('Error connecting to API: ' + error.message + '\n\nPlease make sure the API server is running:\npython ml/ml_api_service_optimized.py');
+            }
+        });
+
+        // Auto-fill example data
+        window.addEventListener('load', function() {
+            document.getElementById('amount').value = '100000';
+            document.getElementById('turnover').value = '5000000';
+        });
+    </script>
+</body>
+</html>

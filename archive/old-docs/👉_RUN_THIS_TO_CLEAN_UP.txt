@@ -1,0 +1,89 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║                  🧹 CLEAN UP YOUR PROJECT NOW! 🧹                 ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+
+📋 YOUR PROJECT IS CLUTTERED!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Current Status:
+  ❌ 130+ files in root directory
+  ❌ 80+ duplicate documentation files
+  ❌ 30+ obsolete script files
+  ❌ Hard to find what you need
+  ❌ Confusing for new developers
+
+
+✨ SOLUTION: RUN THE CLEANUP SCRIPT!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open PowerShell in this directory and run:
+
+    .\CLEANUP_PROJECT.ps1
+
+
+⏱️ TAKES LESS THAN 10 SECONDS!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The script will:
+  ✅ Move 80+ old documentation files to archive/
+  ✅ Move 30+ obsolete scripts to archive/
+  ✅ Move test files to archive/
+  ✅ Move old model directories to archive/
+  ✅ Keep only essential files in root
+  ✅ Show you a summary of changes
+
+
+🎯 AFTER CLEANUP:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Your root directory will have ONLY:
+
+  📄 README.md                    ← Read this first!
+  📄 START_ALL_SERVERS.ps1        ← Use this to start!
+  📄 STOP_SERVERS.ps1             ← Use this to stop!
+  📄 START_ADVANCED_ML_API.bat
+  📄 docker-compose.yml
+  📄 deploy.sh / deploy.bat
+
+  📁 docs/                        ← Backend
+  📁 web/                         ← Frontend
+  📁 ml/                          ← ML API
+  📁 scripts/                     ← Utilities
+  📁 models/                      ← ML Models
+  📁 data/                        ← Data files
+  📁 archive/                     ← Old files (safe!)
+
+
+🔒 100% SAFE!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅ Nothing is deleted
+  ✅ All files moved to archive/
+  ✅ Can restore any file anytime
+  ✅ Can run multiple times safely
+
+
+🚀 READY? RUN THIS NOW:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    .\CLEANUP_PROJECT.ps1
+
+
+📚 NEED MORE INFO?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Read these files:
+  📖 CLEANUP_SUMMARY.txt              ← Quick overview
+  📖 PROJECT_ORGANIZATION_GUIDE.md    ← Detailed guide
+
+
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║              👉 COPY AND RUN THIS COMMAND NOW! 👈                 ║
+║                                                                   ║
+║                    .\CLEANUP_PROJECT.ps1                          ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝

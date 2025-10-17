@@ -1,0 +1,321 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    🚀 NAVI TAX - SERVER MANAGEMENT SCRIPTS                   ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          📁 AVAILABLE SCRIPTS                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  🟢 START_BOTH_SERVERS.bat                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  ⭐ RECOMMENDED - USE THIS TO START EVERYTHING                              │
+│                                                                             │
+│  What it does:                                                              │
+│  ✅ Checks prerequisites (.env, node_modules)                               │
+│  ✅ Installs dependencies if missing                                        │
+│  ✅ Checks if ports are available                                           │
+│  ✅ Starts Backend (Port 3001)                                              │
+│  ✅ Starts Frontend (Port 5173)                                             │
+│  ✅ Opens browser automatically                                             │
+│                                                                             │
+│  How to use:                                                                │
+│  → Double-click the file                                                    │
+│  → Wait for browser to open                                                 │
+│  → Keep both terminal windows open                                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  🟢 START_SERVERS.ps1                                                       │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  PowerShell version of START_BOTH_SERVERS.bat                               │
+│                                                                             │
+│  What it does:                                                              │
+│  ✅ Same as START_BOTH_SERVERS.bat                                          │
+│  ✅ Better error messages with colors                                       │
+│  ✅ More detailed status information                                        │
+│                                                                             │
+│  How to use:                                                                │
+│  → Right-click → Run with PowerShell                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  🔴 STOP_SERVERS.bat                                                        │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  Stop all running servers                                                   │
+│                                                                             │
+│  What it does:                                                              │
+│  ✅ Finds processes on port 3001 (Backend)                                  │
+│  ✅ Finds processes on port 5173 (Frontend)                                 │
+│  ✅ Terminates both processes                                               │
+│  ✅ Confirms shutdown                                                       │
+│                                                                             │
+│  When to use:                                                               │
+│  → When you're done working                                                 │
+│  → Before restarting servers                                                │
+│  → To free up ports                                                         │
+│                                                                             │
+│  How to use:                                                                │
+│  → Double-click the file                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  🔴 STOP_SERVERS.ps1                                                        │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  PowerShell version of STOP_SERVERS.bat                                     │
+│                                                                             │
+│  How to use:                                                                │
+│  → Right-click → Run with PowerShell                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  🔵 CHECK_SERVERS.bat                                                       │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  Check if servers are running                                               │
+│                                                                             │
+│  What it does:                                                              │
+│  ✅ Checks Backend status (Port 3001)                                       │
+│  ✅ Checks Frontend status (Port 5173)                                      │
+│  ✅ Shows process IDs                                                       │
+│  ✅ Provides troubleshooting advice                                         │
+│                                                                             │
+│  When to use:                                                               │
+│  → To verify servers are running                                            │
+│  → To get process IDs                                                       │
+│  → To troubleshoot issues                                                   │
+│                                                                             │
+│  How to use:                                                                │
+│  → Double-click the file                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  🟡 START_BACKEND.bat                                                       │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  Start only the backend server                                              │
+│                                                                             │
+│  What it does:                                                              │
+│  ✅ Checks .env file                                                        │
+│  ✅ Installs dependencies if missing                                        │
+│  ✅ Starts backend on port 3001                                             │
+│                                                                             │
+│  When to use:                                                               │
+│  → When you only need backend                                               │
+│  → For backend-only testing                                                 │
+│                                                                             │
+│  How to use:                                                                │
+│  → Double-click the file                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          📖 DOCUMENTATION FILES                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  📄 🚀_START_HERE.md                                                        │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  ⭐ MAIN GUIDE - READ THIS FIRST                                            │
+│                                                                             │
+│  Contains:                                                                  │
+│  ✅ Quick start (3 steps)                                                   │
+│  ✅ Current status                                                          │
+│  ✅ Excel files status                                                      │
+│  ✅ Testing checklist                                                       │
+│  ✅ Expected results                                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  📄 SERVER_MANAGEMENT_GUIDE.md                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  Comprehensive server management guide                                      │
+│                                                                             │
+│  Contains:                                                                  │
+│  ✅ Detailed script explanations                                            │
+│  ✅ Troubleshooting guide                                                   │
+│  ✅ Architecture diagram                                                    │
+│  ✅ Development workflow                                                    │
+│  ✅ Emergency commands                                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  📄 QUICK_EXCEL_FIX_GUIDE.md                                                │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  Simple guide for Excel processing fix                                      │
+│                                                                             │
+│  Contains:                                                                  │
+│  ✅ 3-step testing instructions                                             │
+│  ✅ Visual diagrams                                                         │
+│  ✅ Expected results                                                        │
+│  ✅ Success criteria                                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  📄 EXCEL_PROCESSING_FIX.md                                                 │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  Technical documentation for Excel processing                               │
+│                                                                             │
+│  Contains:                                                                  │
+│  ✅ Root cause analysis                                                     │
+│  ✅ Solutions implemented                                                   │
+│  ✅ Code examples                                                           │
+│  ✅ Test results                                                            │
+│  ✅ Data flow diagrams                                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          🎯 TYPICAL WORKFLOW                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STARTING YOUR DAY                                                          │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                                             │
+│  1. Double-click: START_BOTH_SERVERS.bat                                    │
+│  2. Wait for browser to open                                                │
+│  3. Start working!                                                          │
+│                                                                             │
+│  Result:                                                                    │
+│  ✅ Backend running on http://localhost:3001                                │
+│  ✅ Frontend running on http://localhost:5173                               │
+│  ✅ Browser opened automatically                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  DURING DEVELOPMENT                                                         │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                                             │
+│  Frontend changes:                                                          │
+│  → Save file → Changes reflect automatically (hot reload)                   │
+│                                                                             │
+│  Backend changes:                                                           │
+│  → Save file → Run STOP_SERVERS.bat → Run START_BOTH_SERVERS.bat           │
+│                                                                             │
+│  Check status:                                                              │
+│  → Run CHECK_SERVERS.bat anytime                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ENDING YOUR DAY                                                            │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                                             │
+│  Option 1: Double-click STOP_SERVERS.bat                                    │
+│  Option 2: Close both terminal windows                                      │
+│  Option 3: Press Ctrl+C in each terminal window                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          🚨 TROUBLESHOOTING                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  PROBLEM: Servers won't start                                               │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                                             │
+│  SOLUTION:                                                                  │
+│  1. Run: STOP_SERVERS.bat                                                   │
+│  2. Wait 5 seconds                                                          │
+│  3. Run: START_BOTH_SERVERS.bat                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  PROBLEM: Port already in use                                               │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                                             │
+│  SOLUTION:                                                                  │
+│  → The startup script will ask if you want to kill the process             │
+│  → Type Y and press Enter                                                   │
+│                                                                             │
+│  OR manually:                                                               │
+│  1. Run: CHECK_SERVERS.bat (to see process IDs)                             │
+│  2. Run: STOP_SERVERS.bat                                                   │
+│  3. Run: START_BOTH_SERVERS.bat                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  PROBLEM: Application not loading                                           │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                                             │
+│  CHECKLIST:                                                                 │
+│  1. Run: CHECK_SERVERS.bat                                                  │
+│     → Both servers should show "RUNNING"                                    │
+│                                                                             │
+│  2. Check backend terminal window                                           │
+│     → Should show "Server running on port 3001"                             │
+│                                                                             │
+│  3. Check frontend terminal window                                          │
+│     → Should show "Local: http://localhost:5173/"                           │
+│                                                                             │
+│  4. Check browser console (F12)                                             │
+│     → Look for error messages                                               │
+│                                                                             │
+│  5. Clear browser cache                                                     │
+│     → Press Ctrl+Shift+Delete                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          📞 QUICK REFERENCE                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  Task                          Command
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Start everything              START_BOTH_SERVERS.bat
+  Stop everything               STOP_SERVERS.bat
+  Check status                  CHECK_SERVERS.bat
+  Backend only                  START_BACKEND.bat
+  View backend                  http://localhost:3001
+  View frontend                 http://localhost:5173
+  Read main guide               🚀_START_HERE.md
+  Server troubleshooting        SERVER_MANAGEMENT_GUIDE.md
+  Excel fix guide               QUICK_EXCEL_FIX_GUIDE.md
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          ✅ SUCCESS INDICATORS                               │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  After running START_BOTH_SERVERS.bat, you should see:
+
+  ✅ Two terminal windows open (Backend + Frontend)
+  ✅ Backend window shows: "Server running on port 3001"
+  ✅ Frontend window shows: "Local: http://localhost:5173/"
+  ✅ Browser opens automatically to http://localhost:5173
+  ✅ Application loads without errors
+  ✅ Can navigate between pages
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          🎯 NEXT STEPS                                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+  1. ✅ Run: START_BOTH_SERVERS.bat
+  2. ✅ Read: 🚀_START_HERE.md
+  3. ✅ Delete old documents (DELETE_OLD_DOCUMENTS.sql in Supabase)
+  4. ✅ Re-upload Excel files
+  5. ✅ Verify VAT Collection Forecast shows data
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                          🎉 YOU'RE ALL SET!                                  ║
+║                                                                              ║
+║                    Everything is ready to go! 🚀                             ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝

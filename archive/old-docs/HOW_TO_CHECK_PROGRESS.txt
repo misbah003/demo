@@ -1,0 +1,98 @@
+================================================================================
+📋 HOW TO CHECK TRAINING PROGRESS
+================================================================================
+
+You got the error because you need to run commands from the project directory!
+
+================================================================================
+METHOD 1: DOUBLE-CLICK BATCH FILES (EASIEST!)
+================================================================================
+
+Just double-click these files in Windows Explorer:
+
+📁 c:\Users\HomeLaptop\Downloads\navi-tax-35-main\
+
+   ⚡ CHECK_TRAINING_STATUS.bat
+      → Quick status check (2 seconds)
+      
+   📊 MONITOR_TRAINING.bat
+      → Live monitor with auto-refresh (every 10 seconds)
+
+================================================================================
+METHOD 2: COMMAND LINE (FROM PROJECT DIRECTORY)
+================================================================================
+
+Step 1: Open PowerShell or Command Prompt
+
+Step 2: Navigate to project directory:
+   cd c:\Users\HomeLaptop\Downloads\navi-tax-35-main
+
+Step 3: Run status check:
+   python ml\quick_status.py
+
+Or run live monitor:
+   python ml\monitor_training.py
+
+================================================================================
+METHOD 3: COMMAND LINE (FROM ANY DIRECTORY)
+================================================================================
+
+Use full path (works from anywhere):
+
+Quick Status:
+   python c:\Users\HomeLaptop\Downloads\navi-tax-35-main\ml\quick_status.py
+
+Live Monitor:
+   python c:\Users\HomeLaptop\Downloads\navi-tax-35-main\ml\monitor_training.py
+
+Detailed Check:
+   python c:\Users\HomeLaptop\Downloads\navi-tax-35-main\ml\check_training_progress.py
+
+================================================================================
+WHAT EACH SCRIPT DOES
+================================================================================
+
+1. quick_status.py (⚡ FASTEST)
+   ├── Shows current training stage
+   ├── Estimated time remaining
+   ├── Takes 2 seconds
+   └── Run every 5-10 minutes
+
+2. monitor_training.py (📊 BEST)
+   ├── Live progress monitor
+   ├── Auto-refreshes every 10 seconds
+   ├── Shows progress bar
+   ├── Shows file sizes
+   └── Press Ctrl+C to stop
+
+3. check_training_progress.py (📁 DETAILED)
+   ├── Shows all files created
+   ├── File sizes and timestamps
+   ├── One-time check
+   └── More detailed than quick_status
+
+================================================================================
+CURRENT STATUS (AS OF NOW)
+================================================================================
+
+Stage: Random Forest Training (Stage 3 of 6)
+Time Elapsed: ~5-10 minutes
+Time Remaining: ~20-50 minutes
+Status: IN PROGRESS ⏳
+
+The training is working! Just be patient.
+
+================================================================================
+QUICK REFERENCE
+================================================================================
+
+From project directory:
+   python ml\quick_status.py
+
+From any directory:
+   python c:\Users\HomeLaptop\Downloads\navi-tax-35-main\ml\quick_status.py
+
+Or just double-click:
+   CHECK_TRAINING_STATUS.bat
+
+================================================================================

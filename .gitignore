@@ -1,0 +1,6 @@
+﻿optimized_models_25000_samples/
+models/
+node_modules/
+*.pkl
+*.png
+data/

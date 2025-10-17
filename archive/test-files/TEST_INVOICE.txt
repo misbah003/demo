@@ -1,0 +1,30 @@
+TAX INVOICE
+
+Invoice Number: INV-2024-001
+Date: 15/01/2024
+
+Bill To:
+ABC Corporation Pvt Ltd
+123 Business Street
+Mumbai, Maharashtra 400001
+GST Number: 27AABCU9603R1ZM
+
+Items:
+1. Software License - ₹50,000.00
+2. Support Services - ₹25,000.00
+
+Subtotal: ₹75,000.00
+CGST (9%): ₹6,750.00
+SGST (9%): ₹6,750.00
+Total Amount: ₹88,500.00
+
+Payment Terms: Net 30 Days
+Due Date: 14/02/2024
+
+Bank Details:
+Account Name: XYZ Services Ltd
+Account Number: 1234567890
+IFSC Code: HDFC0001234
+Bank: HDFC Bank
+
+Thank you for your business!

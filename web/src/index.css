@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 240 10% 98%;
+    --foreground: 240 10% 9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 9%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 217 91% 70%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 217 91% 60%;
+
+    /* Tax Intelligence Brand Colors */
+    --intelligence-blue: 217 91% 60%;
+    --intelligence-navy: 221 83% 53%;
+    --intelligence-cyan: 189 94% 43%;
+    --intelligence-emerald: 160 84% 39%;
+    --intelligence-amber: 43 96% 56%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--intelligence-blue)), hsl(var(--intelligence-navy)));
+    --gradient-success: linear-gradient(135deg, hsl(var(--intelligence-emerald)), hsl(var(--intelligence-cyan)));
+    --gradient-warning: linear-gradient(135deg, hsl(var(--intelligence-amber)), hsl(var(--warning)));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100% / 0.8), hsl(240 4.8% 95.9% / 0.4));
+
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -5px hsl(var(--intelligence-blue) / 0.1);
+    --shadow-glow: 0 0 40px hsl(var(--intelligence-blue) / 0.15);
+    --shadow-card: 0 4px 20px -2px hsl(240 10% 9% / 0.08);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 240 10% 7%;
+    --foreground: 210 40% 98%;
+
+    --card: 240 8% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 240 8% 12%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 217 91% 70%;
+
+    --secondary: 240 4% 20%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 240 4% 16%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 240 4% 20%;
+    --accent-foreground: 210 40% 98%;
+
+    --success: 142 76% 45%;
+    --success-foreground: 0 0% 98%;
+
+    --warning: 38 92% 60%;
+    --warning-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 4% 20%;
+    --input: 240 4% 16%;
+    --ring: 217 91% 60%;
+
+    /* Dark mode gradients */
+    --gradient-card: linear-gradient(135deg, hsl(240 8% 12% / 0.9), hsl(240 4% 16% / 0.6));
+    --shadow-elegant: 0 10px 30px -5px hsl(0 0% 0% / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--intelligence-blue) / 0.25);
+    --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.25);
+
+    --sidebar-background: 240 8% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4% 16%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 4% 20%;
+    --sidebar-ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

@@ -1,0 +1,18 @@
+# ML Model Training and Serving Requirements
+# Install with: pip install -r requirements_ml.txt
+
+# Core ML Libraries
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+
+# API Service
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Excel Support
+openpyxl>=3.1.0
+
+# Optional: For better performance
+joblib>=1.3.0

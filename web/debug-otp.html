@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OTP Debug Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .info {
+            background: #f0f9ff;
+            border: 1px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .error {
+            background: #fee;
+            border: 1px solid #f00;
+            color: #c00;
+        }
+        .success {
+            background: #efe;
+            border: 1px solid #0f0;
+            color: #060;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 OTP Debug Tool</h1>
+        <p>This tool helps debug OTP storage and validation issues.</p>
+        
+        <h3>Step 1: Check Stored OTP</h3>
+        <input type="email" id="emailCheck" placeholder="Enter your email">
+        <button onclick="checkStoredOTP()">Check Stored OTP</button>
+        <div id="checkResult"></div>
+        
+        <hr style="margin: 30px 0;">
+        
+        <h3>Step 2: Manually Store OTP (for testing)</h3>
+        <input type="email" id="emailStore" placeholder="Enter your email">
+        <input type="text" id="otpStore" placeholder="Enter 6-digit OTP" maxlength="6">
+        <button onclick="storeOTP()">Store OTP</button>
+        <div id="storeResult"></div>
+        
+        <hr style="margin: 30px 0;">
+        
+        <h3>Step 3: Verify OTP</h3>
+        <input type="email" id="emailVerify" placeholder="Enter your email">
+        <input type="text" id="otpVerify" placeholder="Enter 6-digit OTP to verify" maxlength="6">
+        <button onclick="verifyOTP()">Verify OTP</button>
+        <div id="verifyResult"></div>
+        
+        <hr style="margin: 30px 0;">
+        
+        <button onclick="clearAll()">Clear All OTP Data</button>
+    </div>
+
+    <script>
+        function checkStoredOTP() {
+            const email = document.getElementById('emailCheck').value.trim();
+            const resultDiv = document.getElementById('checkResult');
+            
+            if (!email) {
+                resultDiv.innerHTML = '<div class="info error">Please enter an email</div>';
+                return;
+            }
+            
+            const storedCode = localStorage.getItem(`otp_${email}`);
+            const timestamp = localStorage.getItem(`otp_${email}_timestamp`);
+            
+            if (!storedCode) {
+                resultDiv.innerHTML = '<div class="info error">No OTP found for this email</div>';
+                return;
+            }
+            
+            const codeAge = Date.now() - parseInt(timestamp);
+            const minutesAgo = Math.floor(codeAge / 60000);
+            const expired = codeAge > 5 * 60 * 1000;
+            
+            resultDiv.innerHTML = `
+                <div class="info ${expired ? 'error' : 'success'}">
+                    <strong>Stored OTP:</strong> ${storedCode}
+                    <strong>Length:</strong> ${storedCode.length} characters
+                    <strong>Stored:</strong> ${minutesAgo} minutes ago
+                    <strong>Status:</strong> ${expired ? 'EXPIRED ❌' : 'VALID ✅'}
+                    <strong>Raw bytes:</strong> [${Array.from(storedCode).map(c => c.charCodeAt(0)).join(', ')}]
+                </div>
+            `;
+        }
+        
+        function storeOTP() {
+            const email = document.getElementById('emailStore').value.trim();
+            const otp = document.getElementById('otpStore').value.trim();
+            const resultDiv = document.getElementById('storeResult');
+            
+            if (!email || !otp) {
+                resultDiv.innerHTML = '<div class="info error">Please enter both email and OTP</div>';
+                return;
+            }
+            
+            if (!/^\d{6}$/.test(otp)) {
+                resultDiv.innerHTML = '<div class="info error">OTP must be exactly 6 digits</div>';
+                return;
+            }
+            
+            localStorage.setItem(`otp_${email}`, otp);
+            localStorage.setItem(`otp_${email}_timestamp`, Date.now().toString());
+            
+            resultDiv.innerHTML = `
+                <div class="info success">
+                    ✅ OTP stored successfully!
+                    <strong>Email:</strong> ${email}
+                    <strong>OTP:</strong> ${otp}
+                </div>
+            `;
+        }
+        
+        function verifyOTP() {
+            const email = document.getElementById('emailVerify').value.trim();
+            const otp = document.getElementById('otpVerify').value.trim();
+            const resultDiv = document.getElementById('verifyResult');
+            
+            if (!email || !otp) {
+                resultDiv.innerHTML = '<div class="info error">Please enter both email and OTP</div>';
+                return;
+            }
+            
+            const storedCode = localStorage.getItem(`otp_${email}`);
+            const timestamp = localStorage.getItem(`otp_${email}_timestamp`);
+            
+            if (!storedCode) {
+                resultDiv.innerHTML = '<div class="info error">❌ No OTP found for this email</div>';
+                return;
+            }
+            
+            const codeAge = Date.now() - parseInt(timestamp);
+            const expired = codeAge > 5 * 60 * 1000;
+            
+            if (expired) {
+                resultDiv.innerHTML = '<div class="info error">❌ OTP has expired</div>';
+                return;
+            }
+            
+            const match = otp === storedCode;
+            const strictMatch = otp.trim() === storedCode.trim();
+            
+            resultDiv.innerHTML = `
+                <div class="info ${match ? 'success' : 'error'}">
+                    <strong>Entered OTP:</strong> "${otp}" (length: ${otp.length})
+                    <strong>Stored OTP:</strong> "${storedCode}" (length: ${storedCode.length})
+                    <strong>Exact Match:</strong> ${match ? '✅ YES' : '❌ NO'}
+                    <strong>Trimmed Match:</strong> ${strictMatch ? '✅ YES' : '❌ NO'}
+                    <strong>Entered bytes:</strong> [${Array.from(otp).map(c => c.charCodeAt(0)).join(', ')}]
+                    <strong>Stored bytes:</strong> [${Array.from(storedCode).map(c => c.charCodeAt(0)).join(', ')}]
+                </div>
+            `;
+        }
+        
+        function clearAll() {
+            const keys = Object.keys(localStorage);
+            const otpKeys = keys.filter(k => k.startsWith('otp_'));
+            
+            otpKeys.forEach(key => localStorage.removeItem(key));
+            
+            alert(`Cleared ${otpKeys.length} OTP-related items from localStorage`);
+        }
+    </script>
+</body>
+</html>

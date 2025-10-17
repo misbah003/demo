@@ -1,0 +1,99 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║           🧹 PROJECT CLEANUP & ORGANIZATION TOOL 🧹            ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+📋 WHAT THIS DOES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Organizes your cluttered project by moving unnecessary files to an
+archive folder, leaving only essential files in the root directory.
+
+✅ SAFE: Nothing is deleted, only moved to archive/
+✅ REVERSIBLE: You can restore any file from archive/
+✅ FAST: Takes less than 10 seconds
+
+
+🎯 QUICK START:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Run this command:
+
+    .\CLEANUP_PROJECT.ps1
+
+
+📊 WHAT GETS MOVED:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FROM ROOT                          TO ARCHIVE
+─────────────────────────────────────────────────────────────────
+
+📄 80+ Documentation Files    →    archive/old-docs/
+   (START_HERE_*.txt, README_*.md, FINAL_*.md, etc.)
+
+📄 30+ Script Files           →    archive/old-scripts/
+   (START_BACKEND.bat, CHECK_*.bat, TEST_*.bat, etc.)
+
+📄 10+ Test Files             →    archive/test-files/
+   (test_*.html, test_*.js, test_*.ps1, etc.)
+
+📁 3 Old Model Directories    →    archive/old-models/
+   (enhanced_models_*, enhanced_synthetic_data/)
+
+
+✨ WHAT STAYS IN ROOT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ README.md                    - Main documentation
+✅ START_ALL_SERVERS.ps1        - Start all services
+✅ START_ADVANCED_ML_API.bat    - Start ML API only
+✅ STOP_SERVERS.ps1             - Stop all services
+✅ docker-compose.yml           - Docker deployment
+✅ deploy.sh / deploy.bat       - Deployment scripts
+
+✅ docs/                        - Backend server
+✅ web/                         - Frontend application
+✅ ml/                          - ML API
+✅ scripts/                     - Utility scripts
+✅ models/                      - Trained ML models
+✅ data/                        - Data files
+
+
+📈 BEFORE vs AFTER:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BEFORE:  130+ files in root directory (cluttered!)
+AFTER:   10 essential files in root (clean!)
+
+
+🔄 HOW TO RESTORE FILES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you need an archived file:
+
+    Copy-Item "archive\old-docs\FILENAME.md" -Destination "."
+
+
+📚 MORE INFORMATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Read these files for detailed information:
+
+    📖 README.md                      - Main documentation
+    📖 PROJECT_ORGANIZATION_GUIDE.md  - Detailed cleanup guide
+
+
+⚡ READY TO CLEAN UP?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Run this command now:
+
+    .\CLEANUP_PROJECT.ps1
+
+Your project will be organized in less than 10 seconds!
+
+
+╔════════════════════════════════════════════════════════════════╗
+║  💡 TIP: Create a backup before running if you're cautious!   ║
+╚════════════════════════════════════════════════════════════════╝

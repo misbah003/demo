@@ -1,0 +1,259 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    👉 DO THIS NOW - 3 SIMPLE STEPS                           ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                            ┃
+┃  STEP 1: START THE SERVERS                                                 ┃
+┃  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ┃
+┃                                                                            ┃
+┃  Find this file in your project folder:                                    ┃
+┃                                                                            ┃
+┃     📄 START_BOTH_SERVERS.bat                                              ┃
+┃                                                                            ┃
+┃  Double-click it!                                                          ┃
+┃                                                                            ┃
+┃  What will happen:                                                         ┃
+┃  ✅ Two terminal windows will open (Backend + Frontend)                    ┃
+┃  ✅ Browser will open automatically to http://localhost:5173               ┃
+┃  ✅ Application will be ready to use                                       ┃
+┃                                                                            ┃
+┃  ⚠️  IMPORTANT: Keep both terminal windows open!                           ┃
+┃                                                                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                            ┃
+┃  STEP 2: DELETE OLD DOCUMENTS                                              ┃
+┃  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ┃
+┃                                                                            ┃
+┃  Go to Supabase:                                                           ┃
+┃                                                                            ┃
+┃     🌐 https://supabase.com/dashboard                                      ┃
+┃                                                                            ┃
+┃  1. Open your project                                                      ┃
+┃  2. Click "SQL Editor" in the left menu                                    ┃
+┃  3. Click "New Query"                                                      ┃
+┃  4. Paste this SQL:                                                        ┃
+┃                                                                            ┃
+┃     DELETE FROM processed_documents WHERE user_id IS NULL;                 ┃
+┃                                                                            ┃
+┃  5. Click "Run" button                                                     ┃
+┃                                                                            ┃
+┃  Why?                                                                      ┃
+┃  Old documents were processed with old code and won't work correctly.      ┃
+┃                                                                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                            ┃
+┃  STEP 3: RE-UPLOAD YOUR EXCEL FILES                                        ┃
+┃  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ┃
+┃                                                                            ┃
+┃  In the browser (http://localhost:5173):                                   ┃
+┃                                                                            ┃
+┃  1. Navigate to "Documents" page                                           ┃
+┃  2. Click "Upload Document" button                                         ┃
+┃  3. Upload these files:                                                    ┃
+┃                                                                            ┃
+┃     📄 vat-refund-report-2025-10-11.xlsx                                   ┃
+┃     📄 sample_invoice_3.xlsx                                               ┃
+┃                                                                            ┃
+┃  4. Wait for processing to complete                                        ┃
+┃                                                                            ┃
+┃  Expected results:                                                         ┃
+┃  ✅ Status: "Compliant" or "Basic Information Present"                     ┃
+┃  ✅ No "Missing Key Information" errors                                    ┃
+┃                                                                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    ✅ VERIFY EVERYTHING WORKS                                ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+  After completing the 3 steps above, check these:
+
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │  ✅ CHECK #1: Servers Running                                            │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │                                                                          │
+  │  Double-click: CHECK_SERVERS.bat                                         │
+  │                                                                          │
+  │  Should show:                                                            │
+  │  ✅ Backend: RUNNING on port 3001                                        │
+  │  ✅ Frontend: RUNNING on port 5173                                       │
+  │                                                                          │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │  ✅ CHECK #2: Documents Processed                                        │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │                                                                          │
+  │  Go to Documents page in the app                                         │
+  │                                                                          │
+  │  Should show:                                                            │
+  │  ✅ vat-refund-report-2025-10-11.xlsx → "Basic Information Present"      │
+  │  ✅ sample_invoice_3.xlsx → "Compliant"                                  │
+  │                                                                          │
+  │  Should NOT show:                                                        │
+  │  ❌ "Missing Key Information"                                            │
+  │                                                                          │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │  ✅ CHECK #3: VAT Forecast Working                                       │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │                                                                          │
+  │  Go to Dashboard page in the app                                         │
+  │                                                                          │
+  │  Should show:                                                            │
+  │  ✅ "Personalized predictions based on 2 document(s)"                    │
+  │  ✅ Chart with data points and forecast line                             │
+  │  ✅ No "No data available" message                                       │
+  │                                                                          │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    🚨 TROUBLESHOOTING                                        ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │  ❌ PROBLEM: Servers won't start                                         │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │                                                                          │
+  │  SOLUTION:                                                               │
+  │  1. Double-click: STOP_SERVERS.bat                                       │
+  │  2. Wait 5 seconds                                                       │
+  │  3. Double-click: START_BOTH_SERVERS.bat                                 │
+  │                                                                          │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │  ❌ PROBLEM: "Port already in use"                                       │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │                                                                          │
+  │  SOLUTION:                                                               │
+  │  The startup script will ask:                                            │
+  │  "Kill existing process and restart? (Y/N)"                              │
+  │                                                                          │
+  │  → Type Y and press Enter                                                │
+  │                                                                          │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │  ❌ PROBLEM: Documents still show "Missing Key Information"              │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │                                                                          │
+  │  CHECKLIST:                                                              │
+  │  □ Did you complete Step 2? (Delete old documents)                       │
+  │  □ Did you restart backend? (Step 1)                                     │
+  │  □ Did you re-upload files? (Step 3)                                     │
+  │                                                                          │
+  │  If all checked, try:                                                    │
+  │  1. Delete ALL documents in Supabase:                                    │
+  │     DELETE FROM processed_documents;                                     │
+  │  2. Re-upload files again                                                │
+  │                                                                          │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │  ❌ PROBLEM: VAT forecast shows no data                                  │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │                                                                          │
+  │  CHECKLIST:                                                              │
+  │  □ Are documents showing "Compliant" or "Basic Information Present"?     │
+  │  □ Are you logged in? (Check top-right corner)                           │
+  │  □ Did you wait a few seconds after upload?                              │
+  │                                                                          │
+  │  If all checked, try:                                                    │
+  │  1. Refresh the page (F5)                                                │
+  │  2. Log out and log back in                                              │
+  │  3. Check browser console (F12) for errors                               │
+  │                                                                          │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    📚 NEED MORE HELP?                                        ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+  Read these files for detailed help:
+
+
+  📄 🚀_START_HERE.md
+     → Main guide with complete instructions
+
+
+  📄 SERVER_MANAGEMENT_GUIDE.md
+     → Detailed server troubleshooting
+
+
+  📄 QUICK_EXCEL_FIX_GUIDE.md
+     → Excel processing guide
+
+
+  📄 WHICH_FILE_TO_USE.txt
+     → Quick decision guide
+
+
+  📄 📋_SCRIPTS_OVERVIEW.txt
+     → All scripts explained
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    🎯 QUICK SUMMARY                                          ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+  What was fixed:
+  ✅ Server startup scripts created
+  ✅ Excel processing enhanced
+  ✅ Entity extraction improved
+  ✅ VAT forecasting fixed
+  ✅ Comprehensive documentation
+
+
+  What you need to do:
+  1️⃣  Double-click: START_BOTH_SERVERS.bat
+  2️⃣  Delete old documents in Supabase
+  3️⃣  Re-upload Excel files
+
+
+  Expected results:
+  ✅ Servers running smoothly
+  ✅ Documents show "Compliant" status
+  ✅ VAT forecast displays data
+  ✅ Personalized predictions work
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    🚀 READY? START NOW!                                      ║
+║                                                                              ║
+║              Double-click: START_BOTH_SERVERS.bat                            ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝

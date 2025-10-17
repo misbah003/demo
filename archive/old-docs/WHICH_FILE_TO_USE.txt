@@ -1,0 +1,186 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    🤔 WHICH FILE SHOULD I USE?                               ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❓ I WANT TO START THE APPLICATION                                          │
+│                                                                              │
+│  👉 USE THIS: START_BOTH_SERVERS.bat                                         │
+│                                                                              │
+│     Just double-click it!                                                    │
+│     ✅ Starts backend                                                        │
+│     ✅ Starts frontend                                                       │
+│     ✅ Opens browser automatically                                           │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❓ I WANT TO STOP THE APPLICATION                                           │
+│                                                                              │
+│  👉 USE THIS: STOP_SERVERS.bat                                               │
+│                                                                              │
+│     Just double-click it!                                                    │
+│     ✅ Stops backend                                                         │
+│     ✅ Stops frontend                                                        │
+│     ✅ Frees up ports                                                        │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❓ I WANT TO CHECK IF SERVERS ARE RUNNING                                   │
+│                                                                              │
+│  👉 USE THIS: CHECK_SERVERS.bat                                              │
+│                                                                              │
+│     Just double-click it!                                                    │
+│     ✅ Shows backend status                                                  │
+│     ✅ Shows frontend status                                                 │
+│     ✅ Shows process IDs                                                     │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❓ I WANT TO LEARN HOW EVERYTHING WORKS                                     │
+│                                                                              │
+│  👉 READ THIS: 🚀_START_HERE.md                                              │
+│                                                                              │
+│     Open with any text editor or VS Code                                     │
+│     ✅ Quick start guide                                                     │
+│     ✅ Testing checklist                                                     │
+│     ✅ Expected results                                                      │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❓ I HAVE PROBLEMS WITH SERVERS                                             │
+│                                                                              │
+│  👉 READ THIS: SERVER_MANAGEMENT_GUIDE.md                                    │
+│                                                                              │
+│     Open with any text editor or VS Code                                     │
+│     ✅ Detailed troubleshooting                                              │
+│     ✅ Emergency commands                                                    │
+│     ✅ Architecture explanation                                              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❓ I WANT TO UNDERSTAND THE EXCEL FIX                                       │
+│                                                                              │
+│  👉 READ THIS: QUICK_EXCEL_FIX_GUIDE.md                                      │
+│                                                                              │
+│     Open with any text editor or VS Code                                     │
+│     ✅ Simple 3-step guide                                                   │
+│     ✅ Visual diagrams                                                       │
+│     ✅ What was fixed                                                        │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❓ I WANT TECHNICAL DETAILS ABOUT THE FIX                                   │
+│                                                                              │
+│  👉 READ THIS: EXCEL_PROCESSING_FIX.md                                       │
+│                                                                              │
+│     Open with any text editor or VS Code                                     │
+│     ✅ Root cause analysis                                                   │
+│     ✅ Code changes                                                          │
+│     ✅ Test results                                                          │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❓ I WANT TO SEE ALL AVAILABLE SCRIPTS                                      │
+│                                                                              │
+│  👉 READ THIS: 📋_SCRIPTS_OVERVIEW.txt                                       │
+│                                                                              │
+│     Open with any text editor                                                │
+│     ✅ Complete list of scripts                                              │
+│     ✅ What each script does                                                 │
+│     ✅ When to use each one                                                  │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                          🎯 MOST COMMON TASKS                                ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │  TASK #1: Start working on the project                                 │
+  ├────────────────────────────────────────────────────────────────────────┤
+  │  1. Double-click: START_BOTH_SERVERS.bat                               │
+  │  2. Wait for browser to open                                           │
+  │  3. Start coding!                                                      │
+  └────────────────────────────────────────────────────────────────────────┘
+
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │  TASK #2: Stop working for the day                                     │
+  ├────────────────────────────────────────────────────────────────────────┤
+  │  1. Double-click: STOP_SERVERS.bat                                     │
+  │  2. Done!                                                              │
+  └────────────────────────────────────────────────────────────────────────┘
+
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │  TASK #3: Something is not working                                     │
+  ├────────────────────────────────────────────────────────────────────────┤
+  │  1. Double-click: CHECK_SERVERS.bat                                    │
+  │  2. If servers not running: START_BOTH_SERVERS.bat                     │
+  │  3. If still issues: Read SERVER_MANAGEMENT_GUIDE.md                   │
+  └────────────────────────────────────────────────────────────────────────┘
+
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │  TASK #4: Test the Excel fix                                           │
+  ├────────────────────────────────────────────────────────────────────────┤
+  │  1. Double-click: START_BOTH_SERVERS.bat                               │
+  │  2. Read: QUICK_EXCEL_FIX_GUIDE.md                                     │
+  │  3. Follow the 3-step testing process                                  │
+  └────────────────────────────────────────────────────────────────────────┘
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                          ⚡ QUICK REFERENCE                                  ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+  What You Want                    File to Use
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Start servers                    START_BOTH_SERVERS.bat
+  Stop servers                     STOP_SERVERS.bat
+  Check status                     CHECK_SERVERS.bat
+  Main guide                       🚀_START_HERE.md
+  Server help                      SERVER_MANAGEMENT_GUIDE.md
+  Excel fix guide                  QUICK_EXCEL_FIX_GUIDE.md
+  All scripts list                 📋_SCRIPTS_OVERVIEW.txt
+  This file                        WHICH_FILE_TO_USE.txt
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    🎉 READY TO START?                                        ║
+║                                                                              ║
+║              Double-click: START_BOTH_SERVERS.bat                            ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝

@@ -1,0 +1,431 @@
+2025-10-08 14:04:53,856 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.138.15.159:5001
+2025-10-08 14:04:53,856 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 14:06:59,547 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.138.15.159:5001
+2025-10-08 14:06:59,547 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 14:18:43,313 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.138.15.159:5001
+2025-10-08 14:18:43,313 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 14:19:40,199 - INFO - 127.0.0.1 - - [08/Oct/2025 14:19:40] "GET / HTTP/1.1" 200 -
+2025-10-08 14:21:01,270 - INFO - 127.0.0.1 - - [08/Oct/2025 14:21:01] "GET /drift-status HTTP/1.1" 200 -
+2025-10-08 14:21:27,751 - INFO - 127.0.0.1 - - [08/Oct/2025 14:21:27] "GET /economic-indicators HTTP/1.1" 200 -
+2025-10-08 14:22:38,265 - INFO - 127.0.0.1 - - [08/Oct/2025 14:22:38] "GET /time-series-forecast HTTP/1.1" 200 -
+2025-10-08 14:23:22,177 - INFO - Prediction successful - Business: Retail, Turnover: 5000000, Refund: \u20b933428.71, Probability: 100.0%, Time: 0.058s
+2025-10-08 14:23:22,177 - INFO - 127.0.0.1 - - [08/Oct/2025 14:23:22] "POST /predict HTTP/1.1" 200 -
+2025-10-08 14:23:41,737 - INFO - 127.0.0.1 - - [08/Oct/2025 14:23:41] "GET /monitoring HTTP/1.1" 200 -
+2025-10-08 14:26:38,545 - INFO - Prediction successful - Business: Manufacturing, Turnover: 10000000, Refund: \u20b919921.67, Probability: 100.0%, Time: 0.015s
+2025-10-08 14:26:38,545 - INFO - 127.0.0.1 - - [08/Oct/2025 14:26:38] "POST /predict HTTP/1.1" 200 -
+2025-10-08 15:16:40,137 - INFO - 127.0.0.1 - - [08/Oct/2025 15:16:40] "GET / HTTP/1.1" 200 -
+2025-10-08 15:19:45,552 - INFO - Prediction successful - Business: Retail, Turnover: 5000000, Refund: \u20b933428.71, Probability: 100.0%, Time: 0.040s
+2025-10-08 15:19:45,552 - INFO - 127.0.0.1 - - [08/Oct/2025 15:19:45] "POST /predict HTTP/1.1" 200 -
+2025-10-08 15:20:02,308 - INFO - Prediction successful - Business: Manufacturing, Turnover: 8000000, Refund: \u20b919367.39, Probability: 96.8%, Time: 0.005s
+2025-10-08 15:20:02,308 - INFO - 127.0.0.1 - - [08/Oct/2025 15:20:02] "POST /predict HTTP/1.1" 200 -
+2025-10-08 15:20:24,430 - ERROR - Prediction failed - Exception: y contains previously unseen labels: 'Medicines', Time: 0.002s
+2025-10-08 15:20:24,431 - INFO - 127.0.0.1 - - [08/Oct/2025 15:20:24] "[35m[1mPOST /predict HTTP/1.1[0m" 500 -
+2025-10-08 15:21:34,211 - INFO - Prediction successful - Business: Pharma, Turnover: 3000000, Refund: \u20b912338.21, Probability: 100.0%, Time: 0.018s
+2025-10-08 15:21:34,213 - INFO - 127.0.0.1 - - [08/Oct/2025 15:21:34] "POST /predict HTTP/1.1" 200 -
+2025-10-08 15:21:52,260 - INFO - 127.0.0.1 - - [08/Oct/2025 15:21:52] "GET /monitoring HTTP/1.1" 200 -
+2025-10-08 15:22:08,757 - INFO - 127.0.0.1 - - [08/Oct/2025 15:22:08] "GET /drift-status HTTP/1.1" 200 -
+2025-10-08 15:22:27,591 - INFO - Prediction successful - Business: Retail, Turnover: 4000000, Refund: \u20b940431.54, Probability: 100.0%, Time: 0.016s
+2025-10-08 15:22:27,591 - INFO - 127.0.0.1 - - [08/Oct/2025 15:22:27] "[35m[1mPOST /batch-predict HTTP/1.1[0m" 500 -
+2025-10-08 15:24:09,704 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 15:24:09,705 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 15:25:19,455 - INFO - Prediction successful - Business: Retail, Turnover: 4000000, Refund: \u20b940431.54, Probability: 100.0%, Time: 0.019s
+2025-10-08 15:25:19,457 - INFO - 127.0.0.1 - - [08/Oct/2025 15:25:19] "[35m[1mPOST /batch-predict HTTP/1.1[0m" 500 -
+2025-10-08 15:43:24,965 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 15:43:24,965 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 15:44:28,939 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.017s
+2025-10-08 15:44:28,941 - INFO - 127.0.0.1 - - [08/Oct/2025 15:44:28] "[35m[1mPOST /batch-predict HTTP/1.1[0m" 500 -
+2025-10-08 15:44:59,216 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.015s
+2025-10-08 15:44:59,217 - INFO - 127.0.0.1 - - [08/Oct/2025 15:44:59] "POST /predict HTTP/1.1" 200 -
+2025-10-08 15:45:24,322 - INFO - 127.0.0.1 - - [08/Oct/2025 15:45:24] "GET /health HTTP/1.1" 200 -
+2025-10-08 15:46:19,640 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 15:46:19,640 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 16:02:58,731 - INFO - 127.0.0.1 - - [08/Oct/2025 16:02:58] "POST /batch-predict HTTP/1.1" 200 -
+2025-10-08 16:03:18,779 - INFO - 127.0.0.1 - - [08/Oct/2025 16:03:18] "POST /batch-predict HTTP/1.1" 200 -
+2025-10-08 16:03:39,526 - INFO - 127.0.0.1 - - [08/Oct/2025 16:03:39] "GET /monitoring HTTP/1.1" 200 -
+2025-10-08 16:04:00,952 - INFO - 127.0.0.1 - - [08/Oct/2025 16:04:00] "GET /health HTTP/1.1" 200 -
+2025-10-08 16:04:23,638 - INFO - 127.0.0.1 - - [08/Oct/2025 16:04:23] "GET /drift-status HTTP/1.1" 200 -
+2025-10-08 16:04:54,485 - INFO - 127.0.0.1 - - [08/Oct/2025 16:04:54] "GET /economic-indicators HTTP/1.1" 200 -
+2025-10-08 16:05:43,600 - INFO - 127.0.0.1 - - [08/Oct/2025 16:05:43] "GET /time-series-forecast HTTP/1.1" 200 -
+2025-10-08 16:06:16,518 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.019s
+2025-10-08 16:06:16,520 - INFO - 127.0.0.1 - - [08/Oct/2025 16:06:16] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:06:16,611 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:06:16,611 - INFO - 127.0.0.1 - - [08/Oct/2025 16:06:16] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:06:16,635 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.005s
+2025-10-08 16:06:16,635 - INFO - 127.0.0.1 - - [08/Oct/2025 16:06:16] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:06:16,657 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:06:16,657 - INFO - 127.0.0.1 - - [08/Oct/2025 16:06:16] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:06:16,681 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:06:16,682 - INFO - 127.0.0.1 - - [08/Oct/2025 16:06:16] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:06:50,864 - INFO - 127.0.0.1 - - [08/Oct/2025 16:06:50] "GET /health HTTP/1.1" 200 -
+2025-10-08 16:07:11,064 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.000s
+2025-10-08 16:07:11,064 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,158 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,159 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,183 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.009s
+2025-10-08 16:07:11,183 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,204 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,204 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,224 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:11,224 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,258 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,258 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,282 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:11,283 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,304 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,304 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,326 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,326 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,348 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.008s
+2025-10-08 16:07:11,350 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,372 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,372 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,393 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,393 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,418 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:11,418 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,450 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:11,450 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,471 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:11,471 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,496 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,496 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,520 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.005s
+2025-10-08 16:07:11,520 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,542 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:11,542 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,569 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.009s
+2025-10-08 16:07:11,569 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,590 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:11,590 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,615 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.008s
+2025-10-08 16:07:11,616 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,637 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:11,637 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,660 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,660 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,684 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:11,685 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,704 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:11,704 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,729 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.011s
+2025-10-08 16:07:11,732 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,754 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:11,754 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,774 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:11,774 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,800 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.009s
+2025-10-08 16:07:11,801 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,821 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:11,821 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,845 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:11,845 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,869 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:11,869 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,890 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:11,890 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,917 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.010s
+2025-10-08 16:07:11,917 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,938 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:11,938 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,962 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.008s
+2025-10-08 16:07:11,965 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:11,987 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.005s
+2025-10-08 16:07:11,987 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:11] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,007 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:12,007 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,034 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.010s
+2025-10-08 16:07:12,035 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,060 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:12,060 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,084 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.009s
+2025-10-08 16:07:12,084 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,104 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:12,104 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,130 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:12,132 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,154 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:12,154 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,178 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:12,178 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,202 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.009s
+2025-10-08 16:07:12,203 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,225 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:12,225 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,248 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:12,250 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,271 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:12,271 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,295 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.008s
+2025-10-08 16:07:12,295 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,319 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:12,319 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,340 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:12,340 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,365 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.008s
+2025-10-08 16:07:12,366 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,388 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:12,388 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,411 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:12,411 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,436 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:12,436 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,458 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:12,459 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,482 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:12,483 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,506 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:12,506 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,527 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:12,527 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,552 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.008s
+2025-10-08 16:07:12,552 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,571 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.001s
+2025-10-08 16:07:12,571 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,598 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.005s
+2025-10-08 16:07:12,599 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,620 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:12,620 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,643 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:12,643 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,669 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.008s
+2025-10-08 16:07:12,669 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,690 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:12,690 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,715 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:12,716 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,737 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:12,737 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,767 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:12,767 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,787 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.001s
+2025-10-08 16:07:12,787 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,815 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.005s
+2025-10-08 16:07:12,824 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,846 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:12,847 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,870 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.005s
+2025-10-08 16:07:12,870 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,889 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:12,889 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,919 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.008s
+2025-10-08 16:07:12,919 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,942 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.005s
+2025-10-08 16:07:12,942 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,966 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:12,967 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:12,987 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:12,987 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:12] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,011 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.005s
+2025-10-08 16:07:13,011 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,035 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:13,035 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,056 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:13,056 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,084 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.009s
+2025-10-08 16:07:13,084 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,107 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:13,107 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,133 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:13,133 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,155 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:13,155 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,185 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.014s
+2025-10-08 16:07:13,185 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,206 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.002s
+2025-10-08 16:07:13,206 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,232 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.009s
+2025-10-08 16:07:13,233 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,257 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:13,257 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,282 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.007s
+2025-10-08 16:07:13,283 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,306 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.003s
+2025-10-08 16:07:13,306 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,331 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.006s
+2025-10-08 16:07:13,332 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,402 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.051s
+2025-10-08 16:07:13,402 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,439 - INFO - Prediction successful - Business: Retail, Turnover: 1000000, Refund: \u20b94195.06, Probability: 59.9%, Time: 0.004s
+2025-10-08 16:07:13,439 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 16:07:13,457 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,522 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,549 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,551 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,551 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,551 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,564 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,564 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,564 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:07:13,564 - INFO - 127.0.0.1 - - [08/Oct/2025 16:07:13] "[31m[1mPOST /predict HTTP/1.1[0m" 429 -
+2025-10-08 16:08:09,578 - INFO - 127.0.0.1 - - [08/Oct/2025 16:08:09] "GET /health HTTP/1.1" 200 -
+2025-10-08 16:09:11,912 - INFO - 127.0.0.1 - - [08/Oct/2025 16:09:11] "GET /monitoring HTTP/1.1" 200 -
+2025-10-08 16:33:15,100 - INFO - 127.0.0.1 - - [08/Oct/2025 16:33:15] "GET / HTTP/1.1" 200 -
+2025-10-08 16:33:15,237 - INFO - 127.0.0.1 - - [08/Oct/2025 16:33:15] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-10-08 20:06:33,250 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 20:06:33,250 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 20:10:07,121 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 20:10:07,122 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 21:11:21,262 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 21:11:21,262 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 21:55:53,916 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 21:55:53,916 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 22:01:39,252 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 22:01:39,253 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 22:26:44,382 - ERROR - Prediction failed - Exception: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand., Time: 0.000s
+2025-10-08 22:26:44,382 - INFO - 127.0.0.1 - - [08/Oct/2025 22:26:44] "[35m[1mPOST /predict HTTP/1.1[0m" 500 -
+2025-10-08 22:28:06,827 - INFO - Prediction successful - Business: Manufacturing, Turnover: 500000, Refund: \u20b919482.07, Probability: 0.0%, Time: 0.034s
+2025-10-08 22:28:06,829 - INFO - 127.0.0.1 - - [08/Oct/2025 22:28:06] "POST /predict HTTP/1.1" 200 -
+2025-10-08 22:30:44,611 - INFO - 127.0.0.1 - - [08/Oct/2025 22:30:44] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 22:30:44,881 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.016s
+2025-10-08 22:30:44,881 - INFO - 127.0.0.1 - - [08/Oct/2025 22:30:44] "POST /predict HTTP/1.1" 200 -
+2025-10-08 22:50:46,153 - INFO - 127.0.0.1 - - [08/Oct/2025 22:50:46] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 22:50:54,792 - INFO - 127.0.0.1 - - [08/Oct/2025 22:50:54] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 22:51:02,095 - INFO - 127.0.0.1 - - [08/Oct/2025 22:51:02] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:02:20,265 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 23:02:20,265 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 23:03:08,845 - ERROR - Forecast generation failed: name 'timedelta' is not defined
+2025-10-08 23:03:08,847 - INFO - 127.0.0.1 - - [08/Oct/2025 23:03:08] "[35m[1mGET /time-series-forecast?start_month=2025-01&num_months=8 HTTP/1.1[0m" 500 -
+2025-10-08 23:21:59,332 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.25.99.159:5001
+2025-10-08 23:21:59,332 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-08 23:23:39,655 - INFO - 127.0.0.1 - - [08/Oct/2025 23:23:39] "GET /time-series-forecast?start_month=2025-01&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:27:50,065 - INFO - 127.0.0.1 - - [08/Oct/2025 23:27:50] "GET /time-series-forecast?start_month=2025-01&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:28:06,172 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:06] "GET /time-series-forecast?start_month=2025-01&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:28:09,638 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:09] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:28:09,917 - INFO - Prediction successful - Business: Manufacturing, Turnover: 500000, Refund: \u20b919482.07, Probability: 0.0%, Time: 0.022s
+2025-10-08 23:28:09,917 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:09] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:28:12,593 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:12] "GET /model-info HTTP/1.1" 200 -
+2025-10-08 23:28:16,183 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:16] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:28:16,471 - INFO - Prediction successful - Business: Manufacturing, Turnover: 500000, Refund: \u20b919482.07, Probability: 0.0%, Time: 0.022s
+2025-10-08 23:28:16,473 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:16] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:28:20,265 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:20] "GET /time-series-forecast?start_month=2025-01&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:28:23,736 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:23] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:28:24,014 - INFO - Prediction successful - Business: Manufacturing, Turnover: 500000, Refund: \u20b919482.07, Probability: 0.0%, Time: 0.026s
+2025-10-08 23:28:24,019 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:24] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:28:29,634 - INFO - 127.0.0.1 - - [08/Oct/2025 23:28:29] "GET /model-info HTTP/1.1" 200 -
+2025-10-08 23:31:07,386 - INFO - 127.0.0.1 - - [08/Oct/2025 23:31:07] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:31:10,205 - INFO - 127.0.0.1 - - [08/Oct/2025 23:31:10] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:31:14,961 - INFO - 127.0.0.1 - - [08/Oct/2025 23:31:14] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:31:33,439 - INFO - 127.0.0.1 - - [08/Oct/2025 23:31:33] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:31:33,773 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.013s
+2025-10-08 23:31:33,773 - INFO - 127.0.0.1 - - [08/Oct/2025 23:31:33] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:32:18,651 - INFO - 127.0.0.1 - - [08/Oct/2025 23:32:18] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:32:22,962 - INFO - 127.0.0.1 - - [08/Oct/2025 23:32:22] "GET /time-series-forecast?start_month=2025-08&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:32:28,034 - INFO - 127.0.0.1 - - [08/Oct/2025 23:32:28] "GET /time-series-forecast?start_month=2025-09&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:35:38,023 - INFO - 127.0.0.1 - - [08/Oct/2025 23:35:38] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:35:38,304 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.033s
+2025-10-08 23:35:38,307 - INFO - 127.0.0.1 - - [08/Oct/2025 23:35:38] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:35:45,066 - INFO - 127.0.0.1 - - [08/Oct/2025 23:35:45] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:35:45,393 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.016s
+2025-10-08 23:35:45,399 - INFO - 127.0.0.1 - - [08/Oct/2025 23:35:45] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:35:54,086 - INFO - 127.0.0.1 - - [08/Oct/2025 23:35:54] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:35:54,424 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.021s
+2025-10-08 23:35:54,424 - INFO - 127.0.0.1 - - [08/Oct/2025 23:35:54] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:35:58,110 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994650.04, Probability: 73.4%, Time: 0.013s
+2025-10-08 23:35:58,110 - INFO - 127.0.0.1 - - [08/Oct/2025 23:35:58] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:36:02,202 - INFO - 127.0.0.1 - - [08/Oct/2025 23:36:02] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:36:02,489 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.028s
+2025-10-08 23:36:02,489 - INFO - 127.0.0.1 - - [08/Oct/2025 23:36:02] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:36:09,610 - INFO - 127.0.0.1 - - [08/Oct/2025 23:36:09] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:36:09,943 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.024s
+2025-10-08 23:36:09,944 - INFO - 127.0.0.1 - - [08/Oct/2025 23:36:09] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:36:13,286 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.015s
+2025-10-08 23:36:13,289 - INFO - 127.0.0.1 - - [08/Oct/2025 23:36:13] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:36:14,155 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.016s
+2025-10-08 23:36:14,155 - INFO - 127.0.0.1 - - [08/Oct/2025 23:36:14] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:36:21,619 - INFO - 127.0.0.1 - - [08/Oct/2025 23:36:21] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-08 23:36:21,957 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.028s
+2025-10-08 23:36:21,959 - INFO - 127.0.0.1 - - [08/Oct/2025 23:36:21] "POST /predict HTTP/1.1" 200 -
+2025-10-08 23:37:50,272 - INFO - 127.0.0.1 - - [08/Oct/2025 23:37:50] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:38:09,779 - INFO - 127.0.0.1 - - [08/Oct/2025 23:38:09] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:38:11,837 - INFO - 127.0.0.1 - - [08/Oct/2025 23:38:11] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:38:13,215 - INFO - 127.0.0.1 - - [08/Oct/2025 23:38:13] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:38:15,658 - INFO - 127.0.0.1 - - [08/Oct/2025 23:38:15] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-08 23:38:17,376 - INFO - 127.0.0.1 - - [08/Oct/2025 23:38:17] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 00:23:12,083 - INFO - 127.0.0.1 - - [09/Oct/2025 00:23:12] "GET /health HTTP/1.1" 200 -
+2025-10-09 00:23:12,147 - INFO - 127.0.0.1 - - [09/Oct/2025 00:23:12] "GET /time-series-forecast?start_month=2025-01&num_months=3 HTTP/1.1" 200 -
+2025-10-09 00:23:13,340 - INFO - 127.0.0.1 - - [09/Oct/2025 00:23:13] "GET /time-series-forecast?start_month=2025-01&num_months=3 HTTP/1.1" 200 -
+2025-10-09 00:23:13,416 - INFO - 127.0.0.1 - - [09/Oct/2025 00:23:13] "GET /model-info HTTP/1.1" 200 -
+2025-10-09 00:23:51,714 - INFO - 127.0.0.1 - - [09/Oct/2025 00:23:51] "GET /time-series-forecast?start_month=2025-01&num_months=3 HTTP/1.1" 200 -
+2025-10-09 00:25:02,808 - INFO - 127.0.0.1 - - [09/Oct/2025 00:25:02] "GET /time-series-forecast?start_month=2025-01&num_months=3 HTTP/1.1" 200 -
+2025-10-09 00:25:03,392 - INFO - 127.0.0.1 - - [09/Oct/2025 00:25:03] "GET /time-series-forecast?start_month=2025-01&num_months=3 HTTP/1.1" 200 -
+2025-10-09 00:28:20,785 - INFO - 127.0.0.1 - - [09/Oct/2025 00:28:20] "GET /health HTTP/1.1" 200 -
+2025-10-09 23:22:20,503 - INFO - 127.0.0.1 - - [09/Oct/2025 23:22:20] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:22:39,016 - INFO - 127.0.0.1 - - [09/Oct/2025 23:22:39] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:23:03,577 - INFO - 127.0.0.1 - - [09/Oct/2025 23:23:03] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-09 23:23:03,922 - INFO - Prediction successful - Business: Trading, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.090s
+2025-10-09 23:23:03,924 - INFO - 127.0.0.1 - - [09/Oct/2025 23:23:03] "POST /predict HTTP/1.1" 200 -
+2025-10-09 23:23:21,699 - INFO - 127.0.0.1 - - [09/Oct/2025 23:23:21] "GET /time-series-forecast?start_month=2025-01&num_months=3 HTTP/1.1" 200 -
+2025-10-09 23:23:21,800 - INFO - 127.0.0.1 - - [09/Oct/2025 23:23:21] "GET /time-series-forecast?start_month=2025-03&num_months=3 HTTP/1.1" 200 -
+2025-10-09 23:23:21,817 - INFO - 127.0.0.1 - - [09/Oct/2025 23:23:21] "GET /time-series-forecast?start_month=2025-06&num_months=3 HTTP/1.1" 200 -
+2025-10-09 23:23:21,833 - INFO - 127.0.0.1 - - [09/Oct/2025 23:23:21] "GET /time-series-forecast?start_month=2025-12&num_months=3 HTTP/1.1" 200 -
+2025-10-09 23:23:21,874 - INFO - 127.0.0.1 - - [09/Oct/2025 23:23:21] "GET /time-series-forecast?start_month=2025-01&num_months=3 HTTP/1.1" 200 -
+2025-10-09 23:27:03,745 - INFO - 127.0.0.1 - - [09/Oct/2025 23:27:03] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:27:25,911 - INFO - 127.0.0.1 - - [09/Oct/2025 23:27:25] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:28:00,050 - INFO - 127.0.0.1 - - [09/Oct/2025 23:28:00] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:31:47,824 - INFO - 127.0.0.1 - - [09/Oct/2025 23:31:47] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:31:52,450 - INFO - 127.0.0.1 - - [09/Oct/2025 23:31:52] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:31:55,217 - INFO - 127.0.0.1 - - [09/Oct/2025 23:31:55] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:31:57,095 - INFO - 127.0.0.1 - - [09/Oct/2025 23:31:57] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:31:59,413 - INFO - 127.0.0.1 - - [09/Oct/2025 23:31:59] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:44:05,697 - INFO - 127.0.0.1 - - [09/Oct/2025 23:44:05] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-09 23:44:43,631 - INFO - 127.0.0.1 - - [09/Oct/2025 23:44:43] "GET /time-series-forecast?start_month=2025-10&num_months=8 HTTP/1.1" 200 -
+2025-10-10 00:03:34,249 - INFO - 127.0.0.1 - - [10/Oct/2025 00:03:34] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-10 00:03:34,542 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994650.04, Probability: 73.4%, Time: 0.041s
+2025-10-10 00:03:34,542 - INFO - 127.0.0.1 - - [10/Oct/2025 00:03:34] "POST /predict HTTP/1.1" 200 -
+2025-10-10 00:08:16,835 - INFO - 127.0.0.1 - - [10/Oct/2025 00:08:16] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-10 00:08:17,106 - INFO - Prediction successful - Business: Trading, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.016s
+2025-10-10 00:08:17,122 - INFO - 127.0.0.1 - - [10/Oct/2025 00:08:17] "POST /predict HTTP/1.1" 200 -
+2025-10-10 00:22:44,052 - INFO - 127.0.0.1 - - [10/Oct/2025 00:22:44] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-10 00:22:44,336 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.018s
+2025-10-10 00:22:44,336 - INFO - 127.0.0.1 - - [10/Oct/2025 00:22:44] "POST /predict HTTP/1.1" 200 -
+2025-10-10 00:52:02,790 - INFO - 127.0.0.1 - - [10/Oct/2025 00:52:02] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-10 00:52:03,060 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.032s
+2025-10-10 00:52:03,060 - INFO - 127.0.0.1 - - [10/Oct/2025 00:52:03] "POST /predict HTTP/1.1" 200 -
+2025-10-10 01:22:30,421 - INFO - 127.0.0.1 - - [10/Oct/2025 01:22:30] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-10 01:22:30,723 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.076s
+2025-10-10 01:22:30,723 - INFO - 127.0.0.1 - - [10/Oct/2025 01:22:30] "POST /predict HTTP/1.1" 200 -
+2025-10-11 14:14:09,708 - INFO - 127.0.0.1 - - [11/Oct/2025 14:14:09] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-11 14:14:09,931 - INFO - Prediction successful - Business: Services, Turnover: 700000, Refund: \u20b994612.20, Probability: 73.3%, Time: 0.207s
+2025-10-11 14:14:09,931 - INFO - 127.0.0.1 - - [11/Oct/2025 14:14:09] "POST /predict HTTP/1.1" 200 -
+2025-10-12 18:46:20,252 - INFO - 127.0.0.1 - - [12/Oct/2025 18:46:20] "OPTIONS /predict HTTP/1.1" 200 -
+2025-10-12 18:46:20,577 - INFO - Prediction successful - Business: Manufacturing, Turnover: 700000, Refund: \u20b994612.20, Probability: 15.2%, Time: 0.203s
+2025-10-12 18:46:20,581 - INFO - 127.0.0.1 - - [12/Oct/2025 18:46:20] "POST /predict HTTP/1.1" 200 -
