@@ -1,0 +1,9 @@
+{
+  "model_type": "traditional",
+  "training_date": "2025-10-12 22:17:03",
+  "label_encoder": {
+    "negative": 0,
+    "neutral": 1,
+    "positive": 2
+  }
+}

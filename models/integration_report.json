@@ -1,0 +1,19 @@
+{
+  "integration_date": "2025-10-12 19:36:23",
+  "models_integrated": [
+    "time_series",
+    "anomaly_detection",
+    "vat_prediction",
+    "optimized_models"
+  ],
+  "models_available": 4,
+  "total_models": 6,
+  "status": {
+    "document_classifier": "missing",
+    "sentiment_analysis": "missing",
+    "time_series": "ready",
+    "anomaly_detection": "ready",
+    "vat_prediction": "ready",
+    "optimized_models": "ready"
+  }
+}

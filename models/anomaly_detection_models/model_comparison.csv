@@ -1,0 +1,4 @@
+model,accuracy,precision,recall,f1_score,roc_auc,pr_auc,confusion_matrix,tp,tn,fp,fn
+Random Forest,1.0,1.0,1.0,1.0,1.0,1.0,"[[3, 0], [0, 7]]",7,3,0,0
+Logistic Regression,1.0,1.0,1.0,1.0,1.0,1.0,"[[3, 0], [0, 7]]",7,3,0,0
+XGBoost,0.9,1.0,0.8571428571428571,0.9230769230769231,1.0,1.0,"[[3, 0], [1, 6]]",6,3,0,1

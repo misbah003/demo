@@ -1,0 +1,13 @@
+Feature,Importance
+Annual_Turnover,0.20099781
+VAT_Amount,0.18634357
+Amount_to_Turnover_Ratio,0.1514687
+Amount,0.12624305
+Region_Encoded,0.08734326
+Filing_Status_Encoded,0.083715074
+Category_Encoded,0.05605872
+Risk_Score,0.05265071
+Business_Type_Encoded,0.039143264
+VAT_Rate_Numeric,0.016035842
+Compliance_Flag_Encoded,0.0
+VAT_to_Amount_Ratio,0.0

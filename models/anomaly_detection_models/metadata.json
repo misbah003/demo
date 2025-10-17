@@ -1,0 +1,24 @@
+{
+    "training_date": "2025-10-07 23:01:13",
+    "total_samples": 50,
+    "train_samples": 40,
+    "test_samples": 10,
+    "anomaly_rate": 74.0,
+    "features": [
+        "Amount",
+        "VAT_Rate_Numeric",
+        "VAT_Amount",
+        "Annual_Turnover",
+        "Risk_Score",
+        "Business_Type_Encoded",
+        "Category_Encoded",
+        "Filing_Status_Encoded",
+        "Region_Encoded",
+        "Compliance_Flag_Encoded",
+        "Amount_to_Turnover"
+    ],
+    "best_model": "Random Forest",
+    "best_f1_score": 1.0,
+    "best_precision": 1.0,
+    "best_recall": 1.0
+}

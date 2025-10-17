@@ -1,0 +1,9 @@
+{
+    "training_date": "2025-10-07 22:59:11",
+    "train_months": 4,
+    "test_months": 2,
+    "best_model": "ARIMA",
+    "best_rmse": 68072.87019630994,
+    "best_mape": 24.76829157059723,
+    "date_range": "2023-01-01 00:00:00 to 2023-06-01 00:00:00"
+}

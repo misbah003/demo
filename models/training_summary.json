@@ -1,0 +1,28 @@
+{
+  "training_date": "2025-10-12 22:17:15",
+  "results": {
+    "document_classification": {
+      "status": "failed",
+      "accuracy": null,
+      "error": "'AdvancedDocumentClassifier' object has no attribute 'plot_training_history'"
+    },
+    "sentiment_analysis": {
+      "status": "success",
+      "accuracy": null
+    },
+    "time_series": {
+      "status": "failed",
+      "rmse": null,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\HomeLaptop\\Downloads\\navi-tax-35-main\\ml\\time_series_forecasting_IMPROVED.py\", line 39, in <module>\n    monthly_summary = pd.read_excel(excel_file, sheet_name=\"Monthly_Filing_Summary\")\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\HomeLaptop\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\io\\excel\\_base.py\", line 495, in read_excel\n    io = ExcelFile(\n         ^^^^^^^^^^\n  File \"C:\\Users\\HomeLaptop\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\io\\excel\\_base.py\", line 1550, in __init__\n    ext = inspect_excel_format(\n          ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\HomeLaptop\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\io\\excel\\_base.py\", line 1402, in inspect_excel_format\n    with get_handle(\n         ^^^^^^^^^^^\n  File \"C:\\Users\\HomeLaptop\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\io\\common.py\", line 882, in get_handle\n    handle = open(handle, ioargs.mode)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'AI_Tax_Intelligence_Expanded.xlsx'\n"
+    },
+    "anomaly_detection": {
+      "status": "failed",
+      "f1_score": null,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\HomeLaptop\\Downloads\\navi-tax-35-main\\ml\\anomaly_detection_classification_IMPROVED.py\", line 39, in <module>\n    transaction_data = pd.read_excel(excel_file, sheet_name=\"Transaction_Data\")\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\HomeLaptop\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\io\\excel\\_base.py\", line 495, in read_excel\n    io = ExcelFile(\n         ^^^^^^^^^^\n  File \"C:\\Users\\HomeLaptop\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\io\\excel\\_base.py\", line 1550, in __init__\n    ext = inspect_excel_format(\n          ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\HomeLaptop\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\io\\excel\\_base.py\", line 1402, in inspect_excel_format\n    with get_handle(\n         ^^^^^^^^^^^\n  File \"C:\\Users\\HomeLaptop\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pandas\\io\\common.py\", line 882, in get_handle\n    handle = open(handle, ioargs.mode)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '../AI_Tax_Intelligence_Expanded.xlsx'\n"
+    }
+  },
+  "success_rate": "1/4",
+  "models_trained": [
+    "sentiment_analysis"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "model_name": "XGBoost",
+  "trained_date": "2025-10-08 13:49:59",
+  "r2_score": 0.2578742595325425,
+  "mae": 1870.3261634943835,
+  "rmse": 5263.337093877078,
+  "training_samples": 8000,
+  "test_samples": 2000,
+  "features": [
+    "Amount",
+    "VAT_Rate_Numeric",
+    "VAT_Amount",
+    "Annual_Turnover",
+    "Risk_Score",
+    "Business_Type_Encoded",
+    "Category_Encoded",
+    "Filing_Status_Encoded",
+    "Region_Encoded",
+    "Compliance_Flag_Encoded",
+    "Amount_to_Turnover_Ratio",
+    "VAT_to_Amount_Ratio"
+  ],
+  "all_results": [
+    {
+      "Model": "Linear Regression",
+      "MAE": 2465.927475826895,
+      "RMSE": 5541.752458343294,
+      "R2_Score": 0.1772850876522457
+    },
+    {
+      "Model": "Random Forest",
+      "MAE": 1945.341572481016,
+      "RMSE": 5480.09026818566,
+      "R2_Score": 0.1954916637206865
+    },
+    {
+      "Model": "Gradient Boosting",
+      "MAE": 1919.5355375106815,
+      "RMSE": 5394.264174875315,
+      "R2_Score": 0.2204938480686074
+    },
+    {
+      "Model": "XGBoost",
+      "MAE": 1870.3261634943835,
+      "RMSE": 5263.337093877078,
+      "R2_Score": 0.2578742595325425
+    },
+    {
+      "Model": "Neural Network",
+      "MAE": 2017.333211801349,
+      "RMSE": 5637.722609185236,
+      "R2_Score": 0.14854337036393206
+    }
+  ]
+}

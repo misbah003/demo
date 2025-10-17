@@ -1,0 +1,17 @@
+{
+  "training_date": "2025-10-07 23:21:26",
+  "total_months": 6,
+  "train_months": 4,
+  "test_months": 2,
+  "improvements": [
+    "Auto-tuned ARIMA parameters",
+    "Auto-tuned SARIMA parameters",
+    "Added exogenous variables",
+    "Walk-forward validation",
+    "Ensemble forecasting"
+  ],
+  "best_arima_order": "(0, 0, 0)",
+  "walk_forward_mape": 13.320149438645092,
+  "winner": "ARIMA (Auto-tuned)",
+  "winner_mape": 23.627916665067243
+}
