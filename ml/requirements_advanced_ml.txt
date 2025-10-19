@@ -37,6 +37,11 @@ fastapi>=0.100.0
 uvicorn>=0.23.0
 pydantic>=2.0.0
 
+# Explainability & Interpretability
+shap>=0.42.0  # SHAP values for model explanations
+lime>=0.2.0   # LIME for local interpretable explanations
+reportlab>=4.0.0  # PDF report generation
+
 # Utilities
 tqdm>=4.65.0
 python-dotenv>=1.0.0
