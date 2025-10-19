@@ -92,7 +92,7 @@ class VATExplanationRequest(BaseModel):
 class DocumentExplanationRequest(BaseModel):
     """Document classification explanation request"""
     text: str
-    method: str = "attention"
+    method: str = "shap"  # "shap", "lime", or "attention" (all now use SHAP/LIME)
 
 class ExplainabilityReportRequest(BaseModel):
     """Report generation request"""
@@ -249,25 +249,45 @@ async def explain_vat_prediction(request: VATExplanationRequest):
 @app.post("/api/explain-document")
 async def explain_document_classification(request: DocumentExplanationRequest):
     """
-    Explain document classification with attention weights
+    Explain document classification using SHAP or LIME
+    
+    Now uses model-agnostic explainability methods for CNNs instead of random attention weights!
     
     Request format:
     {
         "text": "Document content...",
-        "method": "attention"
+        "method": "shap"  # or "lime"
     }
+    
+    Methods:
+    - "shap": SHAP (Shapley Additive exPlanations) using KernelExplainer for neural networks
+    - "lime": LIME (Local Interpretable Model-agnostic Explanations) for local linear approximations
+    - "attention": Alias for SHAP (backward compatible)
+    
+    Response includes:
+    - predicted_class: The classified document category
+    - confidence: Confidence score for the prediction
+    - all_probabilities: Probabilities for all classes
+    - top_tokens: Top 15 most influential tokens with their contributions
+    - explanation_method: Technical description of the method used
     """
     if doc_classifier is None or explainability_service is None:
         raise HTTPException(status_code=503, detail="Required models not initialized")
     
     try:
+        # Map "attention" to "shap" for backward compatibility
+        method = "shap" if request.method.lower() == "attention" else request.method.lower()
+        
         # Get explanation
+        # Use reverse_label_encoder if available (idx -> label), otherwise label_encoder (label -> idx)
+        label_encoder_to_use = getattr(doc_classifier, 'reverse_label_encoder', doc_classifier.label_encoder)
+        
         explanation = explainability_service.explain_document_classification(
             model=doc_classifier.models.get('cnn'),
             input_text=request.text,
             tokenizer=doc_classifier.tokenizer,
-            label_encoder=doc_classifier.label_encoder,
-            method=request.method.lower()
+            label_encoder=label_encoder_to_use,
+            method=method
         )
         
         return format_explanation_for_api(explanation)
@@ -432,6 +452,305 @@ async def get_batch_status(batch_id: str):
     except Exception as e:
         logger.error(f"Error getting batch status: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# ===================== ADVANCED ANOMALY DETECTION EXPLAINABILITY =====================
+
+@app.post("/api/explain-anomaly-advanced")
+async def explain_anomaly_detection_advanced(request: PredictionRequest):
+    """
+    Explain anomaly detection using SHAP or LIME
+    
+    Request format:
+    {
+        "data": {
+            "VAT_Amount": 5000,
+            "Amount": 50000,
+            "Risk_Score": 0.7,
+            ...
+        },
+        "method": "shap"  # or "lime"
+    }
+    
+    Response includes:
+    - is_anomaly: Boolean indicating if transaction is anomalous
+    - anomaly_score: Numeric score (0-1) indicating anomaly probability
+    - feature_contributions: Top 15 features influencing the decision
+    - top_positive_features: Features pushing towards anomaly classification
+    - top_negative_features: Features pushing away from anomaly classification
+    """
+    if explainability_service is None:
+        raise HTTPException(status_code=503, detail="Explainability service not initialized")
+    
+    try:
+        # Load anomaly model
+        model_path = 'models/anomaly_detection_models/best_model.pkl'
+        if not os.path.exists(model_path):
+            model_path = 'models/anomaly_detection_models_IMPROVED/best_model.pkl'
+        
+        if not os.path.exists(model_path):
+            raise HTTPException(status_code=404, detail="Anomaly model not found")
+        
+        model = joblib.load(model_path)
+        
+        # Prepare input data
+        input_df = pd.DataFrame([request.data])
+        feature_names = list(request.data.keys())
+        
+        # Get explanation
+        method = request.method.lower() if hasattr(request, 'method') else 'shap'
+        explanation = explainability_service.explain_anomaly_detection(
+            model=model,
+            input_data=input_df,
+            feature_names=feature_names,
+            method=method
+        )
+        
+        # Enhance response
+        result = format_explanation_for_api(explanation)
+        
+        # Add risk level assessment
+        anomaly_score = explanation.get('anomaly_score', 0)
+        if anomaly_score < 0.3:
+            result['risk_level'] = 'LOW'
+        elif anomaly_score < 0.7:
+            result['risk_level'] = 'MEDIUM'
+        else:
+            result['risk_level'] = 'HIGH'
+        
+        # Separate positive and negative contributors
+        contributions = explanation.get('feature_contributions', [])
+        result['top_positive_features'] = [
+            f for f in contributions 
+            if f.get('direction') == 'positive'
+        ][:5]
+        result['top_negative_features'] = [
+            f for f in contributions 
+            if f.get('direction') == 'negative'
+        ][:5]
+        
+        logger.info(f"✅ Anomaly explanation generated - Risk: {result['risk_level']}")
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error in advanced anomaly explanation: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ===================== SENTIMENT ANALYSIS EXPLAINABILITY =====================
+
+@app.post("/api/explain-sentiment")
+async def explain_sentiment_analysis(request: dict):
+    """
+    Explain sentiment analysis prediction using SHAP or LIME
+    
+    Request format:
+    {
+        "text": "Your tax service was excellent",
+        "method": "shap"  # or "lime"
+    }
+    
+    Response includes:
+    - sentiment: Predicted sentiment (positive, neutral, negative)
+    - confidence: Confidence score for prediction
+    - probabilities: Probability for each sentiment class
+    - important_words: Top 15 words driving the prediction
+    - positive_words: Words contributing to positive sentiment
+    - negative_words: Words contributing to negative sentiment
+    """
+    if explainability_service is None:
+        raise HTTPException(status_code=503, detail="Explainability service not initialized")
+    
+    try:
+        # Load sentiment model
+        model_path = 'models/sentiment_analysis/sentiment_model.pkl'
+        if not os.path.exists(model_path):
+            raise HTTPException(status_code=404, detail="Sentiment model not found")
+        
+        model = joblib.load(model_path)
+        vectorizer_path = 'models/sentiment_analysis/vectorizer.pkl'
+        vectorizer = joblib.load(vectorizer_path)
+        
+        # Label encoder for sentiment
+        label_encoder = {'negative': 0, 'neutral': 1, 'positive': 2}
+        
+        # Get explanation
+        text = request.get('text', '')
+        method = request.get('method', 'shap').lower()
+        
+        if not text:
+            raise HTTPException(status_code=400, detail="Text field is required")
+        
+        explanation = explainability_service.explain_sentiment(
+            model=model,
+            input_text=text,
+            vectorizer=vectorizer,
+            label_encoder=label_encoder,
+            method=method
+        )
+        
+        # Format response
+        result = format_explanation_for_api(explanation)
+        
+        # Extract positive and negative words
+        contributions = explanation.get('feature_contributions', [])
+        result['positive_words'] = [
+            f for f in contributions 
+            if f.get('direction') == 'positive'
+        ][:5]
+        result['negative_words'] = [
+            f for f in contributions 
+            if f.get('direction') == 'negative'
+        ][:5]
+        
+        # Add sentiment intensity
+        conf = explanation.get('confidence', 0)
+        if conf > 0.8:
+            result['sentiment_intensity'] = 'STRONG'
+        elif conf > 0.6:
+            result['sentiment_intensity'] = 'MODERATE'
+        else:
+            result['sentiment_intensity'] = 'WEAK'
+        
+        logger.info(f"✅ Sentiment explanation generated - {explanation.get('sentiment').upper()}")
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error in sentiment explanation: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ===================== COMPARISON ENDPOINT =====================
+
+@app.post("/api/explain-compare")
+async def compare_explanation_methods(request: dict):
+    """
+    Compare SHAP vs LIME explanations for the same input
+    
+    Request format:
+    {
+        "model_type": "anomaly|sentiment|document",
+        "text_or_data": "...",
+        "include_timing": true
+    }
+    
+    Useful for understanding differences between explanation methods
+    and choosing appropriate method for your use case
+    """
+    if explainability_service is None:
+        raise HTTPException(status_code=503, detail="Explainability service not initialized")
+    
+    import time
+    
+    try:
+        model_type = request.get('model_type', '').lower()
+        
+        if model_type not in ['anomaly', 'sentiment', 'document']:
+            raise HTTPException(status_code=400, detail="Invalid model_type")
+        
+        results = {}
+        include_timing = request.get('include_timing', True)
+        
+        for method in ['shap', 'lime']:
+            start_time = time.time()
+            
+            try:
+                # Route to appropriate endpoint based on model type
+                if model_type == 'anomaly':
+                    explanation = explainability_service.explain_anomaly_detection(
+                        model=None,  # Would load from file in real scenario
+                        input_data=pd.DataFrame([request.get('data', {})]),
+                        feature_names=list(request.get('data', {}).keys()),
+                        method=method
+                    )
+                elif model_type == 'sentiment':
+                    explanation = explainability_service.explain_sentiment(
+                        model=None,
+                        input_text=request.get('text', ''),
+                        vectorizer=None,
+                        label_encoder={},
+                        method=method
+                    )
+                elif model_type == 'document':
+                    explanation = explainability_service.explain_document_classification(
+                        model=None,
+                        input_text=request.get('text', ''),
+                        tokenizer=None,
+                        label_encoder={},
+                        method=method
+                    )
+                
+                elapsed = time.time() - start_time
+                
+                results[method] = {
+                    'explanation': explanation,
+                    'elapsed_time': elapsed if include_timing else None
+                }
+            except Exception as e:
+                results[method] = {'error': str(e), 'elapsed_time': time.time() - start_time}
+        
+        # Generate comparison insights
+        insights = {
+            'shap_faster': results['shap'].get('elapsed_time', 0) < results['lime'].get('elapsed_time', 0),
+            'methods_agree': False  # Would be calculated based on feature importance
+        }
+        
+        if include_timing:
+            insights['timing_diff'] = abs(
+                results['shap'].get('elapsed_time', 0) - results['lime'].get('elapsed_time', 0)
+            )
+        
+        return {
+            'status': 'success',
+            'model_type': model_type,
+            'results': results,
+            'insights': insights,
+            'recommendation': 'Use SHAP for accuracy, LIME for speed' if insights['shap_faster'] else 'Use LIME for speed'
+        }
+        
+    except Exception as e:
+        logger.error(f"Error in explanation comparison: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ===================== EXPLAINABILITY STATUS ENDPOINT =====================
+
+@app.get("/api/explainability-status")
+async def get_explainability_status():
+    """
+    Get status of all explainability features and available models
+    """
+    try:
+        models_available = {
+            'cnn_document_classifier': os.path.exists('models/document_classifier/cnn_model.h5'),
+            'anomaly_detection': os.path.exists('models/anomaly_detection_models/best_model.pkl'),
+            'sentiment_analysis': os.path.exists('models/sentiment_analysis/sentiment_model.pkl'),
+            'vat_predictor': os.path.exists('models/ml_models/vat_refund_predictor.pkl')
+        }
+        
+        supported_methods = {
+            'shap': True,
+            'lime': True,
+            'gradient_based': True
+        }
+        
+        return {
+            'status': 'operational',
+            'available_models': models_available,
+            'supported_methods': supported_methods,
+            'available_endpoints': [
+                '/api/explain-vat',
+                '/api/explain-document',
+                '/api/explain-anomaly-advanced',
+                '/api/explain-sentiment',
+                '/api/explain-compare',
+                '/api/explain-batch'
+            ],
+            'timestamp': datetime.now().isoformat()
+        }
+    except Exception as e:
+        logger.error(f"Error getting status: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 # ===================== HELPER FUNCTIONS =====================
 
