@@ -1,0 +1,56 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+.npm
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Docs (don't need in container)
+docs/
+*.md
+README.md
+
+# Tests (optional - remove if you want test coverage)
+tests/
+test_*.py
+
+# Archive
+archive/
+.zencoder/
+
+# Development files
+.env.example
+debug-otp.html
+test_*.html
