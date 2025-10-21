@@ -1,23 +1,19 @@
 # ===== PRODUCTION REQUIREMENTS FOR RENDER =====
 # Optimized for free tier deployment
-# Exclude dev/test dependencies
+# Only includes dependencies actually used by ml_api_service_optimized.py
 
-# Web Framework
+# Web Framework & Server
 Flask==2.3.3
 Flask-CORS==4.0.0
 gunicorn==21.2.0
 python-dotenv==1.0.0
 
-# ML/Data Processing
+# ML/Data Processing (for scikit-learn models)
 scikit-learn==1.3.0
 pandas==2.0.3
 numpy==1.24.3
 xgboost==1.7.6
 joblib==1.3.2
-
-# Deep Learning (TensorFlow lightweight)
-tensorflow==2.13.0
-keras==2.13.0
 
 # Explainability
 shap==0.42.1
@@ -28,17 +24,13 @@ requests==2.31.0
 python-multipart==0.0.6
 PyYAML==6.0
 openpyxl==3.1.2
-
-# Monitoring (optional)
-# prometheus-client==0.17.1
+cryptography==41.0.3
 
 # Note: Removed for production free tier:
-# - spacy (heavy, not required for basic predictions)
-# - torch (heavy, only needed if using transformers)
-# - transformers (heavy, not required for basic predictions)
-# - cryptography (if not needed for specific features)
-
-# These can be added if needed by uncommenting:
-# spacy>=3.5.0
-# transformers>=4.30.0
-# torch>=2.0.0
+# - tensorflow (NOT USED - causes timeout on Render free tier)
+# - keras (NOT USED - causes timeout on Render free tier)
+# - spacy (NOT USED - too heavy)
+# - torch (NOT USED - too heavy)
+# - transformers (NOT USED - too heavy)
+# - lime (NOT USED - optional only)
+# - prometheus-client (NOT USED - optional only)
