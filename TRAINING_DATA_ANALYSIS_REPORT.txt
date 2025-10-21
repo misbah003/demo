@@ -1,0 +1,104 @@
+
+TRAINING DATA & MODEL ANALYSIS REPORT
+Generated: 2025-10-20 23:52:41.863230
+
+ISSUES IDENTIFIED:
+[
+  {
+    "severity": "\ud83d\udfe1 MEDIUM",
+    "issue": "2 features have zero importance",
+    "impact": "Model may be using incomplete feature set",
+    "solution": "Check feature encoding and scaling"
+  },
+  {
+    "severity": "\ud83d\udfe1 MEDIUM",
+    "issue": "SHAP values show different feature importance than global importance",
+    "impact": "Instance-level explanations don't match global patterns",
+    "solution": "May indicate data heterogeneity or feature interactions"
+  },
+  {
+    "severity": "\ud83d\udd34 HIGH",
+    "issue": "Filing_Status dominates predictions (large negative SHAP value)",
+    "impact": "Model is too sensitive to filing frequency",
+    "solution": "Consider feature scaling or re-encoding filing status categories"
+  },
+  {
+    "severity": "\ud83d\udd34 HIGH",
+    "issue": "VAT_Amount has large negative SHAP value",
+    "impact": "Counter-intuitive: higher VAT should increase refunds",
+    "solution": "May indicate training data has reversed relationship or encoding issue"
+  },
+  {
+    "severity": "\u26a0\ufe0f  CRITICAL",
+    "issue": "Model produces 44% lower refunds than baseline average",
+    "impact": "May result in under-refunding legitimate claims",
+    "solution": "Recalibrate model thresholds or reweight features"
+  }
+]
+
+RECOMMENDATIONS:
+[
+  {
+    "priority": "\ud83d\udd34 P1 - CRITICAL",
+    "action": "Validate Input Data",
+    "details": [
+      "Check if VAT_Amount encoding is correct (should be positive for refunds)",
+      "Verify Filing_Status categories are meaningful",
+      "Confirm that test data values are within training data ranges"
+    ]
+  },
+  {
+    "priority": "\ud83d\udd34 P1 - CRITICAL",
+    "action": "Test with Good Scenario",
+    "details": [
+      "Run test with ALL positive signals (high amount, low risk, compliant)",
+      "If refund is still low, model is over-conservative",
+      "If refund is high, model is responsive (issue is data, not model)"
+    ]
+  },
+  {
+    "priority": "\ud83d\udfe1 P2 - HIGH",
+    "action": "Feature Normalization",
+    "details": [
+      "Check if features are scaled appropriately",
+      "Verify that categorical features are one-hot encoded correctly",
+      "Consider normalizing Filing_Status and VAT_Amount"
+    ]
+  },
+  {
+    "priority": "\ud83d\udfe1 P2 - HIGH",
+    "action": "Feature Weight Rebalancing",
+    "details": [
+      "Reduce weight of Filing_Status if causing over-sensitivity",
+      "Increase weight of positive compliance signals",
+      "Consider interaction terms (e.g., VAT \u00d7 Amount \u00d7 Risk_Score)"
+    ]
+  },
+  {
+    "priority": "\ud83d\udfe1 P2 - HIGH",
+    "action": "Training Data Analysis",
+    "details": [
+      "Check distribution of predicted values in training data",
+      "Look for class imbalance in refund eligibility",
+      "Verify training data doesn't have systematic bias toward low refunds"
+    ]
+  },
+  {
+    "priority": "\ud83d\udfe2 P3 - MEDIUM",
+    "action": "Model Comparison",
+    "details": [
+      "Compare Random Forest with Gradient Boosting predictions",
+      "Test Ridge Regression to see if linear model is different",
+      "Potentially use ensemble of multiple models"
+    ]
+  },
+  {
+    "priority": "\ud83d\udfe2 P3 - MEDIUM",
+    "action": "Threshold Calibration",
+    "details": [
+      "Adjust prediction thresholds to match business requirements",
+      "Consider confidence intervals instead of hard cutoffs",
+      "Implement confidence-based recommendation (auto-approve vs manual review)"
+    ]
+  }
+]

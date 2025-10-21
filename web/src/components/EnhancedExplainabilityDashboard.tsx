@@ -1,14 +1,14 @@
-"""
-🎨 ENHANCED EXPLAINABILITY DASHBOARD WITH LIME VISUALIZATION
-=============================================================
-
-Advanced component showing:
-- SHAP vs LIME comparison
-- Feature/Token importance visualization
-- Risk assessment with color coding
-- Interactive method selection
-- Performance metrics
-"""
+/**
+ * 🎨 ENHANCED EXPLAINABILITY DASHBOARD WITH LIME VISUALIZATION
+ * =============================================================
+ * 
+ * Advanced component showing:
+ * - SHAP vs LIME comparison
+ * - Feature/Token importance visualization
+ * - Risk assessment with color coding
+ * - Interactive method selection
+ * - Performance metrics
+ */
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -227,6 +227,53 @@ const EnhancedExplainabilityDashboard: React.FC<EnhancedExplainabilityDashboardP
             <RefreshCw className="mr-2 h-4 w-4" />
             Retry
           </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (!predictionData && !currentData) {
+    return (
+      <Card className="w-full border border-slate-200 dark:border-slate-700">
+        <CardHeader className="pb-8">
+          <CardTitle className="text-2xl font-light tracking-tight">
+            SHAP Analysis Dashboard
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-10">
+          {/* Main CTA Section */}
+          <div className="flex flex-col gap-6">
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-slate-600 dark:text-slate-400">To get started</p>
+              <p className="text-base text-foreground">Make a prediction from Documents or VAT Predictor</p>
+            </div>
+            
+            <div className="border-l-2 border-slate-300 dark:border-slate-600 pl-6 space-y-4">
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-foreground">Feature Contributions</p>
+                <p className="text-sm text-muted-foreground">View SHAP values and feature impact analysis</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-foreground">Interpretation Methods</p>
+                <p className="text-sm text-muted-foreground">Compare SHAP, LIME and other models</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-foreground">Risk & Performance</p>
+                <p className="text-sm text-muted-foreground">Anomaly detection and model metrics</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="h-px bg-slate-200 dark:bg-slate-700"></div>
+
+          {/* Info Section */}
+          <div className="space-y-2">
+            <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider">What you'll see</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Interactive visualizations, detailed explanations, and comprehensive metrics that help you understand exactly why the model made each prediction.
+            </p>
+          </div>
         </CardContent>
       </Card>
     );

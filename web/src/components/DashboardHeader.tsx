@@ -1,4 +1,4 @@
-import { Bell, Search, Settings, User, Sun, Moon, LogOut, UserCircle, Mail, HelpCircle, Shield, FileText } from "lucide-react";
+import { Bell, Search, Settings, User, Sun, Moon, LogOut, UserCircle, Mail, HelpCircle, Shield, FileText, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
@@ -92,6 +92,10 @@ const DashboardHeader = () => {
               <DropdownMenuItem onClick={() => navigate("/documents")}>
                 <FileText className="mr-2 h-4 w-4" />
                 <span>My Documents</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/explainability")}>
+                <BarChart3 className="mr-2 h-4 w-4" />
+                <span>Model Explainability</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate("/profile")}>
                 <UserCircle className="mr-2 h-4 w-4" />

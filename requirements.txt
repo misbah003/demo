@@ -1,0 +1,38 @@
+# ML API Dependencies
+Flask==2.3.3
+Flask-CORS==4.0.0
+scikit-learn==1.3.0
+pandas==2.0.3
+numpy==1.24.3
+xgboost==1.7.6
+joblib==1.3.2
+requests==2.31.0
+
+# Deep Learning
+tensorflow==2.13.0
+keras==2.13.0
+PyYAML==6.0
+
+# Explainability
+shap==0.42.1
+lime==0.2.0
+
+# Data Processing
+openpyxl==3.1.2
+
+# Production Server
+gunicorn==21.2.0
+python-dotenv==1.0.0
+
+# Utilities
+Pillow==10.0.0
+python-multipart==0.0.6
+cryptography==41.0.3
+
+# Monitoring (optional, for production)
+prometheus-client==0.17.1
+
+# Note: For NER and advanced NLP
+spacy>=3.5.0
+transformers>=4.30.0
+torch>=2.0.0

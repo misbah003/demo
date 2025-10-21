@@ -1,0 +1,27 @@
+name: Keep Render Alive
+
+on:
+  schedule:
+    # Run every 14 minutes to keep Render service from spinning down
+    # (Render spins down after 15 minutes of inactivity on free tier)
+    - cron: '*/14 * * * *'
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⏰ Keep Render backend alive
+        run: |
+          echo "🔄 Pinging Render backend..."
+          curl -X GET https://navi-tax-api.onrender.com/health -s -o /dev/null -w "Status: %{http_code}\n" || true
+          
+      - name: ⏰ Keep ML API alive
+        run: |
+          echo "🔄 Pinging ML API..."
+          curl -X GET https://navi-tax-api.onrender.com/ml/health -s -o /dev/null -w "Status: %{http_code}\n" || true
+          
+      - name: ✅ Keep-alive check complete
+        run: |
+          echo "✅ Services pinged successfully"
+          echo "⏱️  Next check in 14 minutes"

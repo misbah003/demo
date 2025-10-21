@@ -1,0 +1,65 @@
+2025-10-20 23:45:54,837 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.176.231.159:8000
+2025-10-20 23:45:54,837 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-21 16:08:03,869 - INFO - Loading optimized models...
+2025-10-21 16:08:05,139 - INFO - \u2705 SHAP TreeExplainer initialized
+2025-10-21 16:08:05,140 - INFO - \u2705 Models loaded successfully from optimized_models_25000_samples
+2025-10-21 16:08:05,141 - INFO - \u2705 Model: Random Forest
+2025-10-21 16:08:05,141 - INFO - \u2705 R² Score: 0.7200
+2025-10-21 16:08:05,199 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.54.190.159:8000
+2025-10-21 16:08:05,199 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-21 16:21:21,268 - INFO - Loading optimized models...
+2025-10-21 16:21:21,269 - ERROR - \u274c Error loading models: [Errno 2] No such file or directory: 'optimized_models_25000_samples/gradient_boosting_optimized.pkl'
+2025-10-21 16:34:33,676 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.54.190.159:8000
+2025-10-21 16:34:33,678 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-21 16:35:27,550 - INFO - 127.0.0.1 - - [21/Oct/2025 16:35:27] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+2025-10-21 16:40:17,350 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.54.190.159:8000
+2025-10-21 16:40:17,350 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-21 16:41:09,814 - INFO - 127.0.0.1 - - [21/Oct/2025 16:41:09] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+2025-10-21 16:43:33,203 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.54.190.159:8000
+2025-10-21 16:43:33,203 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-21 16:44:18,726 - INFO - Loading optimized models...
+2025-10-21 16:44:20,498 - INFO - \u2705 SHAP TreeExplainer initialized
+2025-10-21 16:44:20,499 - INFO - \u2705 Models loaded successfully from C:\Users\HomeLaptop\Downloads\navi-tax-35-main\optimized_models_25000_samples
+2025-10-21 16:44:20,499 - INFO - \u2705 Model: Random Forest
+2025-10-21 16:44:20,499 - INFO - \u2705 R² Score: 0.7200
+2025-10-21 16:44:20,500 - INFO - \u2705 Models initialized on first request
+2025-10-21 16:44:20,501 - INFO - 127.0.0.1 - - [21/Oct/2025 16:44:20] "GET /health HTTP/1.1" 200 -
+2025-10-21 16:47:05,243 - INFO - 127.0.0.1 - - [21/Oct/2025 16:47:05] "GET /validation-reference HTTP/1.1" 200 -
+2025-10-21 16:48:40,291 - INFO - Prediction: \u20b94,751.76 | Recommendation: auto_approve | Response time: 195.01ms
+2025-10-21 16:48:40,291 - INFO - 127.0.0.1 - - [21/Oct/2025 16:48:40] "POST /predict HTTP/1.1" 200 -
+2025-10-21 16:49:57,370 - WARNING - Validation error: 1 validation error for PredictionRequest
+Category
+  Value error, Invalid Category: 'InvalidCategory'. Must be one of: Education, FMCG, Healthcare, Hospitality, IT Services, Manufacturing, Others, Pharmaceuticals, Real Estate, Retail [type=value_error, input_value='InvalidCategory', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+2025-10-21 16:49:57,371 - INFO - 127.0.0.1 - - [21/Oct/2025 16:49:57] "[31m[1mPOST /predict HTTP/1.1[0m" 400 -
+2025-10-21 16:50:38,524 - WARNING - Validation error: 1 validation error for PredictionRequest
+Filing_Status
+  Value error, Invalid Filing_Status: 'Quarterly'. Must be one of: Late, On Time, Very Late [type=value_error, input_value='Quarterly', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+2025-10-21 16:50:38,524 - INFO - 127.0.0.1 - - [21/Oct/2025 16:50:38] "[31m[1mPOST /predict HTTP/1.1[0m" 400 -
+2025-10-21 16:51:29,574 - WARNING - Validation error: 1 validation error for PredictionRequest
+Filing_Status
+  Value error, Invalid Filing_Status: 'Quarterly'. Must be one of: Late, On Time, Very Late [type=value_error, input_value='Quarterly', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+2025-10-21 16:51:29,574 - INFO - 127.0.0.1 - - [21/Oct/2025 16:51:29] "[31m[1mPOST /predict HTTP/1.1[0m" 400 -
+2025-10-21 16:52:11,426 - INFO - 127.0.0.1 - - [21/Oct/2025 16:52:11] "POST /explain HTTP/1.1" 200 -
+2025-10-21 16:53:00,042 - INFO - 127.0.0.1 - - [21/Oct/2025 16:53:00] "POST /explain HTTP/1.1" 200 -
+2025-10-21 16:54:39,544 - INFO - Prediction: \u20b98,315.49 | Recommendation: manual_review | Response time: 141.94ms
+2025-10-21 16:54:39,546 - INFO - 127.0.0.1 - - [21/Oct/2025 16:54:39] "POST /predict HTTP/1.1" 200 -
+2025-10-21 16:54:39,741 - INFO - Prediction: \u20b92,483.37 | Recommendation: auto_approve | Response time: 97.72ms
+2025-10-21 16:54:39,742 - INFO - 127.0.0.1 - - [21/Oct/2025 16:54:39] "POST /predict HTTP/1.1" 200 -

@@ -1,0 +1,15 @@
+POST http://localhost:8000/explain
+Content-Type: application/json
+
+{
+  "Amount": 50000,
+  "VAT_Rate": 19,
+  "Risk_Score": 0.3,
+  "Annual_Turnover": 500000,
+  "Category": "Retail",
+  "Region": "East",
+  "Filing_Status": "On Time",
+  "Compliance_Flag": "Compliant",
+  "Refund_Eligible": "Yes",
+  "Is_Anomaly": "No"
+}

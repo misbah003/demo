@@ -1,0 +1,212 @@
+═══════════════════════════════════════════════════════════════════════════
+  NAVI-TAX PRODUCTION DEPLOYMENT - QUICK REFERENCE CARD
+═══════════════════════════════════════════════════════════════════════════
+
+BEFORE YOU START
+──────────────────────────────────────────────────────────────────────────
+☐ GitHub repo pushed with latest code
+☐ Vercel account created (sign up with GitHub)
+☐ Render account created (sign up with GitHub)  
+☐ Supabase account created (sign up with GitHub)
+☐ Gmail account with 2FA enabled
+☐ Gmail app password generated
+
+
+STEP 1: GMAIL SETUP (10 minutes)
+──────────────────────────────────────────────────────────────────────────
+1. Go to: https://myaccount.google.com/apppasswords
+2. Select: Other (custom name) → "Tax Intelligence Backend"
+3. Generate → Copy 16-character password
+4. Save: GMAIL_USER=your-email@gmail.com
+5. Save: GMAIL_APP_PASSWORD=xxxx xxxx xxxx xxxx
+
+
+STEP 2: SUPABASE SETUP (20 minutes)
+──────────────────────────────────────────────────────────────────────────
+1. Go to: https://app.supabase.com → New Project
+2. Name: navi-tax, Region: closest to you
+3. Wait for initialization (3-5 min)
+4. Go to: Settings → API
+5. Save: SUPABASE_URL=https://xxx.supabase.co
+6. Save: VITE_SUPABASE_ANON_KEY=eyJhbGc... (anon key)
+7. Save: SUPABASE_SERVICE_KEY=eyJhbGc... (service key - SECRET!)
+8. Run migrations: supabase db push
+9. Create buckets: documents, uploads
+
+
+STEP 3: DEPLOY FRONTEND TO VERCEL (15 minutes)
+──────────────────────────────────────────────────────────────────────────
+1. Go to: https://vercel.com
+2. Add New → Project
+3. Select your repo
+4. Root Directory: web/
+5. Build Command: npm run build
+6. Output Directory: dist
+7. Deploy
+8. Wait 2-3 minutes
+9. Save: VERCEL_URL=https://your-project.vercel.app
+
+
+STEP 4: DEPLOY ML API TO RENDER (20 minutes)
+──────────────────────────────────────────────────────────────────────────
+1. Go to: https://render.com
+2. New Web Service
+3. Select your repo
+4. Name: navi-tax-ml-api
+5. Build Command: pip install -r requirements_production.txt
+6. Start Command: gunicorn ml_api_service_optimized:app --workers 2 --worker-class sync --timeout 120 --bind 0.0.0.0:8000
+7. Add env: FLASK_ENV=production
+8. Create
+9. Wait 10-15 minutes for build
+10. Save: ML_API_URL=https://navi-tax-ml-api.onrender.com
+11. Test: curl https://navi-tax-ml-api.onrender.com/health
+
+
+STEP 5: DEPLOY BACKEND TO RENDER (10 minutes)
+──────────────────────────────────────────────────────────────────────────
+1. Go to: https://render.com
+2. New Web Service
+3. Select your repo
+4. Name: navi-tax-backend
+5. Root Directory: docs/backend-example
+6. Build Command: npm install
+7. Start Command: npm start
+8. Add environment variables:
+   ┌─────────────────────────────────────────────────────────┐
+   │ GMAIL_USER=your-email@gmail.com                         │
+   │ GMAIL_APP_PASSWORD=xxxx xxxx xxxx xxxx                  │
+   │ SUPABASE_URL=https://xxx.supabase.co                    │
+   │ SUPABASE_SERVICE_KEY=[your service key]                 │
+   │ ML_API_URL=https://navi-tax-ml-api.onrender.com         │
+   │ FRONTEND_URL=https://your-project.vercel.app            │
+   │ PORT=3001                                               │
+   │ NODE_ENV=production                                     │
+   └─────────────────────────────────────────────────────────┘
+9. Create
+10. Wait 3-5 minutes
+11. Test: curl https://navi-tax-backend.onrender.com/health
+
+
+STEP 6: CONNECT EVERYTHING (10 minutes)
+──────────────────────────────────────────────────────────────────────────
+1. Go to Vercel → Settings → Environment Variables
+2. Add:
+   ├─ VITE_SUPABASE_URL=[your supabase url]
+   ├─ VITE_SUPABASE_ANON_KEY=[anon key]
+   ├─ VITE_API_URL=https://navi-tax-backend.onrender.com
+   └─ VITE_ML_API_URL=https://navi-tax-ml-api.onrender.com
+3. Save
+4. Go to Deployments tab → Redeploy latest
+5. Wait 2-3 minutes
+
+
+STEP 7: TEST EVERYTHING (15 minutes)
+──────────────────────────────────────────────────────────────────────────
+✓ Frontend loads at your Vercel URL
+✓ Can sign up with test email
+✓ Can login with credentials
+✓ ML API /health endpoint responds
+✓ Backend /health endpoint responds
+✓ Can upload a document
+✓ Predictions appear
+✓ No console errors (F12)
+✓ No CORS errors
+✓ Database has new records
+
+
+ENVIRONMENT VARIABLES SUMMARY
+──────────────────────────────────────────────────────────────────────────
+Where to put what:
+
+VERCEL ENVIRONMENT VARIABLES:
+├─ VITE_SUPABASE_URL → From Supabase Settings→API
+├─ VITE_SUPABASE_ANON_KEY → From Supabase (anon key)
+├─ VITE_API_URL → https://navi-tax-backend.onrender.com
+└─ VITE_ML_API_URL → https://navi-tax-ml-api.onrender.com
+
+RENDER ML API ENVIRONMENT VARIABLES:
+└─ FLASK_ENV → production
+
+RENDER BACKEND ENVIRONMENT VARIABLES:
+├─ GMAIL_USER → your-email@gmail.com
+├─ GMAIL_APP_PASSWORD → xxxx xxxx xxxx xxxx
+├─ SUPABASE_URL → From Supabase
+├─ SUPABASE_SERVICE_KEY → From Supabase (SECRET!)
+├─ ML_API_URL → https://navi-tax-ml-api.onrender.com
+├─ FRONTEND_URL → https://your-project.vercel.app
+├─ PORT → 3001
+└─ NODE_ENV → production
+
+
+IMPORTANT URLS
+──────────────────────────────────────────────────────────────────────────
+Gmail App Passwords:        https://myaccount.google.com/apppasswords
+Supabase Console:           https://app.supabase.com
+Supabase Settings→API:      https://app.supabase.com/project/_/settings/api
+Render Dashboard:           https://dashboard.render.com
+Vercel Dashboard:           https://vercel.com/dashboard
+Gmail Account Settings:     https://myaccount.google.com/security
+
+Your Live URLs (after deployment):
+Frontend:                   https://your-project.vercel.app
+Backend:                    https://navi-tax-backend.onrender.com
+ML API:                     https://navi-tax-ml-api.onrender.com
+
+
+TROUBLESHOOTING
+──────────────────────────────────────────────────────────────────────────
+PROBLEM: ML API won't start
+FIX: First build takes 10-15 min. Be patient. Check Render logs.
+
+PROBLEM: Backend can't connect to ML API
+FIX: Check ML_API_URL env var. Wait 2 min. Test /health endpoint.
+
+PROBLEM: Frontend shows blank page
+FIX: Check vercel.json exists. Redeploy after adding env vars.
+
+PROBLEM: CORS error (frontend can't call backend)
+FIX: Check FRONTEND_URL in backend env. Redeploy backend. Clear browser cache.
+
+PROBLEM: Email not sending
+FIX: Verify 2FA on Gmail. Check app password (16 chars). Verify GMAIL_USER.
+
+PROBLEM: Can't connect to Supabase
+FIX: Check SUPABASE_URL format. Verify service key is correct (not anon key).
+
+PROBLEM: Data not saving to database
+FIX: Check RLS policies. Verify you're logged in. Check Supabase logs.
+
+
+DONE! YOUR DEPLOYMENT IS LIVE 🎉
+──────────────────────────────────────────────────────────────────────────
+✅ Frontend on Vercel (auto-scaling, 24/7)
+✅ Backend on Render (auto-scaling, 24/7)
+✅ ML API on Render (auto-scaling, 24/7)
+✅ Database on Supabase (managed, auto-scaling)
+✅ All connections working
+✅ Production ready
+
+Next: Setup Uptime Robot to keep services warm
+       (see DEPLOYMENT_GUIDE_FINAL.md for details)
+
+
+TIME SUMMARY
+──────────────────────────────────────────────────────────────────────────
+Gmail Setup:           10 min
+Supabase Setup:        20 min
+Vercel Deploy:         10 min + 5 min build = 15 min
+ML API Deploy:         5 min + 10-15 min build = 20 min
+Backend Deploy:        5 min + 3-5 min build = 10 min
+Connect Services:      10 min
+Testing:               15 min
+──────────────────────────────────────────────────────────────────────────
+TOTAL:                 2-3 hours
+
+
+For more details, see: DEPLOY_NOW.md
+For choosing a guide, see: DEPLOYMENT_MASTER_GUIDE.md
+To verify deployment, see: VERIFY_DEPLOYMENT.md
+
+
+Good luck! 🚀
+═══════════════════════════════════════════════════════════════════════════

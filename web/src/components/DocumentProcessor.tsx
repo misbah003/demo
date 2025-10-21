@@ -24,9 +24,9 @@ const DocumentProcessor = () => {
   useEffect(() => {
     const checkMLStatus = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/ml-status');
+        const response = await fetch('http://localhost:8000/health');
         const data = await response.json();
-        setMlApiStatus(data.mlApiAvailable ? 'online' : 'offline');
+        setMlApiStatus(data.status === 'healthy' && data.model_loaded ? 'online' : 'offline');
       } catch (error) {
         setMlApiStatus('offline');
       }

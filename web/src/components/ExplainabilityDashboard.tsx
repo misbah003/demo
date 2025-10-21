@@ -1,13 +1,13 @@
-"""
-🔍 EXPLAINABILITY DASHBOARD COMPONENT
-=====================================
-
-Displays SHAP/LIME explanations and model interpretability
-- Feature importance visualization
-- Prediction breakdown
-- Risk assessment
-- PDF report generation
-"""
+/**
+ * 🔍 EXPLAINABILITY DASHBOARD COMPONENT
+ * =====================================
+ * 
+ * Displays SHAP/LIME explanations and model interpretability
+ * - Feature importance visualization
+ * - Prediction breakdown
+ * - Risk assessment
+ * - PDF report generation
+ */
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

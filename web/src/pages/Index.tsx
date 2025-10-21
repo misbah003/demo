@@ -4,9 +4,13 @@ import PredictiveChart from "@/components/PredictiveChart";
 import ComplianceRisk from "@/components/ComplianceRisk";
 import DocumentProcessor from "@/components/DocumentProcessor";
 import VATRefundPredictor from "@/components/VATRefundPredictor";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { BarChart3, FileText, ArrowRight } from "lucide-react";
 import dashboardBg from "@/assets/dashboard-bg.jpg";
 
 const Index = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background relative">
       {/* Background */}
@@ -50,6 +54,72 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <DocumentProcessor />
             <VATRefundPredictor />
+          </div>
+
+          {/* Explainability Features Section */}
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 rounded-lg border border-blue-200 dark:border-blue-800 p-8 mt-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-foreground mb-3">
+                  🔍 Understand Your AI
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                  Deep dive into model decisions with explainability analysis and comprehensive reports
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Dashboard Card */}
+                <div className="bg-white dark:bg-slate-900 rounded-lg p-6 border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-shadow">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-xl font-semibold text-foreground mb-2">
+                        SHAP Analysis Dashboard
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Visualize feature contributions and understand model predictions with interactive SHAP analysis
+                      </p>
+                    </div>
+                    <BarChart3 className="w-6 h-6 text-blue-500 flex-shrink-0" />
+                  </div>
+                  <Button 
+                    onClick={() => navigate("/explainability?tab=dashboard")}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    View Dashboard
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </div>
+
+                {/* Reports Card */}
+                <div className="bg-white dark:bg-slate-900 rounded-lg p-6 border border-purple-200 dark:border-purple-800 hover:shadow-lg transition-shadow">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-xl font-semibold text-foreground mb-2">
+                        Explainability Reports
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Generate professional reports in JSON, HTML, and PDF formats for predictions and analysis
+                      </p>
+                    </div>
+                    <FileText className="w-6 h-6 text-purple-500 flex-shrink-0" />
+                  </div>
+                  <Button 
+                    onClick={() => navigate("/explainability?tab=reports")}
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                  >
+                    Manage Reports
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="mt-6 p-4 bg-blue-100 dark:bg-blue-900 rounded border border-blue-300 dark:border-blue-700">
+                <p className="text-sm text-blue-900 dark:text-blue-100">
+                  ✨ <strong>New Features:</strong> Generate comprehensive explainability reports, manage report history, and download in multiple formats
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Footer */}

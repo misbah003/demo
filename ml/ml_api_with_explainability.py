@@ -38,6 +38,7 @@ from advanced_ner_extraction import AdvancedNERExtractor
 from advanced_document_classifier import AdvancedDocumentClassifier
 from advanced_time_series_forecasting import AdvancedVATForecaster
 from explainability_service import ExplainabilityService, format_explanation_for_api
+from explainability_report_generator import ExplainabilityReportGenerator
 
 # Initialize FastAPI
 app = FastAPI(
@@ -64,6 +65,7 @@ ner_extractor = None
 doc_classifier = None
 vat_forecaster = None
 explainability_service = None
+report_generator = None
 
 # Paths
 MODEL_DIR = 'optimized_models_25000_samples'
@@ -105,7 +107,7 @@ class ExplainabilityReportRequest(BaseModel):
 @app.on_event("startup")
 async def startup_event():
     """Initialize models and services"""
-    global ner_extractor, doc_classifier, vat_forecaster, explainability_service
+    global ner_extractor, doc_classifier, vat_forecaster, explainability_service, report_generator
     
     logger.info("🚀 Starting ML API with Explainability...")
     
@@ -113,6 +115,10 @@ async def startup_event():
         # Initialize explainability service
         logger.info("📊 Initializing Explainability Service...")
         explainability_service = ExplainabilityService()
+        
+        # Initialize report generator
+        logger.info("📄 Initializing Report Generator...")
+        report_generator = ExplainabilityReportGenerator(output_dir=REPORTS_DIR)
         
         # Initialize NER
         logger.info("📝 Loading NER Extractor...")
@@ -145,7 +151,8 @@ async def root():
             "ner": ner_extractor is not None,
             "classifier": doc_classifier is not None,
             "forecaster": vat_forecaster is not None,
-            "explainability": explainability_service is not None
+            "explainability": explainability_service is not None,
+            "report_generator": report_generator is not None
         },
         "features": [
             "predictions",
@@ -342,67 +349,199 @@ async def explain_anomaly_detection(request: PredictionRequest):
 @app.post("/api/explain-report")
 async def generate_explanation_report(request: ExplainabilityReportRequest):
     """
-    Generate comprehensive explanation report
+    Generate comprehensive explanation report in multiple formats
     
     Request format:
     {
         "prediction_data": {...},
         "model_name": "vat_predictor",
-        "input_summary": {
-            "region": "EU",
-            "category": "goods"
-        }
+        "input_summary": {...}
     }
+    
+    Returns JSON, HTML, and optional PDF reports with:
+    - Prediction summary
+    - Feature importance analysis
+    - Risk assessment
+    - Professional visualization
     """
-    if explainability_service is None:
-        raise HTTPException(status_code=503, detail="Explainability service not initialized")
+    if report_generator is None or explainability_service is None:
+        raise HTTPException(status_code=503, detail="Report generator not initialized")
     
     try:
-        # Generate explanation
-        explanation = {}  # Would be generated from prediction_data
-        
-        # Generate report
-        report = explainability_service.generate_explanation_report(
-            explanation=explanation,
+        # Generate JSON report
+        json_report = report_generator.generate_json_report(
+            prediction_data=request.prediction_data,
+            explanation_data=request.input_summary,
             model_name=request.model_name,
-            input_summary=request.input_summary
+            model_type="vat_predictor"
         )
         
-        # Save report
-        report_id = f"report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-        report_path = f"{REPORTS_DIR}/{report_id}.json"
+        # Generate HTML report
+        html_report = report_generator.generate_html_report(
+            prediction_data=request.prediction_data,
+            explanation_data=request.input_summary,
+            model_name=request.model_name,
+            model_type="vat_predictor"
+        )
         
-        with open(report_path, 'w') as f:
-            json.dump(report, f, indent=2)
+        # Generate PDF report (optional, requires reportlab)
+        pdf_path = report_generator.generate_pdf_report(
+            prediction_data=request.prediction_data,
+            explanation_data=request.input_summary,
+            model_name=request.model_name,
+            model_type="vat_predictor"
+        )
+        
+        # Generate unique report ID
+        report_id = f"report_{request.model_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        
+        # Save reports to files
+        json_path = report_generator.save_json_report(
+            prediction_data=request.prediction_data,
+            explanation_data=request.input_summary,
+            model_name=request.model_name,
+            model_type="vat_predictor",
+            filename=f"{report_id}.json"
+        )
+        
+        html_path = report_generator.save_html_report(
+            prediction_data=request.prediction_data,
+            explanation_data=request.input_summary,
+            model_name=request.model_name,
+            model_type="vat_predictor",
+            filename=f"{report_id}.html"
+        )
+        
+        logger.info(f"✅ Report generated: {report_id}")
         
         return {
             "status": "success",
             "report_id": report_id,
-            "report": report,
-            "download_url": f"/api/reports/{report_id}.json"
+            "model_name": request.model_name,
+            "timestamp": datetime.now().isoformat(),
+            "reports": {
+                "json": {
+                    "url": f"/api/reports/{report_id}.json",
+                    "filename": f"{report_id}.json"
+                },
+                "html": {
+                    "url": f"/api/reports/{report_id}.html",
+                    "filename": f"{report_id}.html"
+                },
+                "pdf": {
+                    "url": f"/api/reports/{report_id}.pdf" if pdf_path else None,
+                    "filename": f"{report_id}.pdf" if pdf_path else None,
+                    "available": pdf_path is not None
+                }
+            },
+            "summary": {
+                "prediction": json_report.get('prediction', {}),
+                "risk_level": json_report.get('risk_assessment', {}).get('level'),
+                "top_features": json_report.get('feature_importance', {}).get('top_features', [])[:5]
+            }
         }
         
     except Exception as e:
-        logger.error(f"Error generating report: {e}")
+        logger.error(f"❌ Error generating report: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # ===================== REPORT DOWNLOAD =====================
 
-@app.get("/api/reports/{report_id}.json")
-async def download_report(report_id: str):
-    """Download explanation report"""
+@app.get("/api/reports/{filename}")
+async def download_report(filename: str):
+    """Download explanation report in JSON, HTML, or PDF format"""
     try:
-        report_path = f"{REPORTS_DIR}/{report_id}.json"
-        if os.path.exists(report_path):
-            return FileResponse(
-                path=report_path,
-                filename=f"{report_id}.json",
-                media_type="application/json"
-            )
+        # Validate filename to prevent directory traversal
+        if ".." in filename or "/" in filename or "\\" in filename:
+            raise HTTPException(status_code=400, detail="Invalid filename")
+        
+        report_path = os.path.join(REPORTS_DIR, filename)
+        
+        if not os.path.exists(report_path):
+            raise HTTPException(status_code=404, detail=f"Report not found: {filename}")
+        
+        # Determine media type based on file extension
+        if filename.endswith('.json'):
+            media_type = "application/json"
+        elif filename.endswith('.html'):
+            media_type = "text/html"
+        elif filename.endswith('.pdf'):
+            media_type = "application/pdf"
         else:
-            raise HTTPException(status_code=404, detail="Report not found")
+            media_type = "application/octet-stream"
+        
+        logger.info(f"📥 Downloading report: {filename}")
+        
+        return FileResponse(
+            path=report_path,
+            filename=filename,
+            media_type=media_type
+        )
+        
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"Error downloading report: {e}")
+        logger.error(f"❌ Error downloading report: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ===================== REPORT MANAGEMENT =====================
+
+@app.get("/api/reports")
+async def list_reports():
+    """List all available explainability reports"""
+    try:
+        reports = []
+        if os.path.exists(REPORTS_DIR):
+            for filename in sorted(os.listdir(REPORTS_DIR), reverse=True):
+                if filename.endswith(('.json', '.html', '.pdf')):
+                    filepath = os.path.join(REPORTS_DIR, filename)
+                    file_stat = os.stat(filepath)
+                    
+                    reports.append({
+                        "filename": filename,
+                        "format": filename.split('.')[-1].upper(),
+                        "size": file_stat.st_size,
+                        "created": datetime.fromtimestamp(file_stat.st_ctime).isoformat(),
+                        "url": f"/api/reports/{filename}"
+                    })
+        
+        logger.info(f"📋 Retrieved {len(reports)} reports")
+        
+        return {
+            "status": "success",
+            "total_reports": len(reports),
+            "reports": reports[:50]  # Return latest 50 reports
+        }
+        
+    except Exception as e:
+        logger.error(f"❌ Error listing reports: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/api/reports/{filename}")
+async def delete_report(filename: str):
+    """Delete an explainability report"""
+    try:
+        # Validate filename
+        if ".." in filename or "/" in filename or "\\" in filename:
+            raise HTTPException(status_code=400, detail="Invalid filename")
+        
+        report_path = os.path.join(REPORTS_DIR, filename)
+        
+        if not os.path.exists(report_path):
+            raise HTTPException(status_code=404, detail="Report not found")
+        
+        os.remove(report_path)
+        logger.info(f"🗑️  Deleted report: {filename}")
+        
+        return {
+            "status": "success",
+            "message": f"Report {filename} deleted successfully"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"❌ Error deleting report: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # ===================== BATCH EXPLANATIONS =====================
