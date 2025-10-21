@@ -1,0 +1,245 @@
+════════════════════════════════════════════════════════════════════════════════
+🚀 DEPLOYMENT QUICK LINKS - COPY & PASTE READY
+════════════════════════════════════════════════════════════════════════════════
+
+1️⃣  STEP 1: DEPLOY BACKEND TO RENDER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open: https://dashboard.render.com/
+
+2. Click: "New +" → "Web Service"
+
+3. Select Repository:
+   https://github.com/misbah003/demo
+   (or your GitHub repo)
+
+4. Configuration Values (COPY THESE):
+
+   Name:
+   navi-tax-ml-api
+
+   Region:
+   Frankfurt
+
+   Runtime:
+   Python 3.9
+
+   Build Command:
+   pip install -r requirements.txt
+
+   Start Command:
+   gunicorn -w 2 -b 0.0.0.0:$PORT --timeout 120 ml.ml_api_service_optimized:app
+
+5. Plan: Free
+
+6. Click: "Create Web Service"
+
+7. Wait for deployment (15-20 minutes) → Status: "Live" (green)
+
+8. Save your Render URL:
+   https://navi-tax-ml-api.onrender.com
+   (You'll get something like this)
+
+
+2️⃣  STEP 2: TEST BACKEND HEALTH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open in browser (replace with your Render URL):
+https://navi-tax-ml-api.onrender.com/health
+
+You should see:
+{
+  "status": "healthy",
+  "timestamp": "...",
+  "environment": "production"
+}
+
+
+3️⃣  STEP 3: UPDATE FRONTEND ENVIRONMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Edit file: web/.env.production
+
+Find this line:
+VITE_BACKEND_URL=https://navi-tax-ml-api.onrender.com
+
+Replace with your Render URL if different.
+
+Then commit:
+git add web/.env.production
+git commit -m "chore: update backend URL for production"
+git push
+
+
+4️⃣  STEP 4: DEPLOY FRONTEND TO VERCEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open: https://vercel.com/dashboard
+
+2. Click: "Add New" → "Project"
+
+3. Select Repository:
+   https://github.com/misbah003/demo
+   (your repo)
+
+4. Import Settings:
+
+   Framework: Vite
+   Root Directory: ./
+
+   Build Command:
+   cd web && npm run build
+
+   Output Directory:
+   web/dist
+
+   Environment Variables (COPY THESE):
+
+   VITE_SUPABASE_PROJECT_ID
+   ikqcakganqabiscsibyim
+
+   VITE_SUPABASE_PUBLISHABLE_KEY
+   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrcWNha2dhbnFhYmlzY3NpYnltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzNjc0NDIsImV4cCI6MjA3Mzk0MzQ0Mn0.hkfGO88f95rQO_7bwsRcxADjZRAjw5LoWFxmq5mNY90
+
+   VITE_SUPABASE_URL
+   https://ikqcakganqabiscsibyim.supabase.co
+
+   VITE_BACKEND_URL
+   https://navi-tax-ml-api.onrender.com
+   (use your Render URL from Step 1)
+
+5. Click: "Deploy"
+
+6. Wait for deployment (10-15 minutes)
+
+7. You'll get a URL like:
+   https://navi-tax-35-main.vercel.app
+
+
+5️⃣  STEP 5: TEST YOUR LIVE APPLICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open your Vercel URL:
+   https://navi-tax-35-main.vercel.app
+
+2. Test features:
+   ✅ Sign up / Login
+   ✅ Make a prediction
+   ✅ View SHAP explanation
+   ✅ View model information
+
+3. Test backend API:
+   https://navi-tax-ml-api.onrender.com/model-info
+
+Expected response:
+{
+  "model_name": "Gradient Boosting VAT Refund Predictor",
+  "version": "1.0",
+  "accuracy": "95.2%",
+  ...
+}
+
+
+📊 TESTING PREDICTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Test via backend API (using curl or Postman):
+
+POST https://navi-tax-ml-api.onrender.com/predict
+Content-Type: application/json
+
+{
+  "Amount": 50000,
+  "VAT_Rate": 19,
+  "Risk_Score": 0.3,
+  "Annual_Turnover": 500000,
+  "Category": "Retail",
+  "Region": "East",
+  "Filing_Status": "On Time",
+  "Compliance_Flag": "Compliant",
+  "Refund_Eligible": "Yes",
+  "Is_Anomaly": "No"
+}
+
+Expected: Refund prediction (0 = denied, 1 = approved)
+
+
+💾 IMPORTANT URLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GitHub:
+https://github.com/misbah003/demo
+
+Render Dashboard:
+https://dashboard.render.com/
+
+Vercel Dashboard:
+https://vercel.com/dashboard
+
+Supabase Console:
+https://supabase.co/dashboard
+
+Documentation:
+- DEPLOYMENT_FREEMIUM_GUIDE.md (complete guide with troubleshooting)
+- DEPLOYMENT_VERIFICATION.md (30+ verification tests)
+- DEPLOYMENT_QUICK_START.txt (quick reference)
+
+
+⏱️  TIMELINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1 (Backend):  25 minutes
+Step 2 (Test):      5 minutes
+Step 3 (Update):    2 minutes
+Step 4 (Frontend):  15 minutes
+Step 5 (Verify):    10 minutes
+
+TOTAL: 57 minutes
+
+
+💰 COST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Vercel:    €0/month (free tier with generous limits)
+Render:    €0/month (free tier with generous limits)
+Supabase:  €0/month (free tier with generous limits)
+
+TOTAL:     €0/month
+
+Optional upgrades when you scale:
+- Vercel Pro: $20/month
+- Render: $7-20/month
+- Supabase: $25-100/month
+
+
+🆘 IF SOMETHING GOES WRONG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Check Render Logs:
+   https://dashboard.render.com/
+   Click service → Logs tab
+
+2. Check Vercel Logs:
+   https://vercel.com/dashboard
+   Click project → Deployments tab
+
+3. Test backend health:
+   https://navi-tax-ml-api.onrender.com/health
+
+4. Read troubleshooting guide:
+   Open: DEPLOYMENT_FREEMIUM_GUIDE.md
+   Go to: Section "TROUBLESHOOTING"
+
+
+════════════════════════════════════════════════════════════════════════════════
+✨ YOU'RE READY TO DEPLOY! ✨
+════════════════════════════════════════════════════════════════════════════════
+
+Next: Run the deployment script or follow steps above manually
+
+Run automated script:
+.\DEPLOY_NOW.ps1
+
+Or do it manually using the copy-paste links above.
+
+Questions? See: DEPLOYMENT_FREEMIUM_GUIDE.md
