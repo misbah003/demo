@@ -50,12 +50,7 @@ from .validation import (
 app = Flask(__name__)
 
 # Configure CORS with specific origins for security
-CORS(app, origins=[
-    "http://localhost:3000",  # Local development
-    "http://localhost:5173",  # Vite dev server
-    "https://navi-tax-35.vercel.app",  # Original Vercel URL
-    "https://ai-powered-tax-ml-git-master-misbahs-projects-159c402a.vercel.app"  # Current Vercel URL
-], supports_credentials=True)
+CORS(app, origins=["*"])
 
 # Configuration
 # Use absolute path for models, or relative to parent directory if running from ml/
