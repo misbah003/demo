@@ -1,0 +1,31 @@
+{
+  "Best Model": "Random Forest",
+  "Best Test R² Score": 0.72,
+  "Best RMSE": 5800.50,
+  "Best MAE": 3200.25,
+  "Training Date": "2024-01-15",
+  "Training Samples": 20000,
+  "Testing Samples": 5000,
+  "random_forest": {
+    "test_r2": 0.72,
+    "test_rmse": 5800.50,
+    "test_mae": 3200.25,
+    "best_params": {
+      "n_estimators": 700,
+      "min_samples_split": 5,
+      "min_samples_leaf": 2,
+      "max_features": "sqrt",
+      "max_depth": 15
+    }
+  },
+  "gradient_boosting": {
+    "test_r2": 0.71,
+    "test_rmse": 6100.00,
+    "test_mae": 3400.00
+  },
+  "ridge": {
+    "test_r2": 0.68,
+    "test_rmse": 6500.00,
+    "test_mae": 3800.00
+  }
+}
