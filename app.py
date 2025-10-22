@@ -1,0 +1,1 @@
+from ml.ml_api_service_optimized import app
