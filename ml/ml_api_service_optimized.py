@@ -150,8 +150,8 @@ def load_models():
         
         # Initialize SHAP explainer
         try:
-            shap_explainer = shap.TreeExplainer(model)
-            logger.info("✅ SHAP TreeExplainer initialized")
+            shap_explainer = shap.Explainer(model)
+            logger.info("✅ SHAP Explainer initialized")
         except Exception as e:
             logger.warning(f"⚠️ Could not initialize SHAP explainer: {e}")
             shap_explainer = None
