@@ -21,7 +21,7 @@ The API will run on http://localhost:8000
 """
 
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import joblib
 import json
 import pandas as pd
@@ -593,6 +593,7 @@ def get_feature_importance():
         }), 500
 
 @app.route('/api/send-otp', methods=['POST'])
+@cross_origin()
 def send_otp():
     """
     Send OTP email via Gmail SMTP
