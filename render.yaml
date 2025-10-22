@@ -2,7 +2,7 @@ services:
   - type: web
     name: navi-tax-ml-api
     runtime: python
-    runtimeVersion: 3.9.18
+    runtimeVersion: 3.11.9
     region: frankfurt
     plan: free
     
@@ -17,7 +17,7 @@ services:
     # Environment variables
     envVars:
       - key: PYTHON_VERSION
-        value: 3.9.18
+        value: 3.11.9
       - key: PORT
         value: 10000
       - key: FLASK_ENV
