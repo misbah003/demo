@@ -35,6 +35,9 @@ import shap
 import warnings
 warnings.filterwarnings('ignore')
 
+# Configure logging for Render deployment
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 # Import validation module
 from .validation import (
     PredictionRequest, ExplainRequest, BatchPredictionRequest, ComparisonRequest,
