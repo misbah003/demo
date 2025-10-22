@@ -1,23 +1,14 @@
 services:
   - type: web
     name: navi-tax-ml-api
-    runtime: python
-    runtimeVersion: 3.11.10
     region: frankfurt
     plan: free
     
-    # Build configuration
-    buildCommand: |
-      pip install --upgrade pip &&
-      pip install -r requirements.txt
-    
-    # Start command - use gunicorn for production
-    startCommand: gunicorn -w 2 -b 0.0.0.0:$PORT --timeout 120 ml.ml_api_service_optimized:app
+    # Use Dockerfile for consistent Python 3.11.10
+    dockerfile: Dockerfile
     
     # Environment variables
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.10
       - key: PORT
         value: 10000
       - key: FLASK_ENV
@@ -25,18 +16,10 @@ services:
       - key: LOG_LEVEL
         value: INFO
     
-    # Autoscaling (free tier)
-    scaling:
-      minInstances: 1
-      maxInstances: 1
-    
     # Health check
     healthCheckPath: /health
     healthCheckInterval: 60
     healthCheckTimeout: 10
-    
-    # Use Dockerfile for consistent Python version
-    dockerfile: Dockerfile
     
     # GitHub integration (auto-deploy on push)
     repo: https://github.com/YOUR_USERNAME/navi-tax-35-main
