@@ -3,8 +3,5 @@
   "outputDirectory": "web/dist",
   "installCommand": "cd web && npm install",
   "framework": "vite",
-  "regions": ["fra1"],
-  "buildEnvironment": {
-    "NODE_ENV": "production"
-  }
+  "regions": ["fra1"]
 }
