@@ -33,6 +33,9 @@ from collections import defaultdict
 import time
 import shap
 import warnings
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 warnings.filterwarnings('ignore')
 
 # Configure logging for Render deployment
@@ -587,6 +590,98 @@ def get_feature_importance():
             'error': str(e)
         }), 500
 
+@app.route('/api/send-otp', methods=['POST'])
+def send_otp():
+    """
+    Send OTP email via Gmail SMTP
+
+    Request format:
+    {
+        "to": "user@example.com",
+        "otpCode": "123456"
+    }
+    """
+    try:
+        data = request.get_json()
+
+        if not data or 'to' not in data or 'otpCode' not in data:
+            return jsonify({
+                'success': False,
+                'error': 'Missing required fields: to and otpCode'
+            }), 400
+
+        to_email = data['to']
+        otp_code = data['otpCode']
+
+        # Get Gmail credentials from environment
+        gmail_user = os.getenv('GMAIL_USER')
+        gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
+
+        if not gmail_user or not gmail_app_password:
+            logger.error("Gmail credentials not configured")
+            return jsonify({
+                'success': False,
+                'error': 'Email service not configured'
+            }), 500
+
+        # Create message
+        msg = MIMEMultipart()
+        msg['From'] = f"Tax Intelligence <{gmail_user}>"
+        msg['To'] = to_email
+        msg['Subject'] = "Your Tax Intelligence Verification Code"
+
+        html = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: linear-gradient(135deg, #3b82f6, #1e40af); padding: 20px; text-align: center;">
+            <h1 style="color: white; margin: 0;">Tax Intelligence</h1>
+          </div>
+          <div style="padding: 30px; background: #f8fafc;">
+            <h2 style="color: #1e293b; margin-bottom: 20px;">Your Verification Code</h2>
+            <p style="color: #475569; font-size: 16px; line-height: 1.5;">
+              Hello,<br><br>
+              Your verification code for Tax Intelligence is:
+            </p>
+            <div style="background: white; border: 2px solid #3b82f6; border-radius: 8px; padding: 20px; text-align: center; margin: 20px 0;">
+              <span style="font-size: 32px; font-weight: bold; color: #3b82f6; letter-spacing: 4px;">{otp_code}</span>
+            </div>
+            <p style="color: #475569; font-size: 14px;">
+              This code will expire in <strong>5 minutes</strong> for security reasons.<br>
+              If you didn't request this code, please ignore this email.
+            </p>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+            <p style="color: #64748b; font-size: 12px; text-align: center;">
+              Best regards,<br>
+              Tax Intelligence Team
+            </p>
+          </div>
+        </div>
+        """
+
+        text = f"Your Tax Intelligence verification code is: {otp_code}. This code will expire in 5 minutes."
+
+        # Attach parts
+        msg.attach(MIMEText(text, 'plain'))
+        msg.attach(MIMEText(html, 'html'))
+
+        # Send email
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login(gmail_user, gmail_app_password)
+        server.sendmail(gmail_user, to_email, msg.as_string())
+        server.quit()
+
+        logger.info(f"OTP email sent successfully to {to_email}")
+        return jsonify({
+            'success': True,
+            'message': 'OTP email sent successfully'
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Send OTP error: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 if __name__ == '__main__':
     print("=" * 80)
     print("[*] STARTING OPTIMIZED ML API SERVICE")
@@ -607,6 +702,7 @@ if __name__ == '__main__':
         print(f"\n[OK] POST   http://localhost:{PORT}/predict              - Make a prediction")
         print(f"[OK] POST   http://localhost:{PORT}/batch-predict       - Batch predictions")
         print(f"[OK] POST   http://localhost:{PORT}/explain             - SHAP explanation")
+        print(f"[OK] POST   http://localhost:{PORT}/api/send-otp        - Send OTP email")
         print(f"[OK] GET    http://localhost:{PORT}/feature-importance  - Feature importance")
         print(f"[OK] GET    http://localhost:{PORT}/model-info         - Model metadata")
         print(f"[OK] GET    http://localhost:{PORT}/stats              - Statistics")
