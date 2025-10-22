@@ -1,7 +1,7 @@
 # Multi-stage build for optimized image size
 
 # Stage 1: Builder
-FROM python:3.9.18-slim as builder
+FROM python:3.10.14-slim as builder
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ COPY requirements.txt .
 RUN pip install --user --no-cache-dir -r requirements.txt
 
 # Stage 2: Runtime
-FROM python:3.9.18-slim
+FROM python:3.10.14-slim
 
 WORKDIR /app
 
