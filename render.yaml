@@ -2,7 +2,7 @@ services:
   - type: web
     name: navi-tax-ml-api
     runtime: python
-    runtimeVersion: 3.11.9
+    runtimeVersion: 3.11.10
     region: frankfurt
     plan: free
     
@@ -17,7 +17,7 @@ services:
     # Environment variables
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.9
+        value: 3.11.10
       - key: PORT
         value: 10000
       - key: FLASK_ENV
@@ -35,8 +35,8 @@ services:
     healthCheckInterval: 60
     healthCheckTimeout: 10
     
-    # Dockerfile if you prefer
-    # dockerfile: Dockerfile
+    # Use Dockerfile for consistent Python version
+    dockerfile: Dockerfile
     
     # GitHub integration (auto-deploy on push)
     repo: https://github.com/YOUR_USERNAME/navi-tax-35-main
