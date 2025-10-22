@@ -15,7 +15,7 @@ Valid Categories (from trained model):
            "Healthcare", "Education", "FMCG", "Real Estate", "Others"
 """
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, validator, ConstrainedList
 from typing import Literal, Optional
 import logging
 
@@ -126,7 +126,7 @@ class PredictionRequest(BaseModel):
 
 class BatchPredictionRequest(BaseModel):
     """Schema for /batch-predict endpoint requests"""
-    transactions: list = Field(..., min_items=1, description="List of prediction requests")
+    transactions: list = Field(..., description="List of prediction requests")
     
     class Config:
         schema_extra = {
@@ -151,6 +151,8 @@ class BatchPredictionRequest(BaseModel):
     @validator('transactions')
     def validate_transactions(cls, v):
         """Validate each transaction in the batch"""
+        if len(v) < 1:
+            raise ValueError("transactions must contain at least 1 item")
         validated = []
         for i, transaction in enumerate(v):
             try:
@@ -241,7 +243,7 @@ class ExplainRequest(BaseModel):
 
 class ComparisonRequest(BaseModel):
     """Schema for /compare-predictions endpoint requests"""
-    predictions: list = Field(..., min_items=2, max_items=5, description="List of 2-5 prediction requests")
+    predictions: list = Field(..., description="List of 2-5 prediction requests")
     
     class Config:
         schema_extra = {
@@ -266,6 +268,8 @@ class ComparisonRequest(BaseModel):
     @validator('predictions')
     def validate_predictions(cls, v):
         """Validate each prediction in the comparison"""
+        if len(v) < 2 or len(v) > 5:
+            raise ValueError("predictions must contain between 2 and 5 items")
         validated = []
         for i, prediction in enumerate(v):
             try:
