@@ -666,11 +666,18 @@ def send_otp():
         msg.attach(MIMEText(text, 'plain'))
         msg.attach(MIMEText(html, 'html'))
 
-        # Send email
-        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        server.login(gmail_user, gmail_app_password)
-        server.sendmail(gmail_user, to_email, msg.as_string())
-        server.quit()
+        # Send email with timeout
+        try:
+            server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10)  # 10 second timeout
+            server.login(gmail_user, gmail_app_password)
+            server.sendmail(gmail_user, to_email, msg.as_string())
+            server.quit()
+        except smtplib.SMTPException as e:
+            logger.error(f"SMTP error: {str(e)}")
+            return jsonify({
+                'success': False,
+                'error': f'Email service error: {str(e)}'
+            }), 500
 
         logger.info(f"OTP email sent successfully to {to_email}")
         return jsonify({
