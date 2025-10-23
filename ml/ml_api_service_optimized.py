@@ -668,10 +668,32 @@ def send_otp():
 
         # Send email with timeout
         try:
+            logger.info(f"Attempting to connect to Gmail SMTP for {to_email}")
             server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10)  # 10 second timeout
+            logger.info("SMTP connection established, attempting login")
             server.login(gmail_user, gmail_app_password)
+            logger.info("Login successful, sending email")
             server.sendmail(gmail_user, to_email, msg.as_string())
             server.quit()
+            logger.info("Email sent successfully")
+        except smtplib.SMTPAuthenticationError as e:
+            logger.error(f"SMTP authentication failed: {str(e)}")
+            return jsonify({
+                'success': False,
+                'error': f'Email authentication failed. Please check Gmail credentials.'
+            }), 500
+        except smtplib.SMTPConnectError as e:
+            logger.error(f"SMTP connection failed: {str(e)}")
+            return jsonify({
+                'success': False,
+                'error': f'Cannot connect to Gmail SMTP server. Please check network connectivity.'
+            }), 500
+        except OSError as e:
+            logger.error(f"Network error: {str(e)}")
+            return jsonify({
+                'success': False,
+                'error': f'Network connection error: {str(e)}. This may be due to firewall restrictions.'
+            }), 500
         except smtplib.SMTPException as e:
             logger.error(f"SMTP error: {str(e)}")
             return jsonify({
