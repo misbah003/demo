@@ -626,7 +626,7 @@ def send_otp():
             }), 500
 
         # Create SendGrid email message
-        from_email = "noreply@taxintelligence.app"  # Update this with your verified sender
+        from_email = "mail-misbahanwar16@gmail.com"  # Verified sender email
         subject = "Your Tax Intelligence Verification Code"
 
         html_content = f"""
