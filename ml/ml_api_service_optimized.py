@@ -33,9 +33,8 @@ from collections import defaultdict
 import time
 import shap
 import warnings
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, HtmlContent, PlainTextContent
 warnings.filterwarnings('ignore')
 
 # Configure logging for Render deployment
@@ -616,24 +615,21 @@ def send_otp():
         to_email = data['to']
         otp_code = data['otpCode']
 
-        # Get Gmail credentials from environment
-        gmail_user = os.getenv('GMAIL_USER')
-        gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
+        # Get SendGrid API key from environment
+        sendgrid_api_key = os.getenv('SENDGRID_API_KEY')
 
-        if not gmail_user or not gmail_app_password:
-            logger.error("Gmail credentials not configured")
+        if not sendgrid_api_key:
+            logger.error("SendGrid API key not configured")
             return jsonify({
                 'success': False,
-                'error': 'Email service not configured'
+                'error': 'Email service not configured. Please set SENDGRID_API_KEY environment variable.'
             }), 500
 
-        # Create message
-        msg = MIMEMultipart()
-        msg['From'] = f"Tax Intelligence <{gmail_user}>"
-        msg['To'] = to_email
-        msg['Subject'] = "Your Tax Intelligence Verification Code"
+        # Create SendGrid email message
+        from_email = "noreply@taxintelligence.app"  # Update this with your verified sender
+        subject = "Your Tax Intelligence Verification Code"
 
-        html = f"""
+        html_content = f"""
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #3b82f6, #1e40af); padding: 20px; text-align: center;">
             <h1 style="color: white; margin: 0;">Tax Intelligence</h1>
@@ -660,53 +656,38 @@ def send_otp():
         </div>
         """
 
-        text = f"Your Tax Intelligence verification code is: {otp_code}. This code will expire in 5 minutes."
+        text_content = f"Your Tax Intelligence verification code is: {otp_code}. This code will expire in 5 minutes."
 
-        # Attach parts
-        msg.attach(MIMEText(text, 'plain'))
-        msg.attach(MIMEText(html, 'html'))
-
-        # Send email with timeout
+        # Send email using SendGrid
         try:
-            logger.info(f"Attempting to connect to Gmail SMTP for {to_email}")
+            logger.info(f"Sending OTP email to {to_email} via SendGrid")
 
-            # Try SSL connection first (port 465)
-            try:
-                server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10)
-                logger.info("SMTP_SSL connection established on port 465")
-            except Exception as ssl_error:
-                logger.warning(f"SMTP_SSL failed: {ssl_error}, trying STARTTLS on port 587")
-                # Fallback to STARTTLS (port 587)
-                server = smtplib.SMTP('smtp.gmail.com', 587, timeout=10)
-                server.starttls()
-                logger.info("STARTTLS connection established on port 587")
+            message = Mail(
+                from_email=from_email,
+                to_emails=to_email,
+                subject=subject,
+                plain_text_content=PlainTextContent(text_content),
+                html_content=HtmlContent(html_content)
+            )
 
-            logger.info("Attempting login")
-            server.login(gmail_user, gmail_app_password)
-            logger.info("Login successful, sending email")
-            server.sendmail(gmail_user, to_email, msg.as_string())
-            server.quit()
-            logger.info("Email sent successfully")
-        except smtplib.SMTPAuthenticationError as e:
-            logger.error(f"SMTP authentication failed: {str(e)}")
-            return jsonify({
-                'success': False,
-                'error': f'Email authentication failed. Please check Gmail credentials.'
-            }), 500
-        except smtplib.SMTPConnectError as e:
-            logger.error(f"SMTP connection failed: {str(e)}")
-            return jsonify({
-                'success': False,
-                'error': f'Cannot connect to Gmail SMTP server. Please check network connectivity.'
-            }), 500
-        except OSError as e:
-            logger.error(f"Network error: {str(e)}")
-            return jsonify({
-                'success': False,
-                'error': f'Network connection error: {str(e)}. This may be due to firewall restrictions.'
-            }), 500
-        except smtplib.SMTPException as e:
-            logger.error(f"SMTP error: {str(e)}")
+            sg = SendGridAPIClient(sendgrid_api_key)
+            response = sg.send(message)
+
+            if response.status_code == 202:
+                logger.info(f"OTP email sent successfully to {to_email}")
+                return jsonify({
+                    'success': True,
+                    'message': 'OTP email sent successfully'
+                }), 200
+            else:
+                logger.error(f"SendGrid error: {response.status_code} - {response.body}")
+                return jsonify({
+                    'success': False,
+                    'error': f'Email service error: {response.status_code}'
+                }), 500
+
+        except Exception as e:
+            logger.error(f"SendGrid error: {str(e)}")
             return jsonify({
                 'success': False,
                 'error': f'Email service error: {str(e)}'
