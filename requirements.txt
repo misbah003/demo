@@ -29,7 +29,7 @@ python-multipart==0.0.6
 PyYAML==6.0.2
 openpyxl==3.1.2
 cryptography==41.0.3
-pydantic==2.9.0
+pydantic==2.5.0
 
 # Note: Removed for production free tier (not used + cause timeout):
 # - tensorflow (NOT USED by ml_api_service_optimized.py)
