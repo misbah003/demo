@@ -669,8 +669,19 @@ def send_otp():
         # Send email with timeout
         try:
             logger.info(f"Attempting to connect to Gmail SMTP for {to_email}")
-            server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10)  # 10 second timeout
-            logger.info("SMTP connection established, attempting login")
+
+            # Try SSL connection first (port 465)
+            try:
+                server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10)
+                logger.info("SMTP_SSL connection established on port 465")
+            except Exception as ssl_error:
+                logger.warning(f"SMTP_SSL failed: {ssl_error}, trying STARTTLS on port 587")
+                # Fallback to STARTTLS (port 587)
+                server = smtplib.SMTP('smtp.gmail.com', 587, timeout=10)
+                server.starttls()
+                logger.info("STARTTLS connection established on port 587")
+
+            logger.info("Attempting login")
             server.login(gmail_user, gmail_app_password)
             logger.info("Login successful, sending email")
             server.sendmail(gmail_user, to_email, msg.as_string())
