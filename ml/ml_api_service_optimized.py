@@ -45,7 +45,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 from validation import (
     PredictionRequest, ExplainRequest, BatchPredictionRequest, ComparisonRequest,
     validate_request, get_validation_reference
-)
+)  # Force redeploy
 
 app = Flask(__name__)
 
