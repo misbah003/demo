@@ -15,7 +15,7 @@ Valid Categories (from trained model):
            "Healthcare", "Education", "FMCG", "Real Estate", "Others"
 """
 
-from pydantic import BaseModel, Field, validator, ConstrainedList
+from pydantic import BaseModel, Field, field_validator
 from typing import Literal, Optional
 import logging
 
@@ -69,7 +69,7 @@ class PredictionRequest(BaseModel):
             }
         }
     
-    @validator('Category')
+    @field_validator('Category')
     def validate_category(cls, v):
         """Validate category is in allowed set"""
         if v not in VALID_CATEGORIES:
@@ -78,7 +78,7 @@ class PredictionRequest(BaseModel):
             )
         return v
     
-    @validator('Region')
+    @field_validator('Region')
     def validate_region(cls, v):
         """Validate region is in allowed set"""
         if v not in VALID_REGIONS:
@@ -87,7 +87,7 @@ class PredictionRequest(BaseModel):
             )
         return v
     
-    @validator('Filing_Status')
+    @field_validator('Filing_Status')
     def validate_filing_status(cls, v):
         """Validate filing status is in allowed set"""
         if v not in VALID_FILING_STATUS:
@@ -96,7 +96,7 @@ class PredictionRequest(BaseModel):
             )
         return v
     
-    @validator('Compliance_Flag')
+    @field_validator('Compliance_Flag')
     def validate_compliance_flag(cls, v):
         """Validate compliance flag is in allowed set"""
         if v not in VALID_COMPLIANCE_FLAG:
@@ -105,7 +105,7 @@ class PredictionRequest(BaseModel):
             )
         return v
     
-    @validator('Refund_Eligible')
+    @field_validator('Refund_Eligible')
     def validate_refund_eligible(cls, v):
         """Validate refund eligibility is in allowed set"""
         if v not in VALID_REFUND_ELIGIBLE:
@@ -114,7 +114,7 @@ class PredictionRequest(BaseModel):
             )
         return v
     
-    @validator('Is_Anomaly')
+    @field_validator('Is_Anomaly')
     def validate_is_anomaly(cls, v):
         """Validate anomaly flag is in allowed set"""
         if v not in VALID_IS_ANOMALY:
@@ -148,7 +148,7 @@ class BatchPredictionRequest(BaseModel):
             }
         }
     
-    @validator('transactions')
+    @field_validator('transactions')
     def validate_transactions(cls, v):
         """Validate each transaction in the batch"""
         if len(v) < 1:
@@ -192,7 +192,7 @@ class ExplainRequest(BaseModel):
             }
         }
     
-    @validator('Category')
+    @field_validator('Category')
     def validate_category(cls, v):
         if v not in VALID_CATEGORIES:
             raise ValueError(
@@ -200,7 +200,7 @@ class ExplainRequest(BaseModel):
             )
         return v
     
-    @validator('Region')
+    @field_validator('Region')
     def validate_region(cls, v):
         if v not in VALID_REGIONS:
             raise ValueError(
@@ -208,7 +208,7 @@ class ExplainRequest(BaseModel):
             )
         return v
     
-    @validator('Filing_Status')
+    @field_validator('Filing_Status')
     def validate_filing_status(cls, v):
         if v not in VALID_FILING_STATUS:
             raise ValueError(
@@ -216,7 +216,7 @@ class ExplainRequest(BaseModel):
             )
         return v
     
-    @validator('Compliance_Flag')
+    @field_validator('Compliance_Flag')
     def validate_compliance_flag(cls, v):
         if v not in VALID_COMPLIANCE_FLAG:
             raise ValueError(
@@ -224,7 +224,7 @@ class ExplainRequest(BaseModel):
             )
         return v
     
-    @validator('Refund_Eligible')
+    @field_validator('Refund_Eligible')
     def validate_refund_eligible(cls, v):
         if v not in VALID_REFUND_ELIGIBLE:
             raise ValueError(
@@ -232,7 +232,7 @@ class ExplainRequest(BaseModel):
             )
         return v
     
-    @validator('Is_Anomaly')
+    @field_validator('Is_Anomaly')
     def validate_is_anomaly(cls, v):
         if v not in VALID_IS_ANOMALY:
             raise ValueError(
@@ -265,7 +265,7 @@ class ComparisonRequest(BaseModel):
             }
         }
     
-    @validator('predictions')
+    @field_validator('predictions')
     def validate_predictions(cls, v):
         """Validate each prediction in the comparison"""
         if len(v) < 2 or len(v) > 5:
