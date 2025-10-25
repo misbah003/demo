@@ -24,7 +24,9 @@ const DocumentProcessor = () => {
   useEffect(() => {
     const checkMLStatus = async () => {
       try {
-        const response = await fetch('http://localhost:8000/health');
+        const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+        const mlApiUrl = backendUrl.replace('/api', ''); // Remove /api suffix to get base ML API URL
+        const response = await fetch(`${mlApiUrl}/health`);
         const data = await response.json();
         setMlApiStatus(data.status === 'healthy' && data.model_loaded ? 'online' : 'offline');
       } catch (error) {
@@ -73,7 +75,8 @@ const DocumentProcessor = () => {
 
       setProgress(25); // Upload started
 
-      const response = await fetch('http://localhost:3001/api/process-document', {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+      const response = await fetch(`${backendUrl}/api/process-document`, {
         method: 'POST',
         body: formData,
       });

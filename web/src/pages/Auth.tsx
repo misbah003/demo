@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -148,14 +149,23 @@ const Auth = () => {
               <form onSubmit={handleVerifyOtp} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="code">6-Digit Verification Code</Label>
-                  <Input
-                    id="code"
-                    type="text"
-                    placeholder="Enter the 6-digit code from your email"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
+                  <InputOTP
                     maxLength={6}
-                  />
+                    value={code}
+                    onChange={(value) => setCode(value)}
+                  >
+                    <InputOTPGroup>
+                      <InputOTPSlot index={0} />
+                      <InputOTPSlot index={1} />
+                      <InputOTPSlot index={2} />
+                      <InputOTPSlot index={3} />
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
+                    </InputOTPGroup>
+                  </InputOTP>
+                  <div className="text-xs text-muted-foreground text-center">
+                    Enter the 6-digit code from your email
+                  </div>
                 </div>
                 <Button
                   type="submit"
