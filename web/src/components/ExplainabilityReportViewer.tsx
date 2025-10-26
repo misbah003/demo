@@ -59,7 +59,7 @@ interface ExplainabilityReportViewerProps {
 }
 
 const ExplainabilityReportViewer: React.FC<ExplainabilityReportViewerProps> = ({
-  apiEndpoint = 'http://localhost:8000',
+  apiEndpoint = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001',
   autoRefresh = true,
   refreshInterval = 30000
 }) => {

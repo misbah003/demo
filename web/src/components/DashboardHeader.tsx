@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,10 +23,68 @@ const DashboardHeader = () => {
   const { toast } = useToast();
   const { user, signOut } = useAuth();
   const { profile } = useProfile();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSignOut = async () => {
     await signOut();
     toast({ title: "Logged out", description: "You have been signed out." });
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = searchQuery.toLowerCase().trim();
+
+    if (!query) return;
+
+    // Define search mappings for navigation
+    const searchMappings: Record<string, string> = {
+      'document': '/documents',
+      'documents': '/documents',
+      'upload': '/documents',
+      'file': '/documents',
+      'files': '/documents',
+      'explainability': '/explainability',
+      'explain': '/explainability',
+      'shap': '/explainability',
+      'lime': '/explainability',
+      'model': '/explainability',
+      'analysis': '/explainability',
+      'dashboard': '/',
+      'home': '/',
+      'vat': '/vat-predictor',
+      'predictor': '/vat-predictor',
+      'prediction': '/vat-predictor',
+      'refund': '/vat-predictor',
+      'profile': '/profile',
+      'settings': '/profile',
+      'notification': '/notifications',
+      'notifications': '/notifications',
+      'help': '/profile', // Could be a dedicated help page
+      'support': '/profile'
+    };
+
+    // Check for exact matches first
+    if (searchMappings[query]) {
+      navigate(searchMappings[query]);
+      setSearchQuery("");
+      return;
+    }
+
+    // Check for partial matches
+    for (const [key, path] of Object.entries(searchMappings)) {
+      if (query.includes(key) || key.includes(query)) {
+        navigate(path);
+        setSearchQuery("");
+        return;
+      }
+    }
+
+    // If no match found, show toast
+    toast({
+      title: "Search not found",
+      description: `No page found for "${query}". Try searching for: documents, explainability, dashboard, vat predictor, profile`,
+      variant: "destructive"
+    });
   };
 
   return (
@@ -44,13 +103,15 @@ const DashboardHeader = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-          <div className="relative">
+          <form onSubmit={handleSearch} className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input 
-              placeholder="Search insights, documents..." 
+            <Input
+              placeholder="Search insights, documents..."
               className="pl-10 w-64 bg-background/50"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-          </div>
+          </form>
           
           <Button variant="ghost" size="icon" onClick={() => navigate("/notifications")}>
             <Bell className="h-4 w-4" />

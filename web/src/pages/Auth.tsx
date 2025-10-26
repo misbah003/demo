@@ -16,10 +16,19 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [demoOtp, setDemoOtp] = useState('');
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   const { signInWithOtp, verifyOtp, user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Cooldown timer effect
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      const timer = setTimeout(() => setResendCooldown(resendCooldown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendCooldown]);
 
   // Redirect if already authenticated
   if (!loading && user) {
@@ -45,6 +54,38 @@ const Auth = () => {
           description: 'Please check your email for a 6-digit verification code. It may take a few moments to arrive.',
         });
         setStep('code');
+        setResendCooldown(15); // Start 15 second cooldown
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'An unexpected error occurred.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (resendCooldown > 0) return;
+
+    setIsLoading(true);
+    try {
+      const { error } = await signInWithOtp(email);
+
+      if (error) {
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Verification Code Resent!',
+          description: 'Please check your email (including spam folder) for the new 6-digit verification code.',
+        });
+        setResendCooldown(15); // Reset cooldown
       }
     } catch (error) {
       toast({
@@ -181,14 +222,26 @@ const Auth = () => {
                   'Verify Code'
                 )}
               </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => setStep('email')}
-                >
-                  Back to Email
-                </Button>
+
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => setStep('email')}
+                  >
+                    Back to Email
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="flex-1"
+                    onClick={handleResendOtp}
+                    disabled={isLoading || resendCooldown > 0}
+                  >
+                    {resendCooldown > 0 ? `Resend (${resendCooldown}s)` : 'Resend Code'}
+                  </Button>
+                </div>
               </form>
             </div>
           )}

@@ -130,14 +130,14 @@ const Explainability = () => {
           {/* Tabs Section */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex justify-center mb-6">
-              <TabsList className="grid w-full max-w-md">
-                <TabsTrigger value="dashboard" className="flex items-center gap-2">
+              <TabsList className="flex w-full max-w-md">
+                <TabsTrigger value="dashboard" className="flex-1 flex items-center justify-center gap-2 px-6 py-3">
                   <BarChart3 className="w-4 h-4" />
-                  Dashboard
+                  <span className="font-medium">Dashboard</span>
                 </TabsTrigger>
-                <TabsTrigger value="reports" className="flex items-center gap-2">
+                <TabsTrigger value="reports" className="flex-1 flex items-center justify-center gap-2 px-6 py-3">
                   <FileText className="w-4 h-4" />
-                  Reports
+                  <span className="font-medium">Reports</span>
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -269,8 +269,8 @@ const Explainability = () => {
               </div>
 
               {/* Main Reports Component */}
-              <ExplainabilityReportViewer 
-                apiEndpoint={import.meta.env.VITE_API_URL || "http://localhost:8000"}
+              <ExplainabilityReportViewer
+                apiEndpoint={import.meta.env.VITE_BACKEND_URL || "http://localhost:3001"}
               />
             </TabsContent>
           </Tabs>

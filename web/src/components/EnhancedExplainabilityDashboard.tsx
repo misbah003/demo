@@ -82,7 +82,7 @@ const EnhancedExplainabilityDashboard: React.FC<EnhancedExplainabilityDashboardP
   modelName = 'tax_model',
   modelType = 'document',
   onGenerateReport,
-  apiEndpoint = 'http://localhost:8000'
+  apiEndpoint = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001'
 }) => {
   const [comparison, setComparison] = useState<ComparisonData>({
     shap: null,

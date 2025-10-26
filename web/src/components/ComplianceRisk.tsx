@@ -60,42 +60,64 @@ const ComplianceRisk = () => {
 
   const fetchComplianceData = async () => {
     try {
-      const { data: response, error } = await supabase.functions.invoke('compliance-risk');
-      if (error) throw error;
-      setData(response);
-    } catch (error) {
-      console.error('Error fetching compliance data:', error);
-      // Fallback to default data
-      setData({
-        riskFactors: [
-          {
-            title: "Late Filing Risk",
-            score: 15,
-            status: "low",
-            reasons: ["No late filings detected"]
-          },
-          {
-            title: "Documentation Gap",
-            score: 45,
-            status: "medium",
-            reasons: ["Some documents missing"]
-          },
-          {
-            title: "Audit Probability",
-            score: 25,
-            status: "low",
-            reasons: ["Low risk based on compliance"]
-          },
-          {
-            title: "Penalty Risk",
-            score: 65,
-            status: "high",
-            reasons: ["Multiple non-compliance indicators"]
-          }
-        ],
-        overallScore: 37,
-        overallStatus: "medium"
+      // Try to fetch from ML API first
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+      const response = await fetch(`${backendUrl}/api/compliance-risk-assessment`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
+
+      if (response.ok) {
+        const mlData = await response.json();
+        setData(mlData);
+      } else {
+        throw new Error('ML API not available');
+      }
+    } catch (error) {
+      console.error('Error fetching compliance data from ML API:', error);
+
+      // Try Supabase edge function as backup
+      try {
+        const { data: response, error } = await supabase.functions.invoke('compliance-risk');
+        if (error) throw error;
+        setData(response);
+      } catch (supabaseError) {
+        console.error('Error fetching compliance data from Supabase:', supabaseError);
+
+        // Final fallback to default data
+        setData({
+          riskFactors: [
+            {
+              title: "Late Filing Risk",
+              score: 15,
+              status: "low",
+              reasons: ["No late filings detected"]
+            },
+            {
+              title: "Documentation Gap",
+              score: 45,
+              status: "medium",
+              reasons: ["Some documents missing"]
+            },
+            {
+              title: "Audit Probability",
+              score: 25,
+              status: "low",
+              reasons: ["Low risk based on compliance"]
+            },
+            {
+              title: "Penalty Risk",
+              score: 65,
+              status: "high",
+              reasons: ["Multiple non-compliance indicators"]
+            }
+          ],
+          overallScore: 37,
+          overallStatus: "medium"
+        });
+      }
     } finally {
       setLoading(false);
     }
