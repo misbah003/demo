@@ -130,14 +130,14 @@ const Explainability = () => {
           {/* Tabs Section */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex justify-center mb-6">
-              <TabsList className="flex w-full max-w-md">
-                <TabsTrigger value="dashboard" className="flex-1 flex items-center justify-center gap-2 px-6 py-3">
+              <TabsList className="grid w-full max-w-md grid-cols-2 h-12">
+                <TabsTrigger value="dashboard" className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-slate-900">
                   <BarChart3 className="w-4 h-4" />
-                  <span className="font-medium">Dashboard</span>
+                  <span>Dashboard</span>
                 </TabsTrigger>
-                <TabsTrigger value="reports" className="flex-1 flex items-center justify-center gap-2 px-6 py-3">
+                <TabsTrigger value="reports" className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-slate-900">
                   <FileText className="w-4 h-4" />
-                  <span className="font-medium">Reports</span>
+                  <span>Reports</span>
                 </TabsTrigger>
               </TabsList>
             </div>

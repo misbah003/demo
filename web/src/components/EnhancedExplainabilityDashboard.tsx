@@ -100,18 +100,8 @@ const EnhancedExplainabilityDashboard: React.FC<EnhancedExplainabilityDashboardP
   }, [predictionData]);
 
   const getEndpoint = (): string => {
-    switch (modelType) {
-      case 'document':
-        return '/api/explain-document';
-      case 'anomaly':
-        return '/api/explain-anomaly-advanced';
-      case 'sentiment':
-        return '/api/explain-sentiment';
-      case 'vat':
-        return '/api/explain-vat';
-      default:
-        return '/api/explain-document';
-    }
+    // The ML API uses /explain endpoint for all explanation types
+    return '/explain';
   };
 
   const fetchComparativeExplanations = async () => {

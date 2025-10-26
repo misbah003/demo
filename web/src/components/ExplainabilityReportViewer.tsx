@@ -83,18 +83,13 @@ const ExplainabilityReportViewer: React.FC<ExplainabilityReportViewerProps> = ({
   const fetchReports = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      const response = await fetch(`${apiEndpoint}/api/reports`);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch reports');
-      }
-      
-      const data = await response.json();
-      setReports(data.reports || []);
+      // For now, show empty state since reports endpoint may not be implemented yet
+      // This can be implemented later when the ML API supports report storage
+      setReports([]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      setError('Reports feature coming soon - ML API needs to implement report storage');
       console.error('Reports fetch error:', err);
     } finally {
       setLoading(false);

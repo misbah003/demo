@@ -148,15 +148,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
         
         if (testSignUpError && testSignUpError.message.includes('already registered')) {
-          console.error('❌ User exists but cannot sign in - likely unconfirmed email');
-          return { error: { 
-            message: '🔒 This email was registered before but has an unconfirmed status.\n\n' +
-                     '📋 To fix this:\n' +
-                     '1. Go to Supabase Dashboard > Authentication > Users\n' +
-                     '2. Find and DELETE the user: ' + email + '\n' +
-                     '3. Come back and try signing in again\n\n' +
-                     'OR use a different email address that hasn\'t been used before.'
-          } };
+          console.log('ℹ️ User exists with unconfirmed email, trying to resend confirmation...');
+
+          // Try to resend confirmation email
+          try {
+            await supabase.auth.resend({
+              type: 'signup',
+              email: email,
+            });
+            console.log('✅ Confirmation email resent');
+
+            // Since email confirmation is required, we'll return an error asking user to check email
+            return { error: {
+              message: '📧 Your email needs to be confirmed. Please check your email (including spam folder) for a confirmation link from Supabase. If you don\'t see it, try signing up again.'
+            } };
+          } catch (resendError) {
+            console.error('❌ Failed to resend confirmation:', resendError);
+            return { error: {
+              message: 'Your account exists but needs email confirmation. Please contact support or try a different email address.'
+            } };
+          }
         }
       }
       
