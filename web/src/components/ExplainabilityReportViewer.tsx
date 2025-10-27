@@ -85,11 +85,12 @@ const ExplainabilityReportViewer: React.FC<ExplainabilityReportViewerProps> = ({
     setError(null);
 
     try {
-      // For now, show empty state since reports endpoint may not be implemented yet
-      // This can be implemented later when the ML API supports report storage
-      setReports([]);
+      // Load reports from localStorage
+      const storedReports = localStorage.getItem('explainability-reports');
+      const reports = storedReports ? JSON.parse(storedReports) : [];
+      setReports(reports);
     } catch (err) {
-      setError('Reports feature coming soon - ML API needs to implement report storage');
+      setError('Failed to load reports from storage');
       console.error('Reports fetch error:', err);
     } finally {
       setLoading(false);
@@ -100,19 +101,26 @@ const ExplainabilityReportViewer: React.FC<ExplainabilityReportViewerProps> = ({
     if (report.format !== 'JSON') {
       return; // Can't display detail view for non-JSON reports
     }
-    
+
     setDetailLoading(true);
-    
+
     try {
-      const response = await fetch(`${apiEndpoint}${report.url}`);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch report details');
+      // For local reports, use stored data
+      if (report.data) {
+        setReportDetail(report.data);
+        setSelectedReport(report);
+      } else {
+        // Fallback to fetch if url exists
+        const response = await fetch(`${apiEndpoint}${report.url}`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch report details');
+        }
+
+        const data = await response.json();
+        setReportDetail(data);
+        setSelectedReport(report);
       }
-      
-      const data = await response.json();
-      setReportDetail(data);
-      setSelectedReport(report);
     } catch (err) {
       console.error('Report detail fetch error:', err);
     } finally {

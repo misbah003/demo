@@ -14,6 +14,7 @@ import {
 const Explainability = () => {
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(() => searchParams.get("tab") || "dashboard");
+  const [currentExplanationData, setCurrentExplanationData] = useState<any>(null);
 
   useEffect(() => {
     const tabParam = searchParams.get("tab");
@@ -21,6 +22,31 @@ const Explainability = () => {
       setActiveTab(tabParam);
     }
   }, [searchParams]);
+
+  const generateReport = (data?: any) => {
+    if (!data && !currentExplanationData) {
+      alert('No explanation data available. Please generate explanations first.');
+      return;
+    }
+
+    const reportData = data || currentExplanationData;
+    const report = {
+      filename: `explainability-report-${Date.now()}.json`,
+      format: 'JSON',
+      size: JSON.stringify(reportData).length,
+      created: new Date().toISOString(),
+      url: '', // Not used for local storage
+      data: reportData
+    };
+
+    // Save to localStorage
+    const existingReports = JSON.parse(localStorage.getItem('explainability-reports') || '[]');
+    existingReports.push(report);
+    localStorage.setItem('explainability-reports', JSON.stringify(existingReports));
+
+    // Switch to reports tab
+    setActiveTab('reports');
+  };
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -222,7 +248,7 @@ const Explainability = () => {
               </div>
 
               {/* Main Dashboard Component */}
-              <EnhancedExplainabilityDashboard />
+              <EnhancedExplainabilityDashboard onGenerateReport={generateReport} />
             </TabsContent>
 
             {/* Reports Tab */}

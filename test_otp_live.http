@@ -1,0 +1,7 @@
+POST https://navi-tax-ml-api.onrender.com/api/send-otp
+Content-Type: application/json
+
+{
+  "to": "test@example.com",
+  "otpCode": "123456"
+}

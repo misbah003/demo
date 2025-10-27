@@ -73,7 +73,7 @@ interface EnhancedExplainabilityDashboardProps {
   predictionData?: any;
   modelName: string;
   modelType: 'document' | 'anomaly' | 'sentiment' | 'vat';
-  onGenerateReport?: () => void;
+  onGenerateReport?: (data: any) => void;
   apiEndpoint?: string;
 }
 
@@ -109,32 +109,31 @@ const EnhancedExplainabilityDashboard: React.FC<EnhancedExplainabilityDashboardP
 
     try {
       const endpoint = getEndpoint();
-      
-      // Fetch SHAP explanation
-      const shap_start = performance.now();
-      const shapResponse = await fetch(`${apiEndpoint}${endpoint}`, {
+
+      // Fetch explanations from ML API (single call returns both SHAP and LIME)
+      const start = performance.now();
+      const response = await fetch(`${apiEndpoint}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...predictionData, method: 'shap' })
+        body: JSON.stringify(predictionData)
       });
 
-      if (!shapResponse.ok) throw new Error('SHAP fetch failed');
-      const shapData: ExplanationData = await shapResponse.json();
-      const shap_elapsed = performance.now() - shap_start;
-      shapData.elapsed_time = shap_elapsed;
+      if (!response.ok) throw new Error('Explanation fetch failed');
+      const result = await response.json();
+      const elapsed = performance.now() - start;
 
-      // Fetch LIME explanation
-      const lime_start = performance.now();
-      const limeResponse = await fetch(`${apiEndpoint}${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...predictionData, method: 'lime' })
-      });
+      // Assume API returns { shap: ExplanationData, lime: ExplanationData }
+      const shapData: ExplanationData = result.shap || result;
+      const limeData: ExplanationData = result.lime || result;
 
-      if (!limeResponse.ok) throw new Error('LIME fetch failed');
-      const limeData: ExplanationData = await limeResponse.json();
-      const lime_elapsed = performance.now() - lime_start;
-      limeData.elapsed_time = lime_elapsed;
+      if (shapData) {
+        shapData.elapsed_time = elapsed / 2; // Split time
+        shapData.method = 'shap';
+      }
+      if (limeData) {
+        limeData.elapsed_time = elapsed / 2;
+        limeData.method = 'lime';
+      }
 
       setComparison(prev => ({
         ...prev,
@@ -147,7 +146,7 @@ const EnhancedExplainabilityDashboard: React.FC<EnhancedExplainabilityDashboardP
       setComparison(prev => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Failed to fetch explanations. Make sure you have prediction data.'
       }));
     }
   };
@@ -601,8 +600,8 @@ const ComparisonView: React.FC<{ shap: ExplanationData | null; lime: Explanation
 
 // ==================== INSIGHTS VIEW ====================
 
-const InsightsView: React.FC<{ shap: ExplanationData | null; lime: ExplanationData | null; modelType: string; onGenerateReport?: () => void }> = ({ 
-  shap, lime, modelType, onGenerateReport 
+const InsightsView: React.FC<{ shap: ExplanationData | null; lime: ExplanationData | null; modelType: string; onGenerateReport?: (data: any) => void }> = ({
+  shap, lime, modelType, onGenerateReport
 }) => {
   if (!shap || !lime) return null;
 
@@ -653,7 +652,7 @@ const InsightsView: React.FC<{ shap: ExplanationData | null; lime: ExplanationDa
             <p>• Use LIME for interactive dashboards requiring real-time response</p>
             <p>• Compare both methods for critical predictions</p>
             {onGenerateReport && (
-              <Button onClick={onGenerateReport} className="mt-4 w-full">
+              <Button onClick={() => onGenerateReport({ shap, lime, modelType })} className="mt-4 w-full">
                 <FileDown className="mr-2 h-4 w-4" />
                 Generate Full Report
               </Button>
