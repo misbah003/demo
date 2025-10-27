@@ -24,8 +24,7 @@ const DocumentProcessor = () => {
   useEffect(() => {
     const checkMLStatus = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
-        const mlApiUrl = backendUrl.replace('/api', ''); // Remove /api suffix to get base ML API URL
+        const mlApiUrl = import.meta.env.VITE_ML_API_URL || 'https://navi-tax-ml-api.onrender.com';
         const response = await fetch(`${mlApiUrl}/health`);
         const data = await response.json();
         setMlApiStatus(data.status === 'healthy' && data.model_loaded ? 'online' : 'offline');
@@ -33,7 +32,7 @@ const DocumentProcessor = () => {
         setMlApiStatus('offline');
       }
     };
-    
+
     checkMLStatus();
     // Check every 30 seconds
     const interval = setInterval(checkMLStatus, 30000);
@@ -75,16 +74,32 @@ const DocumentProcessor = () => {
 
       setProgress(25); // Upload started
 
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
-      const response = await fetch(`${backendUrl}/api/process-document`, {
-        method: 'POST',
-        body: formData,
-      });
+      const mlApiUrl = import.meta.env.VITE_ML_API_URL || 'https://navi-tax-ml-api.onrender.com';
 
-      setProgress(50); // Processing
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-      if (!response.ok) {
-        throw new Error('Failed to process documents');
+      let response;
+      try {
+        response = await fetch(`${mlApiUrl}/api/process-document`, {
+          method: 'POST',
+          body: formData,
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+        setProgress(50); // Processing
+
+        if (!response.ok) {
+          throw new Error(`Server responded with status: ${response.status}`);
+        }
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        if (fetchError.name === 'AbortError') {
+          throw new Error('Request timed out. Please try again.');
+        }
+        throw fetchError;
       }
 
       const data = await response.json();
@@ -243,46 +258,24 @@ const DocumentProcessor = () => {
                 
                 <div className="space-y-2">
                   <p className="text-xs text-muted-foreground">
-                    Type: <span className="text-foreground">{result.type}</span>
+                    Status: <span className="text-foreground">{result.status || 'Processed'}</span>
                   </p>
                   <p className="text-xs text-muted-foreground">
                     Confidence: <span className="text-foreground">{(result.confidence * 100).toFixed(1)}%</span>
                   </p>
-                  <div className="text-xs text-muted-foreground">
-                    <p className="font-medium text-foreground mb-1">Extracted Information:</p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {(() => {
-                        // Group entities by type and count them
-                        const entityCounts: Record<string, number> = {};
-                        const entitySamples: Record<string, string[]> = {};
-                        
-                        result.entities.forEach((entity: string) => {
-                          const [type, value] = entity.split(': ');
-                          if (!entityCounts[type]) {
-                            entityCounts[type] = 0;
-                            entitySamples[type] = [];
-                          }
-                          entityCounts[type]++;
-                          // Keep only first 2 samples
-                          if (entitySamples[type].length < 2) {
-                            entitySamples[type].push(value);
-                          }
-                        });
-
-                        return Object.entries(entityCounts).map(([type, count]) => (
-                          <div key={type} className="text-foreground">
-                            <span className="font-medium">{type}:</span> {count}
-                            {entitySamples[type].length > 0 && (
-                              <div className="text-xs text-muted-foreground ml-2">
-                                {entitySamples[type].slice(0, 1).join(', ')}
-                                {count > 1 && ` +${count - 1} more`}
-                              </div>
-                            )}
-                          </div>
-                        ));
-                      })()}
+                  {result.extracted_data && (
+                    <div className="text-xs text-muted-foreground">
+                      <p className="font-medium text-foreground mb-1">Processing Info:</p>
+                      <div className="grid grid-cols-1 gap-1">
+                        <div className="text-foreground">
+                          <span className="font-medium">Method:</span> {result.extracted_data.method || 'ML'}
+                        </div>
+                        <div className="text-foreground">
+                          <span className="font-medium">Accuracy:</span> {result.extracted_data.accuracy || 95}%
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             ))}

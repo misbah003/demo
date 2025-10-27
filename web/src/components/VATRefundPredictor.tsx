@@ -106,7 +106,8 @@ const VATRefundPredictor = () => {
 
       console.log("Sending prediction request:", apiPayload);
 
-      const response = await fetch('http://localhost:5001/predict', {
+      const mlApiUrl = import.meta.env.VITE_ML_API_URL || 'https://navi-tax-ml-api.onrender.com';
+      const response = await fetch(`${mlApiUrl}/predict`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
