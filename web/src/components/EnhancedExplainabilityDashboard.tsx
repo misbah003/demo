@@ -82,7 +82,7 @@ const EnhancedExplainabilityDashboard: React.FC<EnhancedExplainabilityDashboardP
   modelName = 'tax_model',
   modelType = 'document',
   onGenerateReport,
-  apiEndpoint = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001'
+  apiEndpoint = import.meta.env.VITE_ML_API_URL || 'http://localhost:8000'
 }) => {
   const [comparison, setComparison] = useState<ComparisonData>({
     shap: null,
@@ -94,46 +94,133 @@ const EnhancedExplainabilityDashboard: React.FC<EnhancedExplainabilityDashboardP
 
   // Fetch explanations on mount or when predictionData changes
   useEffect(() => {
-    if (predictionData) {
-      fetchComparativeExplanations();
+    if (predictionData && predictionData.content) {
+      // Use a small delay to ensure state is settled
+      const timeoutId = setTimeout(() => {
+        fetchComparativeExplanations();
+      }, 100);
+      return () => clearTimeout(timeoutId);
     }
   }, [predictionData]);
 
   const getEndpoint = (): string => {
-    // The ML API uses /explain endpoint for all explanation types
-    return '/explain';
+    // Route to correct explanation endpoint based on model type
+    switch (modelType) {
+      case 'document':
+        return '/api/explain-document';
+      case 'vat':
+        return '/api/explain-vat';
+      case 'anomaly':
+        return '/api/explain-anomaly-advanced';
+      case 'sentiment':
+        return '/api/explain-sentiment';
+      default:
+        return '/api/explain-document';
+    }
+  };
+
+  const getRequestData = (method: 'shap' | 'lime') => {
+    // Prepare request data based on model type
+    if (!predictionData) return null;
+
+    switch (modelType) {
+      case 'document':
+        return {
+          text: predictionData.content || predictionData.text || '',
+          method: method
+        };
+      case 'vat':
+        return {
+          ...predictionData,
+          method: method
+        };
+      default:
+        return {
+          text: predictionData.content || predictionData.text || '',
+          method: method
+        };
+    }
   };
 
   const fetchComparativeExplanations = async () => {
     setComparison(prev => ({ ...prev, loading: true, error: null }));
 
+    if (!predictionData || !predictionData.content) {
+      const msg = 'No document content available. Please select a valid document.';
+      console.error('[Explainability]', msg);
+      setComparison(prev => ({
+        ...prev,
+        loading: false,
+        error: msg
+      }));
+      return;
+    }
+
     try {
       const endpoint = getEndpoint();
-
-      // Fetch explanations from ML API (single call returns both SHAP and LIME)
+      const fullUrl = `${apiEndpoint}${endpoint}`;
+      console.log('[Explainability] API Call:', { apiEndpoint, endpoint, fullUrl });
       const start = performance.now();
-      const response = await fetch(`${apiEndpoint}${endpoint}`, {
+
+      // Fetch SHAP explanation
+      const shapRequest = getRequestData('shap');
+      console.log('[Explainability] SHAP Request:', shapRequest);
+      
+      const shapResponse = await fetch(fullUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(predictionData)
+        body: JSON.stringify(shapRequest)
       });
 
-      if (!response.ok) throw new Error('Explanation fetch failed');
-      const result = await response.json();
+      if (!shapResponse.ok) {
+        const errorText = await shapResponse.text();
+        const errorMsg = `SHAP ${shapResponse.status}: ${errorText || shapResponse.statusText}`;
+        console.error('[Explainability]', errorMsg);
+        throw new Error(errorMsg);
+      }
+      const shapResult = await shapResponse.json();
+      console.log('[Explainability] SHAP Result:', shapResult);
+
+      // Fetch LIME explanation
+      const limeRequest = getRequestData('lime');
+      console.log('[Explainability] LIME Request:', limeRequest);
+      
+      const limeResponse = await fetch(fullUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(limeRequest)
+      });
+
+      if (!limeResponse.ok) {
+        const errorText = await limeResponse.text();
+        const errorMsg = `LIME ${limeResponse.status}: ${errorText || limeResponse.statusText}`;
+        console.error('[Explainability]', errorMsg);
+        throw new Error(errorMsg);
+      }
+      const limeResult = await limeResponse.json();
+      console.log('[Explainability] LIME Result:', limeResult);
+
       const elapsed = performance.now() - start;
 
-      // Assume API returns { shap: ExplanationData, lime: ExplanationData }
-      const shapData: ExplanationData = result.shap || result;
-      const limeData: ExplanationData = result.lime || result;
+      // Process results - unwrap 'data' field if present
+      const processResponse = (result: any, method: string) => {
+        // If the API wrapped the data in a 'data' field, extract it
+        const dataContent = result.data || result;
+        return {
+          ...dataContent,
+          method: method,
+          elapsed_time: elapsed / 2,
+          timestamp: result.timestamp || new Date().toISOString(),
+          status: 'success',
+          // Ensure feature_contributions exists as empty array if not present
+          feature_contributions: dataContent.feature_contributions || 
+                                 dataContent.top_tokens || 
+                                 dataContent.token_contributions || []
+        };
+      };
 
-      if (shapData) {
-        shapData.elapsed_time = elapsed / 2; // Split time
-        shapData.method = 'shap';
-      }
-      if (limeData) {
-        limeData.elapsed_time = elapsed / 2;
-        limeData.method = 'lime';
-      }
+      const shapData: ExplanationData = processResponse(shapResult, 'shap');
+      const limeData: ExplanationData = processResponse(limeResult, 'lime');
 
       setComparison(prev => ({
         ...prev,
@@ -143,10 +230,11 @@ const EnhancedExplainabilityDashboard: React.FC<EnhancedExplainabilityDashboardP
         selectedMethod: 'shap'
       }));
     } catch (error) {
+      console.error('Explanation fetch error:', error);
       setComparison(prev => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch explanations. Make sure you have prediction data.'
+        error: error instanceof Error ? error.message : 'Failed to fetch explanations. Please check the document content.'
       }));
     }
   };
