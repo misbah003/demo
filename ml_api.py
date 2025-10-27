@@ -46,19 +46,19 @@ def run_ml_api():
         # First, check which API service is available
         api_service = None
         
-        # Use optimized first for fast startup, then advanced/explainability for full features
-        if os.path.exists('ml/ml_api_service_optimized.py'):
-            print("✅ Found Optimized ML API service (Fast startup)")
-            from ml.ml_api_service_optimized import app
-            api_service = 'optimized'
+        # Use explainability first (has all features), then others as fallback
+        if os.path.exists('ml/ml_api_with_explainability.py'):
+            print("✅ Found ML API with Explainability support (Full features)")
+            from ml.ml_api_with_explainability import app
+            api_service = 'explainability'
         elif os.path.exists('ml/ml_api_service_advanced.py'):
             print("✅ Found Advanced ML API service")
             from ml.ml_api_service_advanced import app
             api_service = 'advanced'
-        elif os.path.exists('ml/ml_api_with_explainability.py'):
-            print("✅ Found ML API with Explainability support")
-            from ml.ml_api_with_explainability import app
-            api_service = 'explainability'
+        elif os.path.exists('ml/ml_api_service_optimized.py'):
+            print("✅ Found Optimized ML API service (Fast startup)")
+            from ml.ml_api_service_optimized import app
+            api_service = 'optimized'
         else:
             print("⚠️  No ML API service found, using basic service")
             from ml.ml_api_service import app
