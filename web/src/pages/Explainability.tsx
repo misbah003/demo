@@ -28,10 +28,10 @@ const Explainability = () => {
   
   const { documents, loading: docsLoading } = useProcessedDocuments();
 
-  const handleAnalyzeDocument = (documentId: string) => {
+  const handleAnalyzeDocument = (documentId: string): boolean => {
     if (!documentId) {
       alert('Please select a processed document first');
-      return;
+      return false;
     }
 
     const selectedDoc = documents.find((d) => d.id === documentId);
@@ -46,21 +46,24 @@ const Explainability = () => {
         prediction: selectedDoc.classification,
       };
       setPredictionDataForAnalysis(analysisData);
+      return true;
     }
+    return false;
   };
 
   const handleTabChange = (tabName: string, documentId?: string) => {
     if (documentId) {
-      handleAnalyzeDocument(documentId);
+      const success = handleAnalyzeDocument(documentId);
+      if (!success) return;
     }
     setActiveTab(tabName);
-    // Scroll to tabs section smoothly
+    // Scroll to tabs section smoothly - wait for state update
     setTimeout(() => {
       const tabsSection = document.querySelector('[role="tablist"]');
       if (tabsSection) {
         tabsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 100);
+    }, 300); // Increased delay to ensure state update completes
   };
 
   useEffect(() => {
@@ -135,7 +138,7 @@ const Explainability = () => {
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Select a processed document to analyze:
                 </label>
-                <Select value={selectedDocumentId} onValueChange={setSelectedDocumentId}>
+                <Select value={selectedDocumentId} onValueChange={setSelectedDocumentId} disabled={docsLoading}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder={docsLoading ? "Loading documents..." : "Choose a document..."} />
                   </SelectTrigger>
@@ -150,6 +153,11 @@ const Explainability = () => {
                     ))}
                   </SelectContent>
                 </Select>
+                {selectedDocumentId && documents.find(d => d.id === selectedDocumentId) && (
+                  <p className="text-xs text-green-600 dark:text-green-400 mt-2">
+                    ✓ Document selected and ready for analysis
+                  </p>
+                )}
               </div>
 
               {/* Feature Cards Grid */}
@@ -176,7 +184,8 @@ const Explainability = () => {
                   </ul>
                   <Button 
                     onClick={() => handleTabChange("dashboard", selectedDocumentId)}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    disabled={!selectedDocumentId || docsLoading}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Explore SHAP
                     <ArrowRight className="ml-2 w-4 h-4" />
@@ -205,7 +214,8 @@ const Explainability = () => {
                   </ul>
                   <Button 
                     onClick={() => handleTabChange("dashboard", selectedDocumentId)}
-                    className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                    disabled={!selectedDocumentId || docsLoading}
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Compare Methods
                     <ArrowRight className="ml-2 w-4 h-4" />
