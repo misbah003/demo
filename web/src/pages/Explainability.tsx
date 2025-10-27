@@ -5,7 +5,15 @@ import EnhancedExplainabilityDashboard from "@/components/EnhancedExplainability
 import ExplainabilityReportViewer from "@/components/ExplainabilityReportViewer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import dashboardBg from "@/assets/dashboard-bg.jpg";
+import { useProcessedDocuments } from "@/hooks/useProcessedDocuments";
 import { 
   BarChart3, FileText, Zap, Brain, BookOpen, TrendingUp, 
   ArrowRight, Lightbulb, Shield, Download, Settings 
@@ -15,8 +23,36 @@ const Explainability = () => {
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(() => searchParams.get("tab") || "dashboard");
   const [currentExplanationData, setCurrentExplanationData] = useState<any>(null);
+  const [selectedDocumentId, setSelectedDocumentId] = useState<string>("");
+  const [predictionDataForAnalysis, setPredictionDataForAnalysis] = useState<any>(null);
+  
+  const { documents, loading: docsLoading } = useProcessedDocuments();
 
-  const handleTabChange = (tabName: string) => {
+  const handleAnalyzeDocument = (documentId: string) => {
+    if (!documentId) {
+      alert('Please select a processed document first');
+      return;
+    }
+
+    const selectedDoc = documents.find((d) => d.id === documentId);
+    if (selectedDoc) {
+      // Prepare data for analysis
+      const analysisData = {
+        content: selectedDoc.filename || 'Unknown document',
+        document_type: selectedDoc.type || 'unknown',
+        classification: selectedDoc.classification,
+        confidence: selectedDoc.confidence,
+        entities: selectedDoc.entities,
+        prediction: selectedDoc.classification,
+      };
+      setPredictionDataForAnalysis(analysisData);
+    }
+  };
+
+  const handleTabChange = (tabName: string, documentId?: string) => {
+    if (documentId) {
+      handleAnalyzeDocument(documentId);
+    }
     setActiveTab(tabName);
     // Scroll to tabs section smoothly
     setTimeout(() => {
@@ -94,6 +130,28 @@ const Explainability = () => {
                 </p>
               </div>
 
+              {/* Document Selector */}
+              <div className="mb-8 p-4 bg-white dark:bg-slate-900 rounded-lg border border-blue-200 dark:border-blue-700">
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Select a processed document to analyze:
+                </label>
+                <Select value={selectedDocumentId} onValueChange={setSelectedDocumentId}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder={docsLoading ? "Loading documents..." : "Choose a document..."} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {documents.length === 0 && !docsLoading && (
+                      <SelectItem value="none" disabled>No processed documents found</SelectItem>
+                    )}
+                    {documents.map((doc) => (
+                      <SelectItem key={doc.id} value={doc.id}>
+                        {doc.filename} - {doc.type} ({doc.classification})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Feature Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 {/* SHAP Card */}
@@ -117,7 +175,7 @@ const Explainability = () => {
                     <li className="flex gap-2 text-muted-foreground"><span className="text-blue-600">✓</span> Prediction force plots</li>
                   </ul>
                   <Button 
-                    onClick={() => handleTabChange("dashboard")}
+                    onClick={() => handleTabChange("dashboard", selectedDocumentId)}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     Explore SHAP
@@ -146,7 +204,7 @@ const Explainability = () => {
                     <li className="flex gap-2 text-muted-foreground"><span className="text-purple-600">✓</span> Decision path analysis</li>
                   </ul>
                   <Button 
-                    onClick={() => handleTabChange("dashboard")}
+                    onClick={() => handleTabChange("dashboard", selectedDocumentId)}
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white"
                   >
                     Compare Methods
@@ -259,7 +317,12 @@ const Explainability = () => {
               </div>
 
               {/* Main Dashboard Component */}
-              <EnhancedExplainabilityDashboard onGenerateReport={generateReport} />
+              <EnhancedExplainabilityDashboard 
+                predictionData={predictionDataForAnalysis}
+                modelName="document_classifier"
+                modelType="document"
+                onGenerateReport={generateReport} 
+              />
             </TabsContent>
 
             {/* Reports Tab */}
