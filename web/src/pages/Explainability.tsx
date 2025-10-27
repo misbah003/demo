@@ -16,6 +16,17 @@ const Explainability = () => {
   const [activeTab, setActiveTab] = useState(() => searchParams.get("tab") || "dashboard");
   const [currentExplanationData, setCurrentExplanationData] = useState<any>(null);
 
+  const handleTabChange = (tabName: string) => {
+    setActiveTab(tabName);
+    // Scroll to tabs section smoothly
+    setTimeout(() => {
+      const tabsSection = document.querySelector('[role="tablist"]');
+      if (tabsSection) {
+        tabsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam === "reports" || tabParam === "dashboard") {
@@ -106,7 +117,7 @@ const Explainability = () => {
                     <li className="flex gap-2 text-muted-foreground"><span className="text-blue-600">✓</span> Prediction force plots</li>
                   </ul>
                   <Button 
-                    onClick={() => setActiveTab("dashboard")}
+                    onClick={() => handleTabChange("dashboard")}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     Explore SHAP
@@ -135,7 +146,7 @@ const Explainability = () => {
                     <li className="flex gap-2 text-muted-foreground"><span className="text-purple-600">✓</span> Decision path analysis</li>
                   </ul>
                   <Button 
-                    onClick={() => setActiveTab("dashboard")}
+                    onClick={() => handleTabChange("dashboard")}
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white"
                   >
                     Compare Methods

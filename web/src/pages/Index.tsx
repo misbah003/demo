@@ -74,7 +74,7 @@ const Index = () => {
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <h3 className="text-xl font-semibold text-foreground mb-2">
-                        SHAP Analysis Dashboard
+                        Advanced AI Interpretation
                       </h3>
                       <p className="text-sm text-muted-foreground">
                         Visualize feature contributions and understand model predictions with interactive SHAP analysis
