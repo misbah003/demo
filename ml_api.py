@@ -18,6 +18,7 @@ import sys
 import subprocess
 import time
 from pathlib import Path
+import uvicorn
 
 # Add ml directory to path
 ml_dir = Path(__file__).parent / 'ml'
@@ -69,19 +70,25 @@ def run_ml_api():
         print("⏳ Loading models... (this may take 30-60 seconds on first startup)")
         print("")
         
-        # Run with gunicorn in production or direct Flask in development
+        # Run with uvicorn (FastAPI) or gunicorn (production fallback)
         if os.getenv('NODE_ENV') == 'production':
-            print("📦 Running in PRODUCTION mode with Gunicorn")
-            os.system(f"gunicorn --bind 0.0.0.0:{ml_api_port} --workers 1 --timeout 120 --access-logfile - --error-logfile - ml_api:app")
-        else:
-            print("🔧 Running in DEVELOPMENT mode")
-            # Run Flask development server
-            app.run(
+            print("📦 Running in PRODUCTION mode with Uvicorn")
+            uvicorn.run(
+                app,
                 host='0.0.0.0',
                 port=int(ml_api_port),
-                debug=False,
-                use_reloader=False,
-                threaded=True
+                workers=1,
+                log_level='info'
+            )
+        else:
+            print("🔧 Running in DEVELOPMENT mode with Uvicorn")
+            # Run Uvicorn development server (supports FastAPI/Starlette)
+            uvicorn.run(
+                app,
+                host='0.0.0.0',
+                port=int(ml_api_port),
+                log_level='debug',
+                reload=False
             )
     
     except ImportError as e:

@@ -44,5 +44,7 @@ EXPOSE $PORT
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:$PORT/health || exit 1
 
-# Run with gunicorn
-CMD exec gunicorn -w 2 -b 0.0.0.0:$PORT --timeout 120 ml.ml_api_service_optimized:app
+# Run the ML API with proper entry point (selects explainability service and uses uvicorn)
+ENV NODE_ENV=production \
+    ML_API_PORT=$PORT
+CMD exec python ml_api.py

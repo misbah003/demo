@@ -1,1 +1,1 @@
-web: gunicorn --workers 2 --worker-class sync --bind 0.0.0.0:$PORT --timeout 120 'ml.ml_api_service_optimized:app'
+web: NODE_ENV=production ML_API_PORT=$PORT python ml_api.py
