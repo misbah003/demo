@@ -202,6 +202,145 @@ async def extract_entities(request: PredictionRequest):
         logger.error(f"Error extracting entities: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+# ===================== VAT PREDICTION ENDPOINT =====================
+
+@app.post("/predict")
+async def predict_vat_refund(request: PredictionRequest):
+    """
+    Make a VAT refund prediction (compatible with frontend)
+    
+    Request format:
+    {
+        "businessType": "Manufacturing" | "Services" | "Trading" | "Retail",
+        "turnover": float,
+        "vatPaid": float,
+        "vatClaimed": float,
+        "category": string,
+        "region": string (one of: Delhi, Gujarat, Haryana, Karnataka, Kerala, Maharashtra, Punjab, Rajasthan, Tamil Nadu, Uttar Pradesh),
+        "filingStatus": "Filed" | "Not Filed",
+        "riskScore": float (0-1)
+    }
+    """
+    try:
+        if vat_forecaster is None:
+            raise HTTPException(status_code=503, detail="VAT forecaster not initialized")
+        
+        # Extract prediction data from request
+        data = request.data
+        
+        # Validate required fields
+        required_fields = ['businessType', 'turnover', 'vatPaid', 'vatClaimed', 'category', 'region', 'filingStatus', 'riskScore']
+        for field in required_fields:
+            if field not in data:
+                raise HTTPException(status_code=400, detail=f"Missing required field: {field}")
+        
+        # Load the trained model and scaler
+        model_path = f'{MODEL_DIR}/random_forest_optimized.pkl'
+        if not os.path.exists(model_path):
+            model_path = f'{MODEL_DIR}/gradient_boosting_optimized.pkl'
+        
+        model = joblib.load(model_path)
+        scaler = joblib.load(f'{MODEL_DIR}/scaler.pkl')
+        label_encoders = joblib.load(f'{MODEL_DIR}/label_encoders.pkl')
+        feature_columns = joblib.load(f'{MODEL_DIR}/feature_columns.pkl')
+        
+        # Prepare features
+        vat_amount = data['turnover'] * (data.get('vatPaid', 0) / max(data['turnover'], 1)) if data['turnover'] > 0 else 0
+        amount_to_turnover = data['turnover'] / max(data['turnover'], 1) if data['turnover'] > 0 else 0
+        vat_to_amount = vat_amount / max(data['turnover'], 1) if data['turnover'] > 0 else 0
+        
+        # Encode categorical features
+        encoded_features = {}
+        try:
+            # Map business type to category if needed
+            category = data.get('category', 'Electronics')
+            region = data.get('region', 'Maharashtra')
+            filing_status = data.get('filingStatus', 'Filed')
+            
+            encoded_features['Category_Encoded'] = label_encoders.get('Category', {}).get(category, 0) if isinstance(label_encoders.get('Category'), dict) else 0
+            encoded_features['Region_Encoded'] = label_encoders.get('Region', {}).get(region, 0) if isinstance(label_encoders.get('Region'), dict) else 0
+            encoded_features['Filing_Status_Encoded'] = label_encoders.get('Filing_Status', {}).get(filing_status, 0) if isinstance(label_encoders.get('Filing_Status'), dict) else 0
+            encoded_features['Compliance_Flag_Encoded'] = 0 if data.get('riskScore', 0.3) < 0.3 else 1
+            encoded_features['Refund_Eligible_Encoded'] = 1 if data['vatClaimed'] > 0 else 0
+            encoded_features['Is_Anomaly_Encoded'] = 0
+        except Exception as encode_err:
+            logger.warning(f"Encoding warning: {encode_err}, using defaults")
+            encoded_features = {
+                'Category_Encoded': 0,
+                'Region_Encoded': 0,
+                'Filing_Status_Encoded': 0,
+                'Compliance_Flag_Encoded': 0,
+                'Refund_Eligible_Encoded': 1 if data['vatClaimed'] > 0 else 0,
+                'Is_Anomaly_Encoded': 0
+            }
+        
+        # Create feature vector
+        features = {
+            'Amount': data['turnover'],
+            'VAT_Amount': vat_amount,
+            'VAT_Rate': (data['vatPaid'] / max(data['turnover'], 1) * 100) if data['turnover'] > 0 else 18,
+            'Risk_Score': data.get('riskScore', 0.3),
+            'Annual_Turnover': data['turnover'],
+            'Amount_to_Turnover_Ratio': amount_to_turnover,
+            'VAT_to_Amount_Ratio': vat_to_amount,
+            **encoded_features
+        }
+        
+        # Prepare DataFrame
+        X = pd.DataFrame([features])[feature_columns]
+        X_scaled = scaler.transform(X)
+        
+        # Make prediction
+        predicted_refund = float(model.predict(X_scaled)[0])
+        predicted_refund = max(0, predicted_refund)  # Ensure non-negative
+        
+        # Determine approval probability based on risk score and refund amount
+        risk_score = data.get('riskScore', 0.3)
+        if risk_score > 0.7:
+            approval_prob = 0.2
+            recommendation = "manual_review"
+        elif risk_score > 0.5:
+            approval_prob = 0.5
+            recommendation = "manual_review"
+        elif predicted_refund > 100000:
+            approval_prob = 0.7
+            recommendation = "auto_approve"
+        else:
+            approval_prob = 0.85
+            recommendation = "auto_approve"
+        
+        # Build response matching frontend expectations
+        response = {
+            "predictedRefund": round(predicted_refund, 2),
+            "approvalProbability": round(approval_prob * 100, 1),
+            "recommendation": recommendation,
+            "breakdown": {
+                "adjustments": []
+            },
+            "riskAssessment": {
+                "level": "high" if risk_score > 0.6 else "medium" if risk_score > 0.3 else "low",
+                "complianceFlag": data.get('filingStatus', 'Filed') != 'Filed',
+                "score": risk_score
+            },
+            "modelInfo": {
+                "name": "VAT Refund Predictor",
+                "version": "3.0.0",
+                "confidence": "high"
+            }
+        }
+        
+        logger.info(f"✅ VAT Prediction: ₹{predicted_refund:,.2f} | Risk: {response['riskAssessment']['level']} | Approval: {approval_prob*100:.1f}%")
+        
+        return response
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error in VAT prediction: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
 # ===================== EXPLAINABILITY ENDPOINTS =====================
 
 @app.post("/api/explain-vat")
