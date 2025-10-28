@@ -33,12 +33,42 @@ import joblib
 import os
 import logging
 
-# Import ML modules
-from advanced_ner_extraction import AdvancedNERExtractor
-from advanced_document_classifier import AdvancedDocumentClassifier
-from advanced_time_series_forecasting import AdvancedVATForecaster
-from explainability_service import ExplainabilityService, format_explanation_for_api
-from explainability_report_generator import ExplainabilityReportGenerator
+# Import ML modules - with graceful fallbacks to prevent app crash
+try:
+    from advanced_ner_extraction import AdvancedNERExtractor
+except Exception as e:
+    logger_temp = logging.getLogger(__name__)
+    logger_temp.warning(f"⚠️  Could not import AdvancedNERExtractor: {e}")
+    AdvancedNERExtractor = None
+
+try:
+    from advanced_document_classifier import AdvancedDocumentClassifier
+except Exception as e:
+    logger_temp = logging.getLogger(__name__)
+    logger_temp.warning(f"⚠️  Could not import AdvancedDocumentClassifier: {e}")
+    AdvancedDocumentClassifier = None
+
+try:
+    from advanced_time_series_forecasting import AdvancedVATForecaster
+except Exception as e:
+    logger_temp = logging.getLogger(__name__)
+    logger_temp.warning(f"⚠️  Could not import AdvancedVATForecaster: {e}")
+    AdvancedVATForecaster = None
+
+try:
+    from explainability_service import ExplainabilityService, format_explanation_for_api
+except Exception as e:
+    logger_temp = logging.getLogger(__name__)
+    logger_temp.warning(f"⚠️  Could not import ExplainabilityService: {e}")
+    ExplainabilityService = None
+    format_explanation_for_api = None
+
+try:
+    from explainability_report_generator import ExplainabilityReportGenerator
+except Exception as e:
+    logger_temp = logging.getLogger(__name__)
+    logger_temp.warning(f"⚠️  Could not import ExplainabilityReportGenerator: {e}")
+    ExplainabilityReportGenerator = None
 
 # Initialize FastAPI
 app = FastAPI(
@@ -117,40 +147,55 @@ async def startup_event():
     try:
         # Initialize explainability service
         try:
-            logger.info("📊 Initializing Explainability Service...")
-            explainability_service = ExplainabilityService()
+            if ExplainabilityService is not None:
+                logger.info("📊 Initializing Explainability Service...")
+                explainability_service = ExplainabilityService()
+            else:
+                logger.warning("⚠️  ExplainabilityService not available (import failed)")
         except Exception as e:
-            logger.warning(f"⚠️  Explainability service initialization deferred: {e}")
+            logger.warning(f"⚠️  Explainability service initialization failed: {e}")
         
         # Initialize report generator
         try:
-            logger.info("📄 Initializing Report Generator...")
-            report_generator = ExplainabilityReportGenerator(output_dir=REPORTS_DIR)
+            if ExplainabilityReportGenerator is not None:
+                logger.info("📄 Initializing Report Generator...")
+                report_generator = ExplainabilityReportGenerator(output_dir=REPORTS_DIR)
+            else:
+                logger.warning("⚠️  ExplainabilityReportGenerator not available (import failed)")
         except Exception as e:
-            logger.warning(f"⚠️  Report generator initialization deferred: {e}")
+            logger.warning(f"⚠️  Report generator initialization failed: {e}")
         
         # Initialize NER
         try:
-            logger.info("📝 Loading NER Extractor...")
-            ner_extractor = AdvancedNERExtractor()
+            if AdvancedNERExtractor is not None:
+                logger.info("📝 Loading NER Extractor...")
+                ner_extractor = AdvancedNERExtractor()
+            else:
+                logger.warning("⚠️  AdvancedNERExtractor not available (import failed)")
         except Exception as e:
             logger.warning(f"⚠️  NER extractor initialization failed: {e}")
         
         # Initialize Document Classifier
         try:
-            logger.info("📄 Loading Document Classifier...")
-            doc_classifier = AdvancedDocumentClassifier()
+            if AdvancedDocumentClassifier is not None:
+                logger.info("📄 Loading Document Classifier...")
+                doc_classifier = AdvancedDocumentClassifier()
+            else:
+                logger.warning("⚠️  AdvancedDocumentClassifier not available (import failed)")
         except Exception as e:
             logger.warning(f"⚠️  Document classifier initialization failed: {e}")
         
         # Initialize VAT Forecaster
         try:
-            logger.info("📊 Loading VAT Forecaster...")
-            vat_forecaster = AdvancedVATForecaster()
+            if AdvancedVATForecaster is not None:
+                logger.info("📊 Loading VAT Forecaster...")
+                vat_forecaster = AdvancedVATForecaster()
+            else:
+                logger.warning("⚠️  AdvancedVATForecaster not available (import failed)")
         except Exception as e:
             logger.warning(f"⚠️  VAT forecaster initialization failed: {e}")
         
-        logger.info("✅ Startup sequence complete!")
+        logger.info("✅ Startup sequence complete! App is ready to serve requests.")
         
     except Exception as e:
         logger.error(f"❌ Critical startup error: {e}")
