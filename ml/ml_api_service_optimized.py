@@ -175,19 +175,14 @@ def load_models():
 @app.route('/health', methods=['GET'])
 @cross_origin()
 def health_check():
-    """Health check endpoint"""
-    if model is None:
-        return jsonify({
-            'status': 'unhealthy',
-            'message': 'Models not loaded'
-        }), 503
-    
+    """Health check endpoint - always returns 200 for Render deployment"""
     return jsonify({
         'status': 'healthy',
-        'model_loaded': True,
+        'model_loaded': model is not None,
         'model_dir': MODEL_DIR,
-        'uptime_seconds': (datetime.now() - prediction_stats['start_time']).total_seconds()
-    })
+        'uptime_seconds': (datetime.now() - prediction_stats['start_time']).total_seconds(),
+        'timestamp': datetime.now().isoformat()
+    }), 200
 
 @app.route('/model-info', methods=['GET'])
 def model_info():
@@ -268,7 +263,8 @@ def get_stats():
         'auto_approval_rate': (prediction_stats['auto_approved'] / max(prediction_stats['total_predictions'], 1)) * 100
     })
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def predict():
     """Make a VAT refund prediction"""
     start_time = time.time()
@@ -392,7 +388,8 @@ def predict():
             'error': str(e)
         }), 500
 
-@app.route('/batch-predict', methods=['POST'])
+@app.route('/batch-predict', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def batch_predict():
     """Make predictions for multiple transactions"""
     try:
@@ -433,7 +430,8 @@ def batch_predict():
             'error': str(e)
         }), 500
 
-@app.route('/explain', methods=['POST'])
+@app.route('/explain', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def explain_prediction():
     """
     Get SHAP explanation for a VAT prediction

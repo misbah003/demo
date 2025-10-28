@@ -23,5 +23,5 @@ services:
     
     # GitHub integration (auto-deploy on push)
     repo: https://github.com/YOUR_USERNAME/navi-tax-35-main
-    branch: main
+    branch: master
     autoScaleFreeAccount: true
