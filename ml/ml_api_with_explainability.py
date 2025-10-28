@@ -19,11 +19,11 @@ Endpoints:
 - GET /api/status - System status
 """
 
-from fastapi import FastAPI, HTTPException, File, UploadFile, BackgroundTasks
+from fastapi import FastAPI, HTTPException, File, UploadFile, BackgroundTasks, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Union
 import uvicorn
 import numpy as np
 import pandas as pd
@@ -227,26 +227,44 @@ async def extract_entities(request: PredictionRequest):
 
 # ===================== VAT PREDICTION ENDPOINT =====================
 
+# Alternative prediction request model for direct data format
+class DirectPredictionRequest(BaseModel):
+    """Direct prediction request (data sent directly, not wrapped)"""
+    businessType: str
+    turnover: float
+    vatPaid: float
+    vatClaimed: float
+    category: str
+    region: str
+    filingStatus: str
+    riskScore: float
+
 @app.post("/predict")
-async def predict_vat_refund(request: PredictionRequest):
+async def predict_vat_refund(body: Dict = Body(...)):
     """
-    Make a VAT refund prediction (compatible with frontend)
+    Make a VAT refund prediction (compatible with both frontend formats)
     
-    Request format:
+    Accepts BOTH formats:
+    1. Direct format (from frontend):
     {
-        "businessType": "Manufacturing" | "Services" | "Trading" | "Retail",
-        "turnover": float,
-        "vatPaid": float,
-        "vatClaimed": float,
-        "category": string,
-        "region": string (one of: Delhi, Gujarat, Haryana, Karnataka, Kerala, Maharashtra, Punjab, Rajasthan, Tamil Nadu, Uttar Pradesh),
-        "filingStatus": "Filed" | "Not Filed",
-        "riskScore": float (0-1)
+        "businessType": "Manufacturing",
+        "turnover": 700000,
+        "vatPaid": 550000,
+        "vatClaimed": 678990,
+        "category": "Electronics",
+        "region": "Uttar Pradesh",
+        "filingStatus": "Filed",
+        "riskScore": 0.3
+    }
+    
+    2. Wrapped format:
+    {
+        "data": { ... same fields as above ... }
     }
     """
     try:
-        # Extract prediction data from request
-        data = request.data
+        # Extract prediction data from request - handle both wrapped and direct formats
+        data = body.get('data', body)  # If 'data' key exists, use it; otherwise use body directly
         
         # Validate required fields
         required_fields = ['businessType', 'turnover', 'vatPaid', 'vatClaimed', 'category', 'region', 'filingStatus', 'riskScore']
