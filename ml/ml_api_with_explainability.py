@@ -47,13 +47,14 @@ app = FastAPI(
     version="3.0.0"
 )
 
-# CORS
+# CORS - Must be first middleware to handle OPTIONS preflight requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Allow all origins (can be restricted to specific domains)
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
+    max_age=3600,  # Cache preflight responses for 1 hour
 )
 
 # Setup logging
@@ -139,6 +140,11 @@ async def startup_event():
         raise
 
 # ===================== HEALTH CHECK =====================
+
+@app.get("/health")
+async def health_check():
+    """Render health check endpoint - must respond quickly"""
+    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
 
 @app.get("/")
 async def root():
