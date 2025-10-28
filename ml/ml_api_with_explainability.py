@@ -249,22 +249,34 @@ async def predict_vat_refund(request: PredictionRequest):
         amount_to_turnover = data['turnover'] / max(data['turnover'], 1) if data['turnover'] > 0 else 0
         vat_to_amount = vat_amount / max(data['turnover'], 1) if data['turnover'] > 0 else 0
         
-        # Encode categorical features
+        # Encode categorical features using fitted label encoders
         encoded_features = {}
         try:
             # Map business type to category if needed
             category = data.get('category', 'Electronics')
             region = data.get('region', 'Maharashtra')
             filing_status = data.get('filingStatus', 'Filed')
+            compliance_flag = 'Non-Compliant' if data.get('riskScore', 0.3) < 0.3 else 'Compliant'
+            refund_eligible = 'Yes' if data['vatClaimed'] > 0 else 'No'
+            is_anomaly = 'No'
             
-            encoded_features['Category_Encoded'] = label_encoders.get('Category', {}).get(category, 0) if isinstance(label_encoders.get('Category'), dict) else 0
-            encoded_features['Region_Encoded'] = label_encoders.get('Region', {}).get(region, 0) if isinstance(label_encoders.get('Region'), dict) else 0
-            encoded_features['Filing_Status_Encoded'] = label_encoders.get('Filing_Status', {}).get(filing_status, 0) if isinstance(label_encoders.get('Filing_Status'), dict) else 0
-            encoded_features['Compliance_Flag_Encoded'] = 0 if data.get('riskScore', 0.3) < 0.3 else 1
-            encoded_features['Refund_Eligible_Encoded'] = 1 if data['vatClaimed'] > 0 else 0
-            encoded_features['Is_Anomaly_Encoded'] = 0
+            # Transform using label encoders
+            if 'Category' in label_encoders:
+                encoded_features['Category_Encoded'] = int(label_encoders['Category'].transform([category])[0])
+            if 'Region' in label_encoders:
+                encoded_features['Region_Encoded'] = int(label_encoders['Region'].transform([region])[0])
+            if 'Filing_Status' in label_encoders:
+                encoded_features['Filing_Status_Encoded'] = int(label_encoders['Filing_Status'].transform([filing_status])[0])
+            if 'Compliance_Flag' in label_encoders:
+                encoded_features['Compliance_Flag_Encoded'] = int(label_encoders['Compliance_Flag'].transform([compliance_flag])[0])
+            if 'Refund_Eligible' in label_encoders:
+                encoded_features['Refund_Eligible_Encoded'] = int(label_encoders['Refund_Eligible'].transform([refund_eligible])[0])
+            if 'Is_Anomaly' in label_encoders:
+                encoded_features['Is_Anomaly_Encoded'] = int(label_encoders['Is_Anomaly'].transform([is_anomaly])[0])
+                
         except Exception as encode_err:
             logger.warning(f"Encoding warning: {encode_err}, using defaults")
+            # Use safe defaults
             encoded_features = {
                 'Category_Encoded': 0,
                 'Region_Encoded': 0,
@@ -274,7 +286,7 @@ async def predict_vat_refund(request: PredictionRequest):
                 'Is_Anomaly_Encoded': 0
             }
         
-        # Create feature vector
+        # Create feature vector with only required columns
         features = {
             'Amount': data['turnover'],
             'VAT_Amount': vat_amount,
@@ -283,10 +295,14 @@ async def predict_vat_refund(request: PredictionRequest):
             'Annual_Turnover': data['turnover'],
             'Amount_to_Turnover_Ratio': amount_to_turnover,
             'VAT_to_Amount_Ratio': vat_to_amount,
-            **encoded_features
+            'Category_Encoded': encoded_features.get('Category_Encoded', 0),
+            'Region_Encoded': encoded_features.get('Region_Encoded', 0),
+            'Filing_Status_Encoded': encoded_features.get('Filing_Status_Encoded', 0),
+            'Compliance_Flag_Encoded': encoded_features.get('Compliance_Flag_Encoded', 0),
+            'Is_Anomaly_Encoded': encoded_features.get('Is_Anomaly_Encoded', 0)
         }
         
-        # Prepare DataFrame
+        # Prepare DataFrame with only the required columns in the correct order
         X = pd.DataFrame([features])[feature_columns]
         X_scaled = scaler.transform(X)
         
