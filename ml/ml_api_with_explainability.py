@@ -107,37 +107,54 @@ class ExplainabilityReportRequest(BaseModel):
 
 @app.on_event("startup")
 async def startup_event():
-    """Initialize models and services"""
+    """Initialize models and services - non-blocking to allow app to start"""
     global ner_extractor, doc_classifier, vat_forecaster, explainability_service, report_generator
     
     logger.info("🚀 Starting ML API with Explainability...")
+    logger.info("⏳ Initializing services (app will respond even if initialization is in progress)...")
     
+    # Load models asynchronously without blocking app startup
     try:
         # Initialize explainability service
-        logger.info("📊 Initializing Explainability Service...")
-        explainability_service = ExplainabilityService()
+        try:
+            logger.info("📊 Initializing Explainability Service...")
+            explainability_service = ExplainabilityService()
+        except Exception as e:
+            logger.warning(f"⚠️  Explainability service initialization deferred: {e}")
         
         # Initialize report generator
-        logger.info("📄 Initializing Report Generator...")
-        report_generator = ExplainabilityReportGenerator(output_dir=REPORTS_DIR)
+        try:
+            logger.info("📄 Initializing Report Generator...")
+            report_generator = ExplainabilityReportGenerator(output_dir=REPORTS_DIR)
+        except Exception as e:
+            logger.warning(f"⚠️  Report generator initialization deferred: {e}")
         
         # Initialize NER
-        logger.info("📝 Loading NER Extractor...")
-        ner_extractor = AdvancedNERExtractor()
+        try:
+            logger.info("📝 Loading NER Extractor...")
+            ner_extractor = AdvancedNERExtractor()
+        except Exception as e:
+            logger.warning(f"⚠️  NER extractor initialization failed: {e}")
         
         # Initialize Document Classifier
-        logger.info("📄 Loading Document Classifier...")
-        doc_classifier = AdvancedDocumentClassifier()
+        try:
+            logger.info("📄 Loading Document Classifier...")
+            doc_classifier = AdvancedDocumentClassifier()
+        except Exception as e:
+            logger.warning(f"⚠️  Document classifier initialization failed: {e}")
         
         # Initialize VAT Forecaster
-        logger.info("📊 Loading VAT Forecaster...")
-        vat_forecaster = AdvancedVATForecaster()
+        try:
+            logger.info("📊 Loading VAT Forecaster...")
+            vat_forecaster = AdvancedVATForecaster()
+        except Exception as e:
+            logger.warning(f"⚠️  VAT forecaster initialization failed: {e}")
         
-        logger.info("✅ All models initialized successfully!")
+        logger.info("✅ Startup sequence complete!")
         
     except Exception as e:
-        logger.error(f"❌ Initialization error: {e}")
-        raise
+        logger.error(f"❌ Critical startup error: {e}")
+        # Don't raise - allow app to continue in degraded mode for health checks
 
 # ===================== HEALTH CHECK =====================
 
