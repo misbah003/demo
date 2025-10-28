@@ -222,9 +222,6 @@ async def predict_vat_refund(request: PredictionRequest):
     }
     """
     try:
-        if vat_forecaster is None:
-            raise HTTPException(status_code=503, detail="VAT forecaster not initialized")
-        
         # Extract prediction data from request
         data = request.data
         
